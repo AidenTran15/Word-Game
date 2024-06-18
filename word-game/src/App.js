@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import WelcomePage from './WelcomePage/WelcomePage';
-import GamePage from './GamePage/GamePage';
+import WelcomePage from './components/WelcomePage/WelcomePage';
+import GamePage from './components/GamePage/GamePage';
 
 function App() {
   return (
