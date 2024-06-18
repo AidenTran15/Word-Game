@@ -6,20 +6,21 @@ function App() {
   const [word, setWord] = useState('');
   const [nextWord, setNextWord] = useState('');
   const [error, setError] = useState(null);
+  const [usedWords, setUsedWords] = useState([]);
 
   const fetchNextWord = async () => {
     try {
       console.log(`Fetching next word for category: ${category}, word: ${word}`);
       const response = await axios.get('https://nscjwcove7.execute-api.ap-southeast-2.amazonaws.com/prod/word-game', {
-        params: { category, word }
+        params: { category, word, usedWords: usedWords.join(',') }
       });
       console.log('Response:', response);
 
-      // Handle the response data
       const { data } = response;
       if (data.nextWord) {
         setNextWord(data.nextWord);
         setError(null);
+        setUsedWords([...usedWords, data.nextWord]);
       } else if (data.message) {
         setNextWord(data.message);
         setError(null);
@@ -28,7 +29,6 @@ function App() {
         console.error('Unexpected response structure:', data);
       }
 
-      // Update the word input to the next word
       if (data.nextWord && data.nextWord !== 'You won!') {
         setWord('');
       }
@@ -47,7 +47,20 @@ function App() {
         return;
       }
     }
+    if (usedWords.includes(word)) {
+      setError('This word has already been used.');
+      return;
+    }
+    setUsedWords([...usedWords, word]);
     fetchNextWord();
+  };
+
+  const handleReset = () => {
+    setCategory('Fruit');
+    setWord('');
+    setNextWord('');
+    setError(null);
+    setUsedWords([]);
   };
 
   return (
@@ -67,8 +80,19 @@ function App() {
           <option value="Occupation">Occupation</option>
         </select>
         <button type="submit" style={{ padding: '10px 20px', fontSize: '16px' }} disabled={nextWord === 'You won!'}>Submit</button>
+        {nextWord === 'You won!' && <button onClick={handleReset} style={{ padding: '10px 20px', fontSize: '16px', marginTop: '10px' }}>Reset</button>}
       </form>
       {error && <p style={{ color: 'red' }}>{error}</p>}
+      {usedWords.length > 0 && (
+        <div style={{ marginTop: '20px' }}>
+          <h2>Used Words:</h2>
+          <ul>
+            {usedWords.map((usedWord, index) => (
+              <li key={index}>{usedWord}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
