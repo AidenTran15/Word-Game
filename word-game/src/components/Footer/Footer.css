@@ -3,7 +3,8 @@
     color: #fff;
     text-align: center;
     padding: 1rem;
-    font-family: 'Playfair Display', serif;
-    position: relative;
+    position: fixed;
+    left: 0;
+    bottom: 0;
     width: 100%;
 }
