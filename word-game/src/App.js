@@ -8,6 +8,23 @@ function App() {
   const [error, setError] = useState(null);
   const [usedWords, setUsedWords] = useState([]);
 
+  const validateWord = async (wordToValidate) => {
+    try {
+      console.log(`Validating word for category: ${category}, word: ${wordToValidate}`);
+      const response = await axios.get('https://nscjwcove7.execute-api.ap-southeast-2.amazonaws.com/prod/validate-word', {
+        params: { category, word: wordToValidate }
+      });
+      console.log('Validation Response:', response);
+
+      const { data } = response;
+      return data.valid;
+    } catch (error) {
+      console.error('Error validating word', error);
+      setError('Error validating word');
+      return false;
+    }
+  };
+
   const fetchNextWord = async (userWord) => {
     try {
       const userInputWord = userWord ? userWord : word;
@@ -21,7 +38,7 @@ function App() {
       if (data.nextWord) {
         setNextWord(data.nextWord);
         setError(null);
-        setUsedWords(prevWords => [...prevWords, data.nextWord]);
+        setUsedWords(prevWords => [...prevWords, userInputWord.toLowerCase(), data.nextWord.toLowerCase()]);
       } else if (data.message) {
         setNextWord(data.message);
         setError(null);
@@ -39,8 +56,10 @@ function App() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(`Form submitted with word: ${word}`);
+
     if (nextWord && nextWord !== 'You won!') {
       const lastLetter = nextWord[nextWord.length - 1].toLowerCase();
       if (word[0].toLowerCase() !== lastLetter) {
@@ -52,7 +71,15 @@ function App() {
       setError('This word has already been used.');
       return;
     }
-    setUsedWords([...usedWords, word.toLowerCase()]);
+
+    const isValid = await validateWord(word);
+    console.log('Is word valid:', isValid);
+
+    if (!isValid) {
+      setError('The word is incorrect or not in this field.');
+      return;
+    }
+
     fetchNextWord(word);
   };
 
