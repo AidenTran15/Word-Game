@@ -13,10 +13,6 @@ const GamePage = () => {
     const [gameInProgress, setGameInProgress] = useState(true);
     const [wordSubmitted, setWordSubmitted] = useState(false);
 
-    const capitalizeFirstLetter = (word) => {
-        return word.charAt(0).toUpperCase() + word.slice(1);
-    };
-
     const validateWord = async (wordToValidate) => {
         try {
             const response = await axios.get('https://nscjwcove7.execute-api.ap-southeast-2.amazonaws.com/prod/validate-word', {
@@ -38,7 +34,7 @@ const GamePage = () => {
 
             const { data } = response;
             if (data.nextWord) {
-                setNextWord(data.nextWord);
+                setNextWord(data.nextWord.charAt(0).toUpperCase() + data.nextWord.slice(1));
                 setError(null);
                 setUsedWords([...usedWords, userInputWord.toLowerCase(), data.nextWord.toLowerCase()]);
             } else if (data.message) {
@@ -108,7 +104,7 @@ const GamePage = () => {
                         <option value="Occupation">Occupation</option>
                     </select>
                     {nextWord && nextWord !== 'You won!' && nextWord !== 'Computer wins!' && (
-                        <h2 className="next-word">Next word: {capitalizeFirstLetter(nextWord)}</h2>
+                        <h2 className="next-word">Next word: {nextWord}</h2>
                     )}
                     {(!nextWord || nextWord === 'You won!' || nextWord === 'Computer wins!') && (
                         <h2 className="next-word">{nextWord}</h2>
@@ -127,6 +123,16 @@ const GamePage = () => {
                     {!gameInProgress && <button className="reset-button" onClick={handleReset}>Reset</button>}
                 </form>
                 {error && <p className="error-message">{error}</p>}
+                {wordSubmitted && (
+                    <div className="used-words-section">
+                        <label>Used Words</label>
+                        <ul>
+                            {usedWords.map((usedWord, index) => (
+                                <li key={index}>{usedWord.charAt(0).toUpperCase() + usedWord.slice(1)}</li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
             </div>
             <Footer />
         </div>
