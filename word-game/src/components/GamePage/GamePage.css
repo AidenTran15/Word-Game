@@ -1,81 +1,135 @@
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-}
-
+/* src/GamePage/GamePage.css */
 .game-page {
-    font-family: 'Playfair Display', serif;
     display: flex;
     flex-direction: column;
-    height: 100vh;
-}
-
-.navbar, .footer {
-    background-color: #333;
-    color: white;
-    padding: 20px;
-}
-
-.navbar h1, .footer p {
-    margin: 0;
+    min-height: 100vh;
+    font-family: 'Roboto', sans-serif;
 }
 
 .game-container {
     flex: 1;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    margin-top: -160px; /* Move the section up */
 }
 
 .game-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 300px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
 }
 
-.game-form label {
-    font-size: 1.2em;
+label {
+    font-family: 'Arial', sans-serif;
+    font-size: 2em;
     margin-bottom: 10px;
+    display: block;
 }
 
-.game-form select {
-    padding: 10px;
-    margin-bottom: 20px;
+label::after {
+    content: '';
+    display: block;
+    width: 50%;
+    margin: 0.5em auto;
+    border-bottom: 2px solid #000;
+}
+
+input {
     font-size: 1em;
-    width: 100%;
-}
-
-.game-form input {
     padding: 10px;
-    margin-bottom: 20px;
+    width: 95.5%; /* Adjust width to match both elements */
+    margin: 10px 0 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s;
+}
+
+select {
     font-size: 1em;
-    width: 100%;
-}
-
-.button-group {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-}
-
-.button-group button {
     padding: 10px;
+    width: 100%; /* Adjust width to match both elements */
+    margin: 10px 0 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s;
+}
+
+select:focus, input:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+button {
+    padding: 10px 20px;
     font-size: 1em;
-    width: 48%;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    margin: 10px;
+    background-color: #28a745; /* Green color */
+    color: white;
 }
 
-.button-group button:disabled {
+button:hover {
+    background-color: #218838; /* Darker green on hover */
+    transform: translateY(-2px);
+}
+
+button:disabled {
+    background-color: #ccc;
     cursor: not-allowed;
 }
 
 .reset-button {
-    padding: 10px;
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.reset-button:hover {
+    background-color: #c82333;
+}
+
+.error-message {
+    color: red;
+    margin-top: 20px;
+}
+
+.next-word {
     font-size: 1em;
-    width: 100%;
-    cursor: pointer;
-    margin-top: 10px;
+    font-weight: normal;
+}
+
+.navbar {
+    background-color: #B388EB; /* Purple */
+    color: black;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 80px;
+    padding: 0 20px;
+}
+
+.footer {
+    background-color: #B388EB; /* Purple */
+    color: black;
+    text-align: center;
+    padding: 1rem;
+}
+
+.navbar h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5em;
+    margin: 0;
+}
+
+body {
+    background: linear-gradient(120deg, #B388EB, #E0BBE4);
 }

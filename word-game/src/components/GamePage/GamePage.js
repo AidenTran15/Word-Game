@@ -11,6 +11,11 @@ const GamePage = () => {
     const [error, setError] = useState(null);
     const [usedWords, setUsedWords] = useState([]);
     const [gameInProgress, setGameInProgress] = useState(true);
+    const [wordSubmitted, setWordSubmitted] = useState(false);
+
+    const capitalizeFirstLetter = (word) => {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+    };
 
     const validateWord = async (wordToValidate) => {
         try {
@@ -73,6 +78,7 @@ const GamePage = () => {
 
         setUsedWords([...usedWords, word.toLowerCase()]);
         fetchNextWord(word);
+        setWordSubmitted(true);
     };
 
     const handleReset = () => {
@@ -82,6 +88,7 @@ const GamePage = () => {
         setError(null);
         setUsedWords([]);
         setGameInProgress(true);
+        setWordSubmitted(false);
     };
 
     const handleSurrender = () => {
@@ -101,10 +108,10 @@ const GamePage = () => {
                         <option value="Occupation">Occupation</option>
                     </select>
                     {nextWord && nextWord !== 'You won!' && nextWord !== 'Computer wins!' && (
-                        <h2>Next word: {nextWord}</h2>
+                        <h2 className="next-word">Next word: {capitalizeFirstLetter(nextWord)}</h2>
                     )}
                     {(!nextWord || nextWord === 'You won!' || nextWord === 'Computer wins!') && (
-                        <h2>{nextWord}</h2>
+                        <h2 className="next-word">{nextWord}</h2>
                     )}
                     <input 
                         type="text" 
@@ -115,11 +122,11 @@ const GamePage = () => {
                     />
                     <div className="button-group">
                         <button type="submit" disabled={!gameInProgress}>Submit</button>
-                        <button type="button" onClick={handleSurrender} disabled={!gameInProgress}>Surrender</button>
+                        {wordSubmitted && <button type="button" onClick={handleSurrender} disabled={!gameInProgress}>Surrender</button>}
                     </div>
-                    {(!gameInProgress || nextWord === 'You won!') && <button className="reset-button" onClick={handleReset}>Reset</button>}
+                    {!gameInProgress && <button className="reset-button" onClick={handleReset}>Reset</button>}
                 </form>
-                {error && <p style={{ color: 'red' }}>{error}</p>}
+                {error && <p className="error-message">{error}</p>}
             </div>
             <Footer />
         </div>
