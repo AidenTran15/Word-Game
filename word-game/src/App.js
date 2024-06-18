@@ -8,11 +8,12 @@ function App() {
   const [error, setError] = useState(null);
   const [usedWords, setUsedWords] = useState([]);
 
-  const fetchNextWord = async () => {
+  const fetchNextWord = async (userWord) => {
     try {
-      console.log(`Fetching next word for category: ${category}, word: ${word}`);
+      const userInputWord = userWord ? userWord : word;
+      console.log(`Fetching next word for category: ${category}, word: ${userInputWord}`);
       const response = await axios.get('https://nscjwcove7.execute-api.ap-southeast-2.amazonaws.com/prod/word-game', {
-        params: { category, word, usedWords: usedWords.join(',') }
+        params: { category, word: userInputWord, usedWords: usedWords.join(',') }
       });
       console.log('Response:', response);
 
@@ -20,7 +21,7 @@ function App() {
       if (data.nextWord) {
         setNextWord(data.nextWord);
         setError(null);
-        setUsedWords([...usedWords, data.nextWord]);
+        setUsedWords(prevWords => [...prevWords, data.nextWord]);
       } else if (data.message) {
         setNextWord(data.message);
         setError(null);
@@ -47,12 +48,12 @@ function App() {
         return;
       }
     }
-    if (usedWords.includes(word)) {
+    if (usedWords.includes(word.toLowerCase())) {
       setError('This word has already been used.');
       return;
     }
-    setUsedWords([...usedWords, word]);
-    fetchNextWord();
+    setUsedWords([...usedWords, word.toLowerCase()]);
+    fetchNextWord(word);
   };
 
   const handleReset = () => {
