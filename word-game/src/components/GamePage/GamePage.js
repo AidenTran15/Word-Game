@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Navbar from '../Navbar/Navbar'; // Adjusted path
-import Footer from '../Footer/Footer'; // Adjusted path
+import Navbar from '../Navbar/Navbar';
+import Footer from '../Footer/Footer';
 import './GamePage.css';
 
 function GamePage() {
