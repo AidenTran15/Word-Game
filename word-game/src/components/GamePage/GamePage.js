@@ -104,10 +104,10 @@ const GamePage = () => {
                         <option value="Occupation">Occupation</option>
                     </select>
                     {nextWord && nextWord !== 'You won!' && nextWord !== 'Computer wins!' && (
-                        <h2 className="next-word">Next word: {nextWord}</h2>
+                        <h2>Next word: {nextWord}</h2>
                     )}
                     {(!nextWord || nextWord === 'You won!' || nextWord === 'Computer wins!') && (
-                        <h2 className="next-word">{nextWord}</h2>
+                        <h2>{nextWord}</h2>
                     )}
                     <input 
                         type="text" 
@@ -116,27 +116,31 @@ const GamePage = () => {
                         placeholder="Enter the word"
                         disabled={!gameInProgress}
                     />
+                    {error && <p className="error-message">{error}</p>}
                     <div className="button-group">
                         <button type="submit" disabled={!gameInProgress}>Submit</button>
-                        {wordSubmitted && <button type="button" onClick={handleSurrender} disabled={!gameInProgress}>Surrender</button>}
+                        {wordSubmitted && gameInProgress && nextWord !== 'You won!' && (
+                            <button type="button" onClick={handleSurrender}>Surrender</button>
+                        )}
                     </div>
-                    {!gameInProgress && <button className="reset-button" onClick={handleReset}>Reset</button>}
+                    {(!gameInProgress || nextWord === 'You won!' || nextWord === 'Computer wins!') && (
+                        <button className="reset-button" onClick={handleReset}>Reset</button>
+                    )}
                 </form>
-                {wordSubmitted && (
+                {usedWords.length > 0 && (
                     <div className="used-words-section">
                         <h2>Used Words</h2>
                         <div className="words-grid">
-                            {Array.from({ length: Math.ceil(usedWords.length / 8) }).map((_, columnIndex) => (
-                                <ul key={columnIndex}>
-                                    {usedWords.slice(columnIndex * 8, (columnIndex + 1) * 8).map((usedWord, index) => (
-                                        <li key={index}>{usedWord.charAt(0).toUpperCase() + usedWord.slice(1)}</li>
+                            {Array.from({ length: Math.ceil(usedWords.length / 8) }).map((_, colIndex) => (
+                                <ul key={colIndex}>
+                                    {usedWords.slice(colIndex * 8, (colIndex + 1) * 8).map((word, index) => (
+                                        <li key={index}>{word.charAt(0).toUpperCase() + word.slice(1)}</li>
                                     ))}
                                 </ul>
                             ))}
                         </div>
                     </div>
                 )}
-                {error && <p className="error-message">{error}</p>}
             </div>
             <Footer />
         </div>
