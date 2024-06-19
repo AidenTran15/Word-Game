@@ -122,17 +122,21 @@ const GamePage = () => {
                     </div>
                     {!gameInProgress && <button className="reset-button" onClick={handleReset}>Reset</button>}
                 </form>
-                {error && <p className="error-message">{error}</p>}
                 {wordSubmitted && (
                     <div className="used-words-section">
-                        <label>Used Words</label>
-                        <ul>
-                            {usedWords.map((usedWord, index) => (
-                                <li key={index}>{usedWord.charAt(0).toUpperCase() + usedWord.slice(1)}</li>
+                        <h2>Used Words</h2>
+                        <div className="words-grid">
+                            {Array.from({ length: Math.ceil(usedWords.length / 8) }).map((_, columnIndex) => (
+                                <ul key={columnIndex}>
+                                    {usedWords.slice(columnIndex * 8, (columnIndex + 1) * 8).map((usedWord, index) => (
+                                        <li key={index}>{usedWord.charAt(0).toUpperCase() + usedWord.slice(1)}</li>
+                                    ))}
+                                </ul>
                             ))}
-                        </ul>
+                        </div>
                     </div>
                 )}
+                {error && <p className="error-message">{error}</p>}
             </div>
             <Footer />
         </div>
