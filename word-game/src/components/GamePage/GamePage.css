@@ -8,6 +8,33 @@
 body {
     background: url('../../../public/background.jpg') no-repeat center center fixed;
     background-size: cover;
+    margin: 0; /* Ensure no default margin */
+}
+
+.navbar {
+    background-color: #fff; /* Changed to white */
+    color: black;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 80px;
+    padding: 0 20px;
+    position: fixed; /* Fix navbar at the top */
+    width: 100%;
+    top: 0;
+}
+
+.navbar h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.footer {
+    background-color: #fff; /* Changed to white */
+    color: black;
+    text-align: center;
+    padding: 1rem;
 }
 
 .game-container {
@@ -17,7 +44,7 @@ body {
     align-items: center;
     flex-direction: column;
     padding: 20px;
-    margin-top: -50px; /* Move the section up */
+    margin-top: 100px; /* Space for the fixed navbar */
 }
 
 .game-form {
@@ -46,7 +73,17 @@ label::after {
     border-bottom: 2px solid #000;
 }
 
-select, input {
+select {
+    font-size: 1em;
+    padding: 10px;
+    width: calc(100% - 22px);
+    margin: 10px 0 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s;
+}
+
+input {
     font-size: 1em;
     padding: 10px;
     width: calc(100% - 22px);
@@ -103,11 +140,11 @@ button:disabled {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 500px;
+    max-width: 520px;
     text-align: left;
     margin-top: 20px;
-    height: 300px; /* Fixed height for scrolling */
-    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-y: auto;
+    max-height: 400px; /* Adjusted height */
 }
 
 .used-words-section h2 {
@@ -129,44 +166,18 @@ button:disabled {
 }
 
 .words-grid {
-    column-count: 2; /* Two columns */
-    column-gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
 }
 
 .words-grid ul {
     list-style-type: disc;
     margin: 0;
     padding-left: 20px;
-    break-inside: avoid;
-    max-height: 300px;
-    display: flex;
-    flex-direction: column;
 }
 
 .words-grid ul li {
     font-size: 1em;
     margin-bottom: 5px;
-}
-
-.navbar {
-    background-color: #fff; /* Changed to white */
-    color: black;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    height: 80px;
-    padding: 0 20px;
-}
-
-.footer {
-    background-color: #fff; /* Changed to white */
-    color: black;
-    text-align: center;
-    padding: 1rem;
-}
-
-.navbar h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5em;
-    margin: 0;
 }
