@@ -100,7 +100,10 @@ const GamePage = () => {
                 <form onSubmit={handleSubmit} className="game-form">
                     <label htmlFor="category">Select Topic</label>
                     <select id="category" value={category} onChange={(e) => setCategory(e.target.value)} disabled={!gameInProgress}>
+                        <option value="Animal">Animal</option>
+                        <option value="Body">Body</option>
                         <option value="Fruit">Fruit</option>
+                        <option value="Natural">Natural</option>
                         <option value="Occupation">Occupation</option>
                     </select>
                     {nextWord && nextWord !== 'You won!' && nextWord !== 'Computer wins!' && (
@@ -131,9 +134,9 @@ const GamePage = () => {
                     <div className="used-words-section">
                         <h2>Used Words</h2>
                         <div className="words-grid">
-                            {Array.from({ length: Math.ceil(usedWords.length / 8) }).map((_, colIndex) => (
+                            {Array.from({ length: Math.ceil(usedWords.length / 12) }).map((_, colIndex) => (
                                 <ul key={colIndex}>
-                                    {usedWords.slice(colIndex * 8, (colIndex + 1) * 8).map((word, index) => (
+                                    {usedWords.slice(colIndex * 12, (colIndex + 1) * 12).map((word, index) => (
                                         <li key={index}>{word.charAt(0).toUpperCase() + word.slice(1)}</li>
                                     ))}
                                 </ul>
