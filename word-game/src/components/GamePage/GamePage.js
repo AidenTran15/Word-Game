@@ -78,7 +78,7 @@ const GamePage = () => {
     };
 
     const handleReset = () => {
-        setCategory('Fruit');
+        setCategory('Eveything');
         setWord('');
         setNextWord('');
         setError(null);
@@ -100,9 +100,11 @@ const GamePage = () => {
                 <form onSubmit={handleSubmit} className="game-form">
                     <label htmlFor="category">Select Topic</label>
                     <select id="category" value={category} onChange={(e) => setCategory(e.target.value)} disabled={!gameInProgress}>
-                        <option value="Everything">Everything</option>
+                        <option value="Everything">All</option>
                         <option value="Animal">Animal</option>
                         <option value="Body">Body</option>
+                        <option value="Emotional&Feeling&Character">Emotional, Feeling and Character</option>
+                        <option value="Food&Drink">Food and Drink</option>
                         <option value="Fruit">Fruit</option>
                         <option value="Natural">Natural</option>
                         <option value="Occupation">Occupation</option>

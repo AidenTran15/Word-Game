@@ -4,7 +4,7 @@ import './Footer.css';
 const Footer = () => {
     return (
         <footer className="footer">
-            <p>&copy; 2024 Word Game. All rights reserved.</p>
+            <p>&copy; 2024 Aiden Tran. All rights reserved.</p>
         </footer>
     );
 };

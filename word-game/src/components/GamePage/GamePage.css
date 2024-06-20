@@ -22,11 +22,12 @@ body {
     position: fixed; /* Fix navbar at the top */
     width: 100%;
     top: 0;
+    z-index: 10; /* Ensure navbar is on top */
 }
 
 .navbar h1 {
     font-family: 'Playfair Display', serif;
-    font-size: 1.5em;
+    font-size: 2em;
     margin: 0;
 }
 
@@ -44,7 +45,8 @@ body {
     align-items: center;
     flex-direction: column;
     padding: 20px;
-    margin-top: 100px; /* Space for the fixed navbar */
+    padding-top: 100px; /* Add padding to account for fixed navbar */
+    margin-top: -10px; /* Space for the fixed navbar */
 }
 
 .game-form {
@@ -86,7 +88,7 @@ select {
 input {
     font-size: 1em;
     padding: 10px;
-    width: calc(100% - 22px);
+    width: calc(95.5% - 22px);
     margin: 10px 0 20px;
     border-radius: 5px;
     border: 1px solid #ccc;
@@ -144,17 +146,19 @@ button:disabled {
     text-align: left;
     margin-top: 20px;
     overflow-y: auto;
-    max-height: 300px; /* Adjusted height */
+    max-height: 400px; /* Adjusted height */
+    
 }
 
 .used-words-section h2 {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-size: 2em;
     margin-bottom: 10px;
     text-align: center;
     position: relative;
     margin-top: 6px;
     font-weight: normal;
+    
 }
 
 .used-words-section h2::after {
@@ -169,6 +173,7 @@ button:disabled {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     gap: 10px;
+    margin-left: 10px;
 }
 
 .words-grid ul {
