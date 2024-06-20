@@ -144,7 +144,7 @@ button:disabled {
     text-align: left;
     margin-top: 20px;
     overflow-y: auto;
-    max-height: 400px; /* Adjusted height */
+    max-height: 300px; /* Adjusted height */
 }
 
 .used-words-section h2 {

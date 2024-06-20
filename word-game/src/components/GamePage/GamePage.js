@@ -5,7 +5,7 @@ import Footer from '../Footer/Footer';
 import './GamePage.css';
 
 const GamePage = () => {
-    const [category, setCategory] = useState('Fruit');
+    const [category, setCategory] = useState('Everything');
     const [word, setWord] = useState('');
     const [nextWord, setNextWord] = useState('');
     const [error, setError] = useState(null);
@@ -16,7 +16,7 @@ const GamePage = () => {
     const validateWord = async (wordToValidate) => {
         try {
             const response = await axios.get('https://nscjwcove7.execute-api.ap-southeast-2.amazonaws.com/prod/validate-word', {
-                params: { category, word: wordToValidate }
+                params: { category: category === 'Everything' ? '' : category, word: wordToValidate }
             });
             return response.data.valid;
         } catch (error) {
@@ -29,7 +29,7 @@ const GamePage = () => {
         try {
             const userInputWord = userWord ? userWord : word;
             const response = await axios.get('https://nscjwcove7.execute-api.ap-southeast-2.amazonaws.com/prod/word-game', {
-                params: { category, word: userInputWord, usedWords: usedWords.join(',') }
+                params: { category: category === 'Everything' ? '' : category, word: userInputWord, usedWords: usedWords.join(',') }
             });
 
             const { data } = response;
@@ -100,11 +100,13 @@ const GamePage = () => {
                 <form onSubmit={handleSubmit} className="game-form">
                     <label htmlFor="category">Select Topic</label>
                     <select id="category" value={category} onChange={(e) => setCategory(e.target.value)} disabled={!gameInProgress}>
+                        <option value="Everything">Everything</option>
                         <option value="Animal">Animal</option>
                         <option value="Body">Body</option>
                         <option value="Fruit">Fruit</option>
                         <option value="Natural">Natural</option>
                         <option value="Occupation">Occupation</option>
+                   
                     </select>
                     {nextWord && nextWord !== 'You won!' && nextWord !== 'Computer wins!' && (
                         <h2>Next word: {nextWord}</h2>
@@ -134,7 +136,7 @@ const GamePage = () => {
                     <div className="used-words-section">
                         <h2>Used Words</h2>
                         <div className="words-grid">
-                            {Array.from({ length: Math.ceil(usedWords.length / 12) }).map((_, colIndex) => (
+                            {Array.from({ length: Math.ceil(usedWords.length / 20) }).map((_, colIndex) => (
                                 <ul key={colIndex}>
                                     {usedWords.slice(colIndex * 20, (colIndex + 1) * 20).map((word, index) => (
                                         <li key={index}>{word.charAt(0).toUpperCase() + word.slice(1)}</li>
