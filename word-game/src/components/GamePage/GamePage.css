@@ -146,7 +146,7 @@ button:disabled {
     text-align: left;
     margin-top: 20px;
     overflow-y: auto;
-    max-height: 400px; /* Adjusted height */
+    max-height: 330px; /* Adjusted height */
     
 }
 
@@ -185,4 +185,10 @@ button:disabled {
 .words-grid ul li {
     font-size: 1em;
     margin-bottom: 5px;
+}
+
+.timer {
+    font-size: 1.5em;
+    color: #ff0000;
+    margin-bottom: 20px;
 }

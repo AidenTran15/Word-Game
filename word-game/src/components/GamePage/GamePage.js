@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
@@ -12,6 +12,26 @@ const GamePage = () => {
     const [usedWords, setUsedWords] = useState([]);
     const [gameInProgress, setGameInProgress] = useState(true);
     const [wordSubmitted, setWordSubmitted] = useState(false);
+    const [timeLeft, setTimeLeft] = useState(30);
+    const [gameStarted, setGameStarted] = useState(false);
+
+    useEffect(() => {
+        if (gameInProgress && gameStarted && timeLeft > 0) {
+            const timer = setInterval(() => {
+                setTimeLeft(timeLeft - 1);
+            }, 1000);
+            return () => clearInterval(timer);
+        } else if (timeLeft === 0) {
+            handleSurrender();
+        }
+    }, [gameInProgress, gameStarted, timeLeft]);
+
+    useEffect(() => {
+        if (wordSubmitted) {
+            setTimeLeft(30);
+            setWordSubmitted(false);
+        }
+    }, [wordSubmitted]);
 
     const validateWord = async (wordToValidate) => {
         try {
@@ -75,16 +95,21 @@ const GamePage = () => {
         setUsedWords([...usedWords, word.toLowerCase()]);
         fetchNextWord(word);
         setWordSubmitted(true);
+        if (!gameStarted) {
+            setGameStarted(true);
+        }
     };
 
     const handleReset = () => {
-        setCategory('Eveything');
+        setCategory('Everything');
         setWord('');
         setNextWord('');
         setError(null);
         setUsedWords([]);
         setGameInProgress(true);
         setWordSubmitted(false);
+        setTimeLeft(30);
+        setGameStarted(false);
     };
 
     const handleSurrender = () => {
@@ -97,6 +122,7 @@ const GamePage = () => {
         <div className="game-page">
             <Navbar />
             <div className="game-container">
+                {gameStarted && gameInProgress && <div className="timer">Time left: {timeLeft}s</div>}
                 <form onSubmit={handleSubmit} className="game-form">
                     <label htmlFor="category">Select Topic</label>
                     <select id="category" value={category} onChange={(e) => setCategory(e.target.value)} disabled={!gameInProgress}>
@@ -108,7 +134,6 @@ const GamePage = () => {
                         <option value="Fruit">Fruit</option>
                         <option value="Natural">Natural</option>
                         <option value="Occupation">Occupation</option>
-                   
                     </select>
                     {nextWord && nextWord !== 'You won!' && nextWord !== 'Computer wins!' && (
                         <h2>Next word: {nextWord}</h2>
