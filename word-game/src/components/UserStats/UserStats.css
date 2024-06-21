@@ -1,15 +1,50 @@
-.user-stats {
-    text-align: right;
+.user-stats-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent; /* Ensure transparent background */
+    margin-top: 20px; /* Move the component down */
+    border-radius: 15px;
+    position: relative;
+    width: 100%; /* Ensure it takes full width of its container */
 }
 
-.user-stats h3 {
+.user-stats {
+    text-align: center;
+    background: #3B71CA; /* Matching the timer color */
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%; /* Ensure it takes full width of its container */
+    max-width: 300px; /* Control max-width for layout */
+}
+
+.stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stat {
+    flex: 1;
+    text-align: center;
+}
+
+.stat h3 {
+    margin: 0;
+    font-size: 1em;
+    color: white;
+}
+
+.stat p {
     margin: 0;
     font-size: 1.2em;
-    font-weight: normal;
+    color: white;
+    font-weight: bold;
 }
 
-.user-stats p {
-    margin: 5px 0;
-    font-size: 1.2em;
-    color: #333;
+.divider {
+    width: 1px;
+    background: white;
+    height: 40px;
 }

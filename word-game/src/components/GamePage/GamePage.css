@@ -2,10 +2,7 @@
     position: absolute;
     top: 80px; /* Adjust based on your navbar height */
     right: 20px;
-    background: #fff;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: transparent; /* Ensure transparent background */
 }
 
 /* Existing styles */
@@ -15,6 +12,7 @@
     min-height: 100vh;
     font-family: 'Roboto', sans-serif;
     position: relative;
+    background: transparent; /* Ensure transparent background */
 }
 
 body {
@@ -57,7 +55,7 @@ body {
     align-items: center;
     flex-direction: column;
     padding: 20px;
-    padding-top: 100px; /* Add padding to account for fixed navbar */
+    background: transparent; /* Ensure transparent background */
     margin-top: -10px; /* Space for the fixed navbar */
 }
 
