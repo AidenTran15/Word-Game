@@ -1,0 +1,15 @@
+.user-stats {
+    text-align: right;
+}
+
+.user-stats h3 {
+    margin: 0;
+    font-size: 1.2em;
+    font-weight: normal;
+}
+
+.user-stats p {
+    margin: 5px 0;
+    font-size: 1.2em;
+    color: #333;
+}

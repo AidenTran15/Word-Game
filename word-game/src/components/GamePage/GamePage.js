@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
+import UserStats from '../UserStats/UserStats'; // Import the UserStats component
 import './GamePage.css';
 
 const GamePage = () => {
@@ -14,6 +15,25 @@ const GamePage = () => {
     const [wordSubmitted, setWordSubmitted] = useState(false);
     const [timeLeft, setTimeLeft] = useState(30);
     const [gameStarted, setGameStarted] = useState(false);
+    const [wordsEntered, setWordsEntered] = useState(0);
+    const [record, setRecord] = useState(() => {
+        const savedRecord = localStorage.getItem('wordGameRecord');
+        return savedRecord ? JSON.parse(savedRecord) : 0;
+    });
+
+    const updateRecord = useCallback(() => {
+        if (wordsEntered > record) {
+            setRecord(wordsEntered);
+            localStorage.setItem('wordGameRecord', JSON.stringify(wordsEntered));
+        }
+    }, [wordsEntered, record]);
+
+    const handleSurrender = useCallback(() => {
+        updateRecord();
+        setNextWord('Computer wins!');
+        setError(null);
+        setGameInProgress(false);
+    }, [updateRecord]);
 
     useEffect(() => {
         if (gameInProgress && gameStarted && timeLeft > 0) {
@@ -24,7 +44,7 @@ const GamePage = () => {
         } else if (timeLeft === 0) {
             handleSurrender();
         }
-    }, [gameInProgress, gameStarted, timeLeft]);
+    }, [gameInProgress, gameStarted, timeLeft, handleSurrender]);
 
     useEffect(() => {
         if (wordSubmitted) {
@@ -57,6 +77,7 @@ const GamePage = () => {
                 setNextWord(data.nextWord.charAt(0).toUpperCase() + data.nextWord.slice(1));
                 setError(null);
                 setUsedWords([...usedWords, userInputWord.toLowerCase(), data.nextWord.toLowerCase()]);
+                setWordsEntered(wordsEntered + 1);
             } else if (data.message) {
                 setNextWord(data.message);
                 setError(null);
@@ -101,6 +122,7 @@ const GamePage = () => {
     };
 
     const handleReset = () => {
+        updateRecord();
         setCategory('Everything');
         setWord('');
         setNextWord('');
@@ -110,17 +132,15 @@ const GamePage = () => {
         setWordSubmitted(false);
         setTimeLeft(30);
         setGameStarted(false);
-    };
-
-    const handleSurrender = () => {
-        setNextWord('Computer wins!');
-        setError(null);
-        setGameInProgress(false);
+        setWordsEntered(0);
     };
 
     return (
         <div className="game-page">
             <Navbar />
+            <div className="stats-container">
+                <UserStats wordsEntered={wordsEntered} record={record} />
+            </div>
             <div className="game-container">
                 {gameStarted && gameInProgress && (
                     <div className="timer-container">

@@ -1,8 +1,20 @@
+.stats-container {
+    position: absolute;
+    top: 80px; /* Adjust based on your navbar height */
+    right: 20px;
+    background: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Existing styles */
 .game-page {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     font-family: 'Roboto', sans-serif;
+    position: relative;
 }
 
 body {
