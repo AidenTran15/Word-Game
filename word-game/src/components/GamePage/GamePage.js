@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
@@ -6,6 +7,8 @@ import UserStats from '../UserStats/UserStats'; // Import the UserStats componen
 import './GamePage.css';
 
 const GamePage = () => {
+    const location = useLocation();
+    const { userName } = location.state || { userName: 'Player' };
     const [category, setCategory] = useState('Everything');
     const [word, setWord] = useState('');
     const [nextWord, setNextWord] = useState('');
@@ -85,7 +88,7 @@ const GamePage = () => {
                 setError('Unexpected response structure');
             }
 
-            if (data.nextWord && data.nextWord !== 'You won!') {
+            if (data.nextWord && data.nextWord !== `${userName} won!`) {
                 setWord('');
             }
         } catch (error) {
@@ -95,7 +98,7 @@ const GamePage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (nextWord && nextWord !== 'You won!') {
+        if (nextWord && nextWord !== `${userName} won!`) {
             const lastLetter = nextWord[nextWord.length - 1].toLowerCase();
             if (word[0].toLowerCase() !== lastLetter) {
                 setError(`The word should start with "${lastLetter.toUpperCase()}"`);
@@ -139,7 +142,7 @@ const GamePage = () => {
         <div className="game-page">
             <Navbar />
             <div className="stats-container">
-                <UserStats wordsEntered={wordsEntered} record={record} />
+                <UserStats userName={userName} wordsEntered={wordsEntered} record={record} />
             </div>
             <div className="game-container">
                 {gameStarted && gameInProgress && (
@@ -176,10 +179,10 @@ const GamePage = () => {
                         <option value="Natural">Natural</option>
                         <option value="Occupation">Occupation</option>
                     </select>
-                    {nextWord && nextWord !== 'You won!' && nextWord !== 'Computer wins!' && (
+                    {nextWord && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
                         <h2>Next word: {nextWord}</h2>
                     )}
-                    {(!nextWord || nextWord === 'You won!' || nextWord === 'Computer wins!') && (
+                    {(!nextWord || nextWord === `${userName} won!` || nextWord === 'Computer wins!') && (
                         <h2>{nextWord}</h2>
                     )}
                     <input 
@@ -192,11 +195,11 @@ const GamePage = () => {
                     {error && <p className="error-message">{error}</p>}
                     <div className="button-group">
                         <button type="submit" disabled={!gameInProgress}>Submit</button>
-                        {wordSubmitted && gameInProgress && nextWord !== 'You won!' && (
+                        {wordSubmitted && gameInProgress && nextWord !== `${userName} won!` && (
                             <button type="button" onClick={handleSurrender}>Surrender</button>
                         )}
                     </div>
-                    {(!gameInProgress || nextWord === 'You won!' || nextWord === 'Computer wins!') && (
+                    {(!gameInProgress || nextWord === `${userName} won!` || nextWord === 'Computer wins!') && (
                         <button className="reset-button" onClick={handleReset}>Reset</button>
                     )}
                 </form>

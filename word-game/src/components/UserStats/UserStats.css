@@ -1,28 +1,29 @@
+/* UserStats.css */
 .user-stats-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: transparent; /* Ensure transparent background */
-    margin-top: 20px; /* Move the component down */
+    background: transparent;
+    margin-top: 20px;
     border-radius: 15px;
     position: relative;
-    width: 100%; /* Ensure it takes full width of its container */
+    width: 100%;
 }
 
 .user-stats {
     text-align: center;
-    background: #3B71CA; /* Matching the timer color */
+    background: #3B71CA;
     padding: 20px;
     border-radius: 15px;
     box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 100%; /* Ensure it takes full width of its container */
-    max-width: 300px; /* Control max-width for layout */
+    width: 100%;
+    max-width: 300px;
 }
 
 .stats {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .stat {
@@ -38,6 +39,12 @@
 
 .stat p {
     margin: 0;
+    font-size: 1em;
+    color: white;
+}
+
+.stat-value {
+    margin: 0;
     font-size: 1.2em;
     color: white;
     font-weight: bold;
@@ -46,5 +53,6 @@
 .divider {
     width: 1px;
     background: white;
-    height: 40px;
+    height: 50px; /* Adjusted height to align with the content */
+    margin: 0 10px; /* Added margin for spacing */
 }

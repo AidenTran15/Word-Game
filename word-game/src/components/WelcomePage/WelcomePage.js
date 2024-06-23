@@ -1,11 +1,23 @@
-import React from 'react';
+// WelcomePage.js
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import NameModal from '../NameModal/NameModal';
 
 function WelcomePage() {
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
   const handlePlayGame = () => {
-    navigate('/game');
+    setShowModal(true);
+  };
+
+  const handleSaveName = (name) => {
+    setShowModal(false);
+    navigate('/game', { state: { userName: name } });
+  };
+
+  const handleCancel = () => {
+    setShowModal(false);
   };
 
   return (
@@ -15,6 +27,7 @@ function WelcomePage() {
         This is a fun game where you and the computer take turns to enter words. The next word must start with the last letter of the previous word. Try not to use the same word twice!
       </p>
       <button onClick={handlePlayGame} style={styles.button}>Play Game</button>
+      {showModal && <NameModal onSave={handleSaveName} onCancel={handleCancel} />}
       <div style={styles.floatingElement1}></div>
       <div style={styles.floatingElement2}></div>
     </div>
