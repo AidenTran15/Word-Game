@@ -2,14 +2,14 @@
 .stats-container {
     margin-top: 80px; /* Adjust based on your navbar height */
     background: transparent; /* Ensure transparent background */
-    text-align: center; /* Center align the text */
+    text-align: right; /* Align the text to the right */
     margin-bottom: 20px; /* Add some margin below */
-    position: relative;
+    position: absolute; /* Use absolute positioning */
+    right: 20px; /* Position it to the right */
     z-index: 1; /* Ensure it is above other content */
-    width: 100%; /* Ensure it takes full width */
-    max-width: 600px; /* Increase max-width */
+    max-width: 400px; /* Increased max-width */
+    width: 20%; /* Ensure it takes full width */
 }
-
 /* Existing styles */
 .game-page {
     display: flex;
@@ -64,11 +64,15 @@ body {
     flex: 1;
     padding: 20px;
     background: transparent; /* Ensure transparent background */
-    margin-top: 10px; /* Space for the fixed navbar */
+    margin-top: 0px; /* Space for the fixed navbar */
     width: 100%; /* Ensure it takes full width of its container */
     max-width: 800px; /* Control max-width for layout */
     position: relative; /* Ensure relative positioning */
-    top: 30px; /* Move up to make space for the stats */
+    top: 380px; /* Move up to make space for the stats */
+}
+
+.game-container.moved-up {
+    top: 200px; /* Adjust based on your desired position for desktop */
 }
 
 .timer-container {
@@ -76,7 +80,7 @@ body {
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
-    margin-top: -20px; /* Move the timer up */
+    margin-top: -30px; /* Move the timer up */
 }
 
 .timer-svg {
@@ -243,13 +247,27 @@ button:disabled {
 
 /* Add media query for smaller screens */
 @media (max-width: 600px) {
+    .stats-container {
+        position: relative; /* Change position to relative for smaller screens */
+        right: auto; /* Reset right position */
+        margin-top: 80px; /* Adjust margin for smaller screens */
+        max-width: 100%; /* Ensure it takes full width for smaller screens */
+        width: 100%; /* Ensure it takes full width */
+    }
+
     .game-container {
         padding: 10px; /* Adjust padding for smaller screens */
-        margin-top: 10px; /* Adjust margin for smaller screens */
+        margin-top: 80px; /* Adjust margin for smaller screens */
+        top: 0px; /* Reset top position for smaller screens */
+    }
+
+    .game-container.moved-up {
+        top: -30px; /* Adjust based on your desired position for mobile */
     }
     
     .used-words-section {
         max-height: 150px; /* Adjust height for smaller screens */
         margin-bottom: 20px; /* Adjust margin for smaller screens */
+        max-height: 300px; 
     }
 }

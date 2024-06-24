@@ -23,6 +23,7 @@ const GamePage = () => {
         const savedRecord = localStorage.getItem('wordGameRecord');
         return savedRecord ? JSON.parse(savedRecord) : 0;
     });
+    const [positionUp, setPositionUp] = useState(false);
 
     const updateRecord = useCallback(() => {
         if (wordsEntered > record) {
@@ -122,6 +123,9 @@ const GamePage = () => {
         if (!gameStarted) {
             setGameStarted(true);
         }
+        if (!positionUp) {
+            setPositionUp(true);
+        }
     };
 
     const handleReset = () => {
@@ -136,6 +140,7 @@ const GamePage = () => {
         setTimeLeft(30);
         setGameStarted(false);
         setWordsEntered(0);
+        setPositionUp(false);
     };
 
     return (
@@ -144,7 +149,7 @@ const GamePage = () => {
             <div className="stats-container">
                 <UserStats userName={userName} wordsEntered={wordsEntered} record={record} />
             </div>
-            <div className="game-container">
+            <div className={`game-container ${positionUp ? 'moved-up' : ''}`}>
                 <div className="timer-container">
                     {gameStarted && gameInProgress && (
                         <svg className="timer-svg" viewBox="0 0 36 36">
