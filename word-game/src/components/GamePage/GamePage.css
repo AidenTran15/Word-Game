@@ -68,7 +68,7 @@ body {
     width: 100%; /* Ensure it takes full width of its container */
     max-width: 800px; /* Control max-width for layout */
     position: relative; /* Ensure relative positioning */
-    top: 380px; /* Move up to make space for the stats */
+    top: 320px; /* Move up to make space for the stats */
 }
 
 .game-container.moved-up {

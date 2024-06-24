@@ -113,7 +113,7 @@ const GamePage = () => {
 
         const isValid = await validateWord(word);
         if (!isValid) {
-            setError('The word is incorrect or not in this field.');
+            setError('Invalid word');
             return;
         }
 
@@ -175,13 +175,15 @@ const GamePage = () => {
                 <form onSubmit={handleSubmit} className="game-form">
                     <label htmlFor="category">Select Topic</label>
                     <select id="category" value={category} onChange={(e) => setCategory(e.target.value)} disabled={!gameInProgress}>
-                        <option value="Everything">All</option>
+                        <option value="Everything">All (Include all topics in the list)</option>
                         <option value="Animal">Animal</option>
                         <option value="Body">Body</option>
                         <option value="Emotional&Feeling&Character">Emotional, Feeling and Character</option>
                         <option value="Food&Drink">Food and Drink</option>
                         <option value="Fruit">Fruit</option>
+                        <option value="Hobbies">Hobbies</option>
                         <option value="Natural">Natural</option>
+                        <option value="Supermarket">Supermarket</option>
                         <option value="Occupation">Occupation</option>
                     </select>
                     {nextWord && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
