@@ -145,8 +145,8 @@ const GamePage = () => {
                 <UserStats userName={userName} wordsEntered={wordsEntered} record={record} />
             </div>
             <div className="game-container">
-                {gameStarted && gameInProgress && (
-                    <div className="timer-container">
+                <div className="timer-container">
+                    {gameStarted && gameInProgress && (
                         <svg className="timer-svg" viewBox="0 0 36 36">
                             <path
                                 className="timer-bg"
@@ -165,8 +165,8 @@ const GamePage = () => {
                                 {timeLeft}s
                             </text>
                         </svg>
-                    </div>
-                )}
+                    )}
+                </div>
                 <form onSubmit={handleSubmit} className="game-form">
                     <label htmlFor="category">Select Topic</label>
                     <select id="category" value={category} onChange={(e) => setCategory(e.target.value)} disabled={!gameInProgress}>
