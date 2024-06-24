@@ -202,7 +202,7 @@ const GamePage = () => {
                     {error && <p className="error-message">{error}</p>}
                     <div className="button-group">
                         <button type="submit" disabled={!gameInProgress}>Submit</button>
-                        {wordSubmitted && gameInProgress && nextWord !== `${userName} won!` && (
+                        {gameStarted && gameInProgress && (
                             <button type="button" onClick={handleSurrender}>Surrender</button>
                         )}
                     </div>

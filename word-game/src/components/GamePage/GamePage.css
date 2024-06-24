@@ -1,4 +1,3 @@
-/* GamePage.css */
 .stats-container {
     margin-top: 80px; /* Adjust based on your navbar height */
     background: transparent; /* Ensure transparent background */
@@ -10,6 +9,7 @@
     max-width: 400px; /* Increased max-width */
     width: 20%; /* Ensure it takes full width */
 }
+
 /* Existing styles */
 .game-page {
     display: flex;
@@ -72,7 +72,7 @@ body {
 }
 
 .game-container.moved-up {
-    top: 200px; /* Adjust based on your desired position for desktop */
+    top: 160px; /* Adjust based on your desired position for desktop */
 }
 
 .timer-container {
