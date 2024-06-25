@@ -78,10 +78,16 @@ const GamePage = () => {
 
             const { data } = response;
             if (data.nextWord) {
-                setNextWord(data.nextWord.charAt(0).toUpperCase() + data.nextWord.slice(1));
-                setError(null);
-                setUsedWords([...usedWords, userInputWord.toLowerCase(), data.nextWord.toLowerCase()]);
-                setWordsEntered(wordsEntered + 1);
+                const newWord = data.nextWord.toLowerCase();
+                if (!usedWords.includes(newWord)) {
+                    setNextWord(data.nextWord.charAt(0).toUpperCase() + data.nextWord.slice(1));
+                    setError(null);
+                    setUsedWords([...usedWords, userInputWord.toLowerCase(), newWord]);
+                    setWordsEntered(wordsEntered + 1);
+                } else {
+                    // Fetch a new word if the generated word is already used
+                    fetchNextWord(userInputWord);
+                }
             } else if (data.message) {
                 setNextWord(data.message);
                 setError(null);
