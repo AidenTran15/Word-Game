@@ -1,4 +1,3 @@
-// WelcomePage.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NameModal from '../NameModal/NameModal';
@@ -71,6 +70,8 @@ const styles = {
     border: 'none',
     boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
     transition: 'transform 0.3s, background-color 0.3s',
+    position: 'relative', // Ensure the button is above the floating elements
+    zIndex: 2, // Ensure the button is above the floating elements
   },
   floatingElement1: {
     width: '150px',
@@ -81,6 +82,7 @@ const styles = {
     top: '10%',
     left: '15%',
     animation: 'float 6s ease-in-out infinite',
+    zIndex: 1, // Ensure it is below the button
   },
   floatingElement2: {
     width: '200px',
@@ -91,6 +93,7 @@ const styles = {
     bottom: '20%',
     right: '10%',
     animation: 'float 8s ease-in-out infinite',
+    zIndex: 1, // Ensure it is below the button
   },
   '@keyframes fadeInDown': {
     from: {

@@ -178,6 +178,7 @@ const GamePage = () => {
                         <option value="Everything">All (Include all topics in the list)</option>
                         <option value="Animal">Animal</option>
                         <option value="Body">Body</option>
+                        <option value="Country">Country</option>
                         <option value="Emotional&Feeling&Character">Emotional, Feeling and Character</option>
                         <option value="Food&Drink">Food and Drink</option>
                         <option value="Fruit">Fruit</option>
