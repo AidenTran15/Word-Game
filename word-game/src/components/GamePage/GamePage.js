@@ -213,17 +213,22 @@ const GamePage = () => {
 };
 
   const handleWordClick = async (word) => {
-    try {
-      const response = await axios.get('https://api.dictionaryapi.dev/api/v2/entries/en/' + word);
-      const { data } = response;
-      if (data && data.length > 0 && data[0].meanings && data[0].meanings.length > 0) {
-        const definition = data[0].meanings[0].definitions[0].definition;
-        setDefinition(definition);
-        setShowDefinitionModal(true);
+    if (category === 'Country' || category === 'City') {
+      setDefinition(`The word "${word}" is the name of a ${category.toLowerCase()}.`);
+      setShowDefinitionModal(true);
+    } else {
+      try {
+        const response = await axios.get('https://api.dictionaryapi.dev/api/v2/entries/en/' + word);
+        const { data } = response;
+        if (data && data.length > 0 && data[0].meanings && data[0].meanings.length > 0) {
+          const definition = data[0].meanings[0].definitions[0].definition;
+          setDefinition(definition);
+          setShowDefinitionModal(true);
+        }
+      } catch (error) {
+        console.error('Error fetching definition:', error);
+        setError('Error fetching definition');
       }
-    } catch (error) {
-      console.error('Error fetching definition:', error);
-      setError('Error fetching definition');
     }
   };
 
