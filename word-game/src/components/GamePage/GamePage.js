@@ -68,25 +68,33 @@ const GamePage = () => {
             return false;
         }
     };
-
-    const fetchNextWord = async (userWord) => {
+    const fetchNextWord = async (userWord, attempts = 0) => {
         try {
+            if (attempts > 5) { // Avoid infinite recursion
+                setNextWord('No more valid words available!');
+                setGameInProgress(false);
+                return;
+            }
+    
             const userInputWord = userWord ? userWord : word;
+            console.log(`Fetching next word for user input: ${userInputWord}, attempts: ${attempts}`);
             const response = await axios.get('https://nscjwcove7.execute-api.ap-southeast-2.amazonaws.com/prod/word-game', {
                 params: { category: category === 'Everything' ? '' : category, word: userInputWord, usedWords: usedWords.join(',') }
             });
-
+    
             const { data } = response;
+            console.log('Response data:', data);
             if (data.nextWord) {
                 const newWord = data.nextWord.toLowerCase();
-                if (!usedWords.includes(newWord)) {
+                if (!usedWords.includes(newWord) && newWord !== userInputWord.toLowerCase()) {
+                    console.log(`New word accepted: ${newWord}`);
                     setNextWord(data.nextWord.charAt(0).toUpperCase() + data.nextWord.slice(1));
                     setError(null);
                     setUsedWords([...usedWords, userInputWord.toLowerCase(), newWord]);
                     setWordsEntered(wordsEntered + 1);
                 } else {
-                    // Fetch a new word if the generated word is already used
-                    fetchNextWord(userInputWord);
+                    console.log(`New word rejected (duplicate or same as user input): ${newWord}`);
+                    fetchNextWord(userInputWord, attempts + 1); // Recursively fetch a new word
                 }
             } else if (data.message) {
                 setNextWord(data.message);
@@ -94,18 +102,20 @@ const GamePage = () => {
             } else {
                 setError('Unexpected response structure');
             }
-
-            if (data.nextWord && data.nextWord !== `${userName} won!`) {
+    
+            if (data.nextWord && data.nextWord !== `${userName} won!` && data.nextWord !== 'Computer wins!') {
                 setWord('');
             }
         } catch (error) {
+            console.error('Error fetching next word:', error);
             setError('Error fetching next word');
         }
     };
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (nextWord && nextWord !== `${userName} won!`) {
+        if (nextWord && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!') {
             const lastLetter = nextWord[nextWord.length - 1].toLowerCase();
             if (word[0].toLowerCase() !== lastLetter) {
                 setError(`The word should start with "${lastLetter.toUpperCase()}"`);
@@ -157,7 +167,7 @@ const GamePage = () => {
             </div>
             <div className={`game-container ${positionUp ? 'moved-up' : ''}`}>
                 <div className="timer-container">
-                    {gameStarted && gameInProgress && (
+                    {gameStarted && gameInProgress && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
                         <svg className="timer-svg" viewBox="0 0 36 36">
                             <path
                                 className="timer-bg"
