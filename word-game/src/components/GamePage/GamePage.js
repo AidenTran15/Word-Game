@@ -210,98 +210,96 @@ const GamePage = () => {
 };
 
 
-
-
-  return (
+return (
     <div className="game-page">
-      <Navbar />
-      <div className="stats-container">
-        <UserStats userName={userName} wordsEntered={wordsEntered} record={record} />
-      </div>
-      <div className={`game-container ${positionUp ? 'moved-up' : ''}`}>
-        <div className="timer-container">
-          {gameStarted && gameInProgress && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
-            <svg className="timer-svg" viewBox="0 0 36 36">
-              <path
-                className="timer-bg"
-                d="M18 2.0845
-                    a 15.9155 15.9155 0 0 1 0 31.831
-                    a 15.9155 15.9155 0 0 1 0 -31.831"
-              />
-              <path
-                className="timer-fg"
-                strokeDasharray={`${(timeLeft / 30) * 100}, 100`}
-                d="M18 2.0845
-                    a 15.9155 15.9155 0 0 1 0 31.831
-                    a 15.9155 15.9155 0 0 1 0 -31.831"
-              />
-              <text x="18" y="20.35" className="timer-text" textAnchor="middle" dy=".3em">
-                {timeLeft}s
-              </text>
-            </svg>
-          )}
+        <Navbar />
+        <div className="stats-container">
+            <UserStats userName={userName} wordsEntered={wordsEntered} record={record} />
         </div>
-        <form onSubmit={handleSubmit} className="game-form">
-          <label htmlFor="category">Select Topic</label>
-          <select id="category" value={category} onChange={(e) => setCategory(e.target.value)} disabled={!gameInProgress}>
-            <option value="Everything">All (Include all topics in the list)</option>
-            <option value="Animal">Animal</option>
-            <option value="Body">Body</option>
-            <option value="Country">Country</option>
-            <option value="Emotional&Feeling&Character">Emotional, Feeling and Character</option>
-            <option value="Food&Drink">Food and Drink</option>
-            <option value="Fruit">Fruit</option>
-            <option value="Hobbies">Hobbies</option>
-            <option value="Natural">Natural</option>
-            <option value="Supermarket">Supermarket</option>
-            <option value="Occupation">Occupation</option>
-          </select>
-          {nextWord && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
-            <h2>Next word: {nextWord}</h2>
-          )}
-          {(!nextWord || nextWord === `${userName} won!` || nextWord === 'Computer wins!') && (
-            <h2>{nextWord}</h2>
-          )}
-          <input 
-            type="text" 
-            value={word}
-            onChange={(e) => setWord(e.target.value)}
-            placeholder="Enter the word"
-            disabled={!gameInProgress}
-          />
-          {error && <p className="error-message">{error}</p>}
-          <div className="button-group">
-            <button type="submit" disabled={!gameInProgress}>Submit</button>
-            {gameStarted && gameInProgress && (
-              <button type="button" onClick={handleSurrender}>Surrender</button>
+        <div className={`game-container ${positionUp ? 'moved-up' : ''}`}>
+            <div className="timer-container">
+                {gameStarted && gameInProgress && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
+                    <svg className="timer-svg" viewBox="0 0 36 36">
+                        <path
+                            className="timer-bg"
+                            d="M18 2.0845
+                                a 15.9155 15.9155 0 0 1 0 31.831
+                                a 15.9155 15.9155 0 0 1 0 -31.831"
+                        />
+                        <path
+                            className="timer-fg"
+                            strokeDasharray={`${(timeLeft / 30) * 100}, 100`}
+                            d="M18 2.0845
+                                a 15.9155 15.9155 0 0 1 0 31.831
+                                a 15.9155 15.9155 0 0 1 0 -31.831"
+                        />
+                        <text x="18" y="20.35" className="timer-text" textAnchor="middle" dy=".3em">
+                            {timeLeft}s
+                        </text>
+                    </svg>
+                )}
+            </div>
+            <form onSubmit={handleSubmit} className="game-form">
+                <label htmlFor="category">Select Topic</label>
+                <select id="category" value={category} onChange={(e) => setCategory(e.target.value)} disabled={!gameInProgress}>
+                    <option value="Everything">All (Include all topics in the list)</option>
+                    <option value="Animal">Animal</option>
+                    <option value="Body">Body</option>
+                    <option value="Country">Country</option>
+                    <option value="Emotional&Feeling&Character">Emotional, Feeling and Character</option>
+                    <option value="Food&Drink">Food and Drink</option>
+                    <option value="Fruit">Fruit</option>
+                    <option value="Hobbies">Hobbies</option>
+                    <option value="Natural">Natural</option>
+                    <option value="Supermarket">Supermarket</option>
+                    <option value="Occupation">Occupation</option>
+                </select>
+                {nextWord && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
+                    <h2>Next word: {nextWord}</h2>
+                )}
+                {(!nextWord || nextWord === `${userName} won!` || nextWord === 'Computer wins!') && (
+                    <h2>{nextWord}</h2>
+                )}
+                <input 
+                    type="text" 
+                    value={word}
+                    onChange={(e) => setWord(e.target.value)}
+                    placeholder="Enter the word"
+                    disabled={!gameInProgress}
+                />
+                {error && <p className="error-message">{error}</p>}
+                <div className="button-group">
+                    <button type="submit" disabled={!gameInProgress}>Submit</button>
+                    {gameStarted && gameInProgress && (
+                        <button type="button" onClick={handleSurrender}>Surrender</button>
+                    )}
+                </div>
+                {(!gameInProgress || nextWord === `${userName} won!` || nextWord === 'Computer wins!') && (
+                    <div className="button-group">
+                        <button className="reset-button" onClick={handleReset}>Reset</button>
+                        {showResultButton && <button className="result-button" onClick={handleSeeResult}>See result</button>}
+                    </div>
+                )}
+            </form>
+            {usedWords.length > 0 && (
+                <div className="used-words-section">
+                    <h2>Used Words</h2>
+                    <div className="words-grid">
+                        {Array.from({ length: Math.ceil(usedWords.length / 20) }).map((_, colIndex) => (
+                            <ul key={colIndex}>
+                                {usedWords.slice(colIndex * 20, (colIndex + 1) * 20).map((word, index) => (
+                                    <li key={index}>{word.charAt(0).toUpperCase() + word.slice(1)}</li>
+                                ))}
+                            </ul>
+                        ))}
+                    </div>
+                </div>
             )}
-          </div>
-          {(!gameInProgress || nextWord === `${userName} won!` || nextWord === 'Computer wins!') && (
-            <div className="button-group">
-              <button className="reset-button" onClick={handleReset}>Reset</button>
-              {showResultButton && <button className="result-button" onClick={handleSeeResult}>See result</button>}
-            </div>
-          )}
-        </form>
-        {usedWords.length > 0 && (
-          <div className="used-words-section">
-            <h2>Used Words</h2>
-            <div className="words-grid">
-              {Array.from({ length: Math.ceil(usedWords.length / 20) }).map((_, colIndex) => (
-                <ul key={colIndex}>
-                  {usedWords.slice(colIndex * 20, (colIndex + 1) * 20).map((word, index) => (
-                    <li key={index}>{word.charAt(0).toUpperCase() + word.slice(1)}</li>
-                  ))}
-                </ul>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-      <Footer />
-      <ResultModal show={showModal} onClose={() => setShowModal(false)} words={resultWords} />
+        </div>
+        <Footer />
+        <ResultModal show={showModal} onClose={() => setShowModal(false)} words={resultWords} />
     </div>
-  );
+);
 };
 
 export default GamePage;

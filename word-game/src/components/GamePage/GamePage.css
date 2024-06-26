@@ -195,6 +195,27 @@ button:disabled {
     margin-top: 10px;
 }
 
+.used-words-section ul {
+    list-style-type: none !important; /* Remove dot points */
+    padding: 0 !important; /* Remove padding */
+    margin: 0 !important; /* Remove margin */
+}
+
+.used-words-section li {
+    background: #f1f1f1 !important; /* Add background color */
+    margin: 5px 0 !important; /* Add margin */
+    padding: 10px !important; /* Add padding */
+    border-radius: 5px !important; /* Round the corners */
+    text-transform: capitalize !important; /* Capitalize first letter */
+    transition: background 0.3s !important;
+    font-size: 18px !important; /* Increase font size */
+}
+
+.used-words-section li:hover {
+    background: #e1e1e1 !important; /* Change background color on hover */
+}
+
+
 .used-words-section {
     background: #fff;
     padding: 20px;
