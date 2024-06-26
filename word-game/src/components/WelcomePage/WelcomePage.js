@@ -36,16 +36,18 @@ function WelcomePage() {
 const styles = {
   container: {
     textAlign: 'center',
-    padding: '50px',
+    padding: '20px',
     background: 'linear-gradient(90deg, rgba(0,123,255,0.3), rgba(0,123,255,0.6))',
-    height: '100vh',
+    height: '100vh', // Full height to cover the entire viewport
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'center', // Center content vertically
     alignItems: 'center',
     color: '#fff',
     position: 'relative',
     overflow: 'hidden',
+    marginTop: '-200px', // Adjusted this value to move up
+    paddingTop: '10px', // Added padding top if needed
   },
   title: {
     fontSize: '48px',
@@ -70,8 +72,8 @@ const styles = {
     border: 'none',
     boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
     transition: 'transform 0.3s, background-color 0.3s',
-    position: 'relative', // Ensure the button is above the floating elements
-    zIndex: 2, // Ensure the button is above the floating elements
+    position: 'relative',
+    zIndex: 2,
   },
   floatingElement1: {
     width: '150px',
@@ -82,7 +84,7 @@ const styles = {
     top: '10%',
     left: '15%',
     animation: 'float 6s ease-in-out infinite',
-    zIndex: 1, // Ensure it is below the button
+    zIndex: 1,
   },
   floatingElement2: {
     width: '200px',
@@ -93,7 +95,7 @@ const styles = {
     bottom: '20%',
     right: '10%',
     animation: 'float 8s ease-in-out infinite',
-    zIndex: 1, // Ensure it is below the button
+    zIndex: 1,
   },
   '@keyframes fadeInDown': {
     from: {
