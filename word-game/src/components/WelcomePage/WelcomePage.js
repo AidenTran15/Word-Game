@@ -38,7 +38,7 @@ const styles = {
     textAlign: 'center',
     padding: '20px',
     background: 'linear-gradient(90deg, rgba(0,123,255,0.3), rgba(0,123,255,0.6))',
-    height: '100vh', // Full height to cover the entire viewport
+    minHeight: '100vh', // Ensures the container covers the full viewport height
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center', // Center content vertically
@@ -46,8 +46,6 @@ const styles = {
     color: '#fff',
     position: 'relative',
     overflow: 'hidden',
-    marginTop: '-200px', // Adjusted this value to move up
-    paddingTop: '10px', // Added padding top if needed
   },
   title: {
     fontSize: '48px',
@@ -61,6 +59,7 @@ const styles = {
     marginBottom: '40px',
     lineHeight: '1.6',
     animation: 'fadeIn 2s',
+    color: 'rgba(255, 255, 255, 0.8)', // Light grey color with transparency
   },
   button: {
     padding: '15px 30px',
