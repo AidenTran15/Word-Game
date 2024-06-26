@@ -3,8 +3,9 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
-import UserStats from '../UserStats/UserStats'; // Import the UserStats component
-import ResultModal from '../ResultModal/ResultModal'; // Import the ResultModal component
+import UserStats from '../UserStats/UserStats';
+import ResultModal from '../ResultModal/ResultModal';
+import DefinitionModal from '../DefinitionModal/DefinitionModal';
 import './GamePage.css';
 
 const GamePage = () => {
@@ -28,6 +29,8 @@ const GamePage = () => {
   const [showResultButton, setShowResultButton] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [resultWords, setResultWords] = useState([]);
+  const [showDefinitionModal, setShowDefinitionModal] = useState(false);
+  const [definition, setDefinition] = useState('');
 
   const updateRecord = useCallback(() => {
     if (wordsEntered > record) {
@@ -171,7 +174,6 @@ const GamePage = () => {
     }
 };
 
-
   const handleReset = () => {
     updateRecord();
     setCategory('Everything');
@@ -189,16 +191,17 @@ const GamePage = () => {
   };
 
   const handleSeeResult = async () => {
+    setError(null); // Ensure the error state is cleared
     const lastLetter = usedWords[usedWords.length - 1].slice(-1).toLowerCase();
     console.log(`Last letter for result: '${lastLetter}'`);
     try {
         const response = await axios.get('https://nscjwcove7.execute-api.ap-southeast-2.amazonaws.com/prod/word-game', {
-            params: { category: category === 'Everything' ? '' : category, word: lastLetter, usedWords: usedWords.join(',') }
+            params: { category: category === 'Everything' ? '' : category, word: lastLetter, usedWords: '' }
         });
         const { data } = response;
         console.log('Response data for result:', data);
         if (data.nextWords) {
-            setResultWords(data.nextWords); // Set the words directly from the response array
+            setResultWords(data.nextWords);
         } else {
             setResultWords([]);
         }
@@ -209,97 +212,112 @@ const GamePage = () => {
     }
 };
 
+  const handleWordClick = async (word) => {
+    try {
+      const response = await axios.get('https://api.dictionaryapi.dev/api/v2/entries/en/' + word);
+      const { data } = response;
+      if (data && data.length > 0 && data[0].meanings && data[0].meanings.length > 0) {
+        const definition = data[0].meanings[0].definitions[0].definition;
+        setDefinition(definition);
+        setShowDefinitionModal(true);
+      }
+    } catch (error) {
+      console.error('Error fetching definition:', error);
+      setError('Error fetching definition');
+    }
+  };
 
-return (
+  return (
     <div className="game-page">
-        <Navbar />
-        <div className="stats-container">
-            <UserStats userName={userName} wordsEntered={wordsEntered} record={record} />
+      <Navbar />
+      <div className="stats-container">
+        <UserStats userName={userName} wordsEntered={wordsEntered} record={record} />
+      </div>
+      <div className={`game-container ${positionUp ? 'moved-up' : ''}`}>
+        <div className="timer-container">
+          {gameStarted && gameInProgress && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
+            <svg className="timer-svg" viewBox="0 0 36 36">
+              <path
+                className="timer-bg"
+                d="M18 2.0845
+                    a 15.9155 15.9155 0 0 1 0 31.831
+                    a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+              <path
+                className="timer-fg"
+                strokeDasharray={`${(timeLeft / 30) * 100}, 100`}
+                d="M18 2.0845
+                    a 15.9155 15.9155 0 0 1 0 31.831
+                    a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+              <text x="18" y="20.35" className="timer-text" textAnchor="middle" dy=".3em">
+                {timeLeft}s
+              </text>
+            </svg>
+          )}
         </div>
-        <div className={`game-container ${positionUp ? 'moved-up' : ''}`}>
-            <div className="timer-container">
-                {gameStarted && gameInProgress && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
-                    <svg className="timer-svg" viewBox="0 0 36 36">
-                        <path
-                            className="timer-bg"
-                            d="M18 2.0845
-                                a 15.9155 15.9155 0 0 1 0 31.831
-                                a 15.9155 15.9155 0 0 1 0 -31.831"
-                        />
-                        <path
-                            className="timer-fg"
-                            strokeDasharray={`${(timeLeft / 30) * 100}, 100`}
-                            d="M18 2.0845
-                                a 15.9155 15.9155 0 0 1 0 31.831
-                                a 15.9155 15.9155 0 0 1 0 -31.831"
-                        />
-                        <text x="18" y="20.35" className="timer-text" textAnchor="middle" dy=".3em">
-                            {timeLeft}s
-                        </text>
-                    </svg>
-                )}
-            </div>
-            <form onSubmit={handleSubmit} className="game-form">
-                <label htmlFor="category">Select Topic</label>
-                <select id="category" value={category} onChange={(e) => setCategory(e.target.value)} disabled={!gameInProgress}>
-                    <option value="Everything">All (Include all topics in the list)</option>
-                    <option value="Animal">Animal</option>
-                    <option value="Body">Body</option>
-                    <option value="Country">Country</option>
-                    <option value="Emotional&Feeling&Character">Emotional, Feeling and Character</option>
-                    <option value="Food&Drink">Food and Drink</option>
-                    <option value="Fruit">Fruit</option>
-                    <option value="Hobbies">Hobbies</option>
-                    <option value="Natural">Natural</option>
-                    <option value="Supermarket">Supermarket</option>
-                    <option value="Occupation">Occupation</option>
-                </select>
-                {nextWord && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
-                    <h2>Next word: {nextWord}</h2>
-                )}
-                {(!nextWord || nextWord === `${userName} won!` || nextWord === 'Computer wins!') && (
-                    <h2>{nextWord}</h2>
-                )}
-                <input 
-                    type="text" 
-                    value={word}
-                    onChange={(e) => setWord(e.target.value)}
-                    placeholder="Enter the word"
-                    disabled={!gameInProgress}
-                />
-                {error && <p className="error-message">{error}</p>}
-                <div className="button-group">
-                    <button type="submit" disabled={!gameInProgress}>Submit</button>
-                    {gameStarted && gameInProgress && (
-                        <button type="button" onClick={handleSurrender}>Surrender</button>
-                    )}
-                </div>
-                {(!gameInProgress || nextWord === `${userName} won!` || nextWord === 'Computer wins!') && (
-                    <div className="button-group">
-                        <button className="reset-button" onClick={handleReset}>Reset</button>
-                        {showResultButton && <button className="result-button" onClick={handleSeeResult}>See result</button>}
-                    </div>
-                )}
-            </form>
-            {usedWords.length > 0 && (
-                <div className="used-words-section">
-                    <h2>Used Words</h2>
-                    <div className="words-grid">
-                        {Array.from({ length: Math.ceil(usedWords.length / 20) }).map((_, colIndex) => (
-                            <ul key={colIndex}>
-                                {usedWords.slice(colIndex * 20, (colIndex + 1) * 20).map((word, index) => (
-                                    <li key={index}>{word.charAt(0).toUpperCase() + word.slice(1)}</li>
-                                ))}
-                            </ul>
-                        ))}
-                    </div>
-                </div>
+        <form onSubmit={handleSubmit} className="game-form">
+          <label htmlFor="category">Select Topic</label>
+          <select id="category" value={category} onChange={(e) => setCategory(e.target.value)} disabled={!gameInProgress}>
+            <option value="Everything">All (Include all topics in the list)</option>
+            <option value="Animal">Animal</option>
+            <option value="Body">Body</option>
+            <option value="Country">Country</option>
+            <option value="Emotional&Feeling&Character">Emotional, Feeling and Character</option>
+            <option value="Food&Drink">Food and Drink</option>
+            <option value="Fruit">Fruit</option>
+            <option value="Hobbies">Hobbies</option>
+            <option value="Natural">Natural</option>
+            <option value="Supermarket">Supermarket</option>
+            <option value="Occupation">Occupation</option>
+          </select>
+          {nextWord && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
+            <h2>Next word: {nextWord}</h2>
+          )}
+          {(!nextWord || nextWord === `${userName} won!` || nextWord === 'Computer wins!') && (
+            <h2>{nextWord}</h2>
+          )}
+          <input 
+            type="text" 
+            value={word}
+            onChange={(e) => setWord(e.target.value)}
+            placeholder="Enter the word"
+            disabled={!gameInProgress}
+          />
+          {error && <p className="error-message">{error}</p>}
+          <div className="button-group">
+            <button type="submit" disabled={!gameInProgress}>Submit</button>
+            {gameStarted && gameInProgress && (
+              <button type="button" onClick={handleSurrender}>Surrender</button>
             )}
-        </div>
-        <Footer />
-        <ResultModal show={showModal} onClose={() => setShowModal(false)} words={resultWords} />
+          </div>
+          {(!gameInProgress || nextWord === `${userName} won!` || nextWord === 'Computer wins!') && (
+            <div className="button-group">
+              <button className="reset-button" onClick={handleReset}>Reset</button>
+              {showResultButton && <button className="result-button" onClick={handleSeeResult}>See result</button>}
+            </div>
+          )}
+        </form>
+        {usedWords.length > 0 && (
+          <div className="used-words-section">
+            <h2>Used Words</h2>
+            <div className="words-grid">
+              <ul>
+                {usedWords.map((word, index) => (
+                  <li key={index} onClick={() => handleWordClick(word)}>
+                    {word.charAt(0).toUpperCase() + word.slice(1)}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+      </div>
+      <Footer />
+      <ResultModal show={showModal} onClose={() => setShowModal(false)} words={resultWords} />
+      <DefinitionModal show={showDefinitionModal} onClose={() => setShowDefinitionModal(false)} definition={definition} />
     </div>
-);
+  );
 };
 
 export default GamePage;
