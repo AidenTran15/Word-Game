@@ -1,33 +1,12 @@
-.stats-container {
-    margin-top: 80px; /* Adjust based on your navbar height */
-    background: transparent; /* Ensure transparent background */
-    text-align: right; /* Align the text to the right */
-    margin-bottom: 20px; /* Add some margin below */
-    position: absolute; /* Use absolute positioning */
-    right: 20px; /* Position it to the right */
-    z-index: 1; /* Ensure it is above other content */
-    max-width: 400px; /* Increased max-width */
-    width: 20%; /* Ensure it takes full width */
-}
-
-/* Existing styles */
-.game-page {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    font-family: 'Roboto', sans-serif;
-    position: relative;
-    background: transparent; /* Ensure transparent background */
-    padding-bottom: 50px; /* Ensure enough padding at the bottom */
-    align-items: center; /* Center the content horizontally */
-}
-
+/* General page styling */
 body {
     background: url('../../../public/background.jpg') no-repeat center center fixed;
     background-size: cover;
     margin: 0; /* Ensure no default margin */
+    font-family: 'Roboto', sans-serif;
 }
 
+/* Navbar styling */
 .navbar {
     background-color: #fff; /* Changed to white */
     color: black;
@@ -48,6 +27,7 @@ body {
     margin: 0;
 }
 
+/* Footer styling */
 .footer {
     background-color: #fff; /* Changed to white */
     color: black;
@@ -56,6 +36,31 @@ body {
     width: 100%; /* Ensure footer takes full width */
 }
 
+/* Game page styling */
+.game-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative;
+    background: transparent; /* Ensure transparent background */
+    padding-bottom: 50px; /* Ensure enough padding at the bottom */
+    align-items: center; /* Center the content horizontally */
+}
+
+/* Stats container styling */
+.stats-container {
+    margin-top: 80px; /* Adjust based on your navbar height */
+    background: transparent; /* Ensure transparent background */
+    text-align: right; /* Align the text to the right */
+    margin-bottom: 20px; /* Add some margin below */
+    position: absolute; /* Use absolute positioning */
+    right: 20px; /* Position it to the right */
+    z-index: 1; /* Ensure it is above other content */
+    max-width: 400px; /* Increased max-width */
+    width: 20%; /* Ensure it takes full width */
+}
+
+/* Game container styling */
 .game-container {
     display: flex;
     flex-direction: column;
@@ -75,6 +80,7 @@ body {
     top: 160px; /* Adjust based on your desired position for desktop */
 }
 
+/* Timer container styling */
 .timer-container {
     display: flex;
     justify-content: center;
@@ -108,6 +114,7 @@ body {
     text-anchor: middle;
 }
 
+/* Game form styling */
 .game-form {
     background: #fff;
     padding: 30px;
@@ -159,6 +166,7 @@ select:focus, input:focus {
     outline: none;
 }
 
+/* Button styling */
 button {
     padding: 10px 20px;
     font-size: 1em;
@@ -195,27 +203,7 @@ button:disabled {
     margin-top: 10px;
 }
 
-.used-words-section ul {
-    list-style-type: none !important; /* Remove dot points */
-    padding: 0 !important; /* Remove padding */
-    margin: 0 !important; /* Remove margin */
-}
-
-.used-words-section li {
-    background: #f1f1f1 !important; /* Add background color */
-    margin: 5px 0 !important; /* Add margin */
-    padding: 10px !important; /* Add padding */
-    border-radius: 5px !important; /* Round the corners */
-    text-transform: capitalize !important; /* Capitalize first letter */
-    transition: background 0.3s !important;
-    font-size: 18px !important; /* Increase font size */
-}
-
-.used-words-section li:hover {
-    background: #e1e1e1 !important; /* Change background color on hover */
-}
-
-
+/* Used words section styling */
 .used-words-section {
     background: #fff;
     padding: 20px;
@@ -225,7 +213,7 @@ button:disabled {
     max-width: 520px;
     text-align: left;
     margin-top: 20px;
-    overflow-y: auto;
+    overflow-y: auto; /* Enable vertical scrolling for the whole section */
     max-height: 300px; /* Adjusted height */
     margin-bottom: 50px; /* Ensure enough margin at the bottom */
 }
@@ -248,25 +236,41 @@ button:disabled {
     border-bottom: 2px solid #000;
 }
 
+.used-words-section ul {
+    list-style-type: none !important; /* Remove dot points */
+    padding: 0 !important; /* Remove padding */
+    margin: 0 !important; /* Remove margin */
+}
+
 .words-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     gap: 10px;
-    margin-left: 10px;
 }
 
 .words-grid ul {
-    list-style-type: disc;
+    list-style-type: none !important; /* Ensure no bullets */
     margin: 0;
-    padding-left: 20px;
+    padding-left: 0; /* Remove left padding */
+    overflow-y: auto; /* Add scroll for the whole section */
+    max-height: 100%; /* Ensure it takes full height */
 }
 
 .words-grid ul li {
     font-size: 1em;
     margin-bottom: 5px;
+    background: #f1f1f1; /* Add background color */
+    padding: 10px; /* Add padding */
+    border-radius: 5px; /* Round the corners */
+    text-transform: capitalize; /* Capitalize first letter */
+    transition: background 0.3s;
 }
 
-/* Add media query for smaller screens */
+.words-grid ul li:hover {
+    background: #e1e1e1; /* Change background color on hover */
+}
+
+/* Media query for smaller screens */
 @media (max-width: 600px) {
     .stats-container {
         position: relative; /* Change position to relative for smaller screens */
@@ -289,6 +293,5 @@ button:disabled {
     .used-words-section {
         max-height: 150px; /* Adjust height for smaller screens */
         margin-bottom: 20px; /* Adjust margin for smaller screens */
-        max-height: 300px; 
     }
 }
