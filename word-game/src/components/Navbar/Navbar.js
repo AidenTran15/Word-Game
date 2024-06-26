@@ -1,10 +1,11 @@
 import React from 'react';
 import './Navbar.css';
+import WordGameHeader from '../../assets/3.png'; // Adjust the path based on your file structure
 
 const Navbar = () => {
     return (
         <nav className="navbar">
-            <h1>Word Game</h1>
+            <img src={WordGameHeader} alt="Word Game" className="header-image" />
         </nav>
     );
 };
