@@ -121,33 +121,56 @@ const GamePage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (nextWord && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!') {
-      const lastLetter = nextWord[nextWord.length - 1].toLowerCase();
-      if (word[0].toLowerCase() !== lastLetter) {
-        setError(`The word should start with "${lastLetter.toUpperCase()}"`);
-        return;
-      }
+        const lastLetter = nextWord[nextWord.length - 1].toLowerCase();
+        if (word[0].toLowerCase() !== lastLetter) {
+            setError(`The word should start with "${lastLetter.toUpperCase()}"`);
+            return;
+        }
     }
     if (usedWords.includes(word.toLowerCase())) {
-      setError('This word has already been used.');
-      return;
+        setError('This word has already been used.');
+        return;
     }
 
     const isValid = await validateWord(word);
     if (!isValid) {
-      setError('Invalid word');
-      return;
+        setError('Invalid word');
+        return;
     }
 
-    setUsedWords([...usedWords, word.toLowerCase()]);
-    fetchNextWord(word);
+    try {
+        const response = await axios.get('https://nscjwcove7.execute-api.ap-southeast-2.amazonaws.com/prod/word-game', {
+            params: { category: category === 'Everything' ? '' : category, word: word.toLowerCase(), usedWords: usedWords.join(',') }
+        });
+        const { data } = response;
+        console.log('Response data for next word:', data);
+        if (data.nextWords) {
+            const newWords = data.nextWords;
+            setNextWord(newWords[0].charAt(0).toUpperCase() + newWords[0].slice(1));
+            setUsedWords([...usedWords, word.toLowerCase(), ...newWords.slice(0, 1).map(w => w.toLowerCase())]);
+            setWordsEntered(wordsEntered + 1);
+            setError(null);
+        } else if (data.message) {
+            setNextWord(data.message);
+            setError(null);
+        } else {
+            setError('Unexpected response structure');
+        }
+        setWord('');
+    } catch (error) {
+        console.error('Error fetching next word:', error);
+        setError('Error fetching next word');
+    }
+
     setWordSubmitted(true);
     if (!gameStarted) {
-      setGameStarted(true);
+        setGameStarted(true);
     }
     if (!positionUp) {
-      setPositionUp(true);
+        setPositionUp(true);
     }
-  };
+};
+
 
   const handleReset = () => {
     updateRecord();
@@ -174,8 +197,8 @@ const GamePage = () => {
         });
         const { data } = response;
         console.log('Response data for result:', data);
-        if (data.nextWord) {
-            setResultWords(data.nextWord.split(',')); // Assuming the response is a comma-separated list of words
+        if (data.nextWords) {
+            setResultWords(data.nextWords); // Set the words directly from the response array
         } else {
             setResultWords([]);
         }
@@ -185,6 +208,8 @@ const GamePage = () => {
         setError('Error fetching result words');
     }
 };
+
+
 
 
   return (
