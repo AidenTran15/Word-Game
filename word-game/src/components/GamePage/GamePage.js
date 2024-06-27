@@ -31,6 +31,7 @@ const GamePage = () => {
   const [resultWords, setResultWords] = useState([]);
   const [showDefinitionModal, setShowDefinitionModal] = useState(false);
   const [definition, setDefinition] = useState('');
+  const [gameOver, setGameOver] = useState(false);
 
   const updateRecord = useCallback(() => {
     if (wordsEntered > record) {
@@ -45,7 +46,17 @@ const GamePage = () => {
     setError(null);
     setGameInProgress(false);
     setShowResultButton(true);
+    setGameOver(true);
   }, [updateRecord]);
+
+  const handleWin = () => {
+    updateRecord();
+    setNextWord(`${userName} won!`);
+    setError(null);
+    setGameInProgress(false);
+    setShowResultButton(true);
+    setGameOver(true);
+  };
 
   useEffect(() => {
     if (gameInProgress && gameStarted && timeLeft > 0) {
@@ -82,6 +93,7 @@ const GamePage = () => {
       if (attempts > 5) { // Avoid infinite recursion
         setNextWord('No more valid words available!');
         setGameInProgress(false);
+        setGameOver(true);
         return;
       }
 
@@ -93,11 +105,11 @@ const GamePage = () => {
 
       const { data } = response;
       console.log('Response data:', data);
-      if (data.nextWord) {
-        const newWord = data.nextWord.toLowerCase();
+      if (data.nextWords) {
+        const newWord = data.nextWords[0].toLowerCase();
         if (!usedWords.includes(newWord) && newWord !== userInputWord.toLowerCase()) {
           console.log(`New word accepted: ${newWord}`);
-          setNextWord(data.nextWord.charAt(0).toUpperCase() + data.nextWord.slice(1));
+          setNextWord(data.nextWords[0].charAt(0).toUpperCase() + data.nextWords[0].slice(1));
           setError(null);
           setUsedWords([...usedWords, userInputWord.toLowerCase(), newWord]);
           setWordsEntered(wordsEntered + 1);
@@ -105,16 +117,15 @@ const GamePage = () => {
           console.log(`New word rejected (duplicate or same as user input): ${newWord}`);
           fetchNextWord(userInputWord, attempts + 1); // Recursively fetch a new word
         }
-      } else if (data.message) {
-        setNextWord(data.message);
-        setError(null);
+      } else if (data.message === 'You won!') {
+        handleWin();
+      } else if (data.message === 'Computer wins!') {
+        handleSurrender();
       } else {
         setError('Unexpected response structure');
       }
 
-      if (data.nextWord && data.nextWord !== `${userName} won!` && data.nextWord !== 'Computer wins!') {
-        setWord('');
-      }
+      setWord('');
     } catch (error) {
       console.error('Error fetching next word:', error);
       setError('Error fetching next word');
@@ -124,55 +135,33 @@ const GamePage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (nextWord && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!') {
-        const lastLetter = nextWord[nextWord.length - 1].toLowerCase();
-        if (word[0].toLowerCase() !== lastLetter) {
-            setError(`The word should start with "${lastLetter.toUpperCase()}"`);
-            return;
-        }
+      const lastLetter = nextWord[nextWord.length - 1].toLowerCase();
+      if (word[0].toLowerCase() !== lastLetter) {
+        setError(`The word should start with "${lastLetter.toUpperCase()}"`);
+        return;
+      }
     }
     if (usedWords.includes(word.toLowerCase())) {
-        setError('This word has already been used.');
-        return;
+      setError('This word has already been used.');
+      return;
     }
 
     const isValid = await validateWord(word);
     if (!isValid) {
-        setError('Invalid word');
-        return;
-    }
-
-    try {
-        const response = await axios.get('https://nscjwcove7.execute-api.ap-southeast-2.amazonaws.com/prod/word-game', {
-            params: { category: category === 'Everything' ? '' : category, word: word.toLowerCase(), usedWords: usedWords.join(',') }
-        });
-        const { data } = response;
-        console.log('Response data for next word:', data);
-        if (data.nextWords) {
-            const newWords = data.nextWords;
-            setNextWord(newWords[0].charAt(0).toUpperCase() + newWords[0].slice(1));
-            setUsedWords([...usedWords, word.toLowerCase(), ...newWords.slice(0, 1).map(w => w.toLowerCase())]);
-            setWordsEntered(wordsEntered + 1);
-            setError(null);
-        } else if (data.message) {
-            setNextWord(data.message);
-            setError(null);
-        } else {
-            setError('Unexpected response structure');
-        }
-        setWord('');
-    } catch (error) {
-        console.error('Error fetching next word:', error);
-        setError('Error fetching next word');
+      setError('Invalid word');
+      return;
     }
 
     setWordSubmitted(true);
     if (!gameStarted) {
-        setGameStarted(true);
+      setGameStarted(true);
     }
     if (!positionUp) {
-        setPositionUp(true);
+      setPositionUp(true);
     }
-};
+
+    fetchNextWord(word);
+  };
 
   const handleReset = () => {
     updateRecord();
@@ -188,6 +177,7 @@ const GamePage = () => {
     setWordsEntered(0);
     setPositionUp(false);
     setShowResultButton(false);
+    setGameOver(false);
   };
 
   const handleSeeResult = async () => {
@@ -195,22 +185,22 @@ const GamePage = () => {
     const lastLetter = usedWords[usedWords.length - 1].slice(-1).toLowerCase();
     console.log(`Last letter for result: '${lastLetter}'`);
     try {
-        const response = await axios.get('https://nscjwcove7.execute-api.ap-southeast-2.amazonaws.com/prod/word-game', {
-            params: { category: category === 'Everything' ? '' : category, word: lastLetter, usedWords: '' }
-        });
-        const { data } = response;
-        console.log('Response data for result:', data);
-        if (data.nextWords) {
-            setResultWords(data.nextWords);
-        } else {
-            setResultWords([]);
-        }
-        setShowModal(true);
+      const response = await axios.get('https://nscjwcove7.execute-api.ap-southeast-2.amazonaws.com/prod/word-game', {
+        params: { category: category === 'Everything' ? '' : category, word: lastLetter, usedWords: '' }
+      });
+      const { data } = response;
+      console.log('Response data for result:', data);
+      if (data.nextWords) {
+        setResultWords(data.nextWords);
+      } else {
+        setResultWords([]);
+      }
+      setShowModal(true);
     } catch (error) {
-        console.error('Error fetching result words:', error);
-        setError('Error fetching result words');
+      console.error('Error fetching result words:', error);
+      setError('Error fetching result words');
     }
-};
+  };
 
   const handleWordClick = async (word) => {
     if (category === 'Country' || category === 'City') {
@@ -275,6 +265,7 @@ const GamePage = () => {
             <option value="Natural">Natural</option>
             <option value="Supermarket">Supermarket</option>
             <option value="Occupation">Occupation</option>
+            <option value="Test">Test</option>
           </select>
           {nextWord && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
             <h2>Next word: {nextWord}</h2>
@@ -292,14 +283,16 @@ const GamePage = () => {
           {error && <p className="error-message">{error}</p>}
           <div className="button-group">
             <button type="submit" disabled={!gameInProgress}>Submit</button>
-            {gameStarted && gameInProgress && (
+            {gameStarted && gameInProgress && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
               <button type="button" onClick={handleSurrender}>Surrender</button>
             )}
+            {(!gameInProgress || gameOver) && (
+              <button type="button" onClick={handleReset}>Reset</button>
+            )}
           </div>
-          {(!gameInProgress || nextWord === `${userName} won!` || nextWord === 'Computer wins!') && (
+          {gameOver && (
             <div className="button-group">
-              <button className="reset-button" onClick={handleReset}>Reset</button>
-              {showResultButton && <button className="result-button" onClick={handleSeeResult}>See result</button>}
+              {showResultButton && nextWord !== `${userName} won!` && <button className="result-button" onClick={handleSeeResult}>See result</button>}
             </div>
           )}
         </form>
