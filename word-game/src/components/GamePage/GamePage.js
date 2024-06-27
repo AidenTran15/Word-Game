@@ -279,6 +279,7 @@ const GamePage = () => {
             <option value="Animal">Animal</option>
             <option value="Body">Body</option>
             <option value="Country">Country</option>
+            <option value="City">City</option>
             <option value="Emotional&Feeling&Character">Emotional, Feeling and Character</option>
             <option value="Food&Drink">Food and Drink</option>
             <option value="Fruit">Fruit</option>
@@ -286,7 +287,6 @@ const GamePage = () => {
             <option value="Natural">Natural</option>
             <option value="Supermarket">Supermarket</option>
             <option value="Occupation">Occupation</option>
-            <option value="Test">Test</option>
           </select>
           {nextWord && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
             <h2 className="next-word-container">

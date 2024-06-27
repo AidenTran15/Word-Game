@@ -144,7 +144,7 @@ label::after {
 select {
     font-size: 1em;
     padding: 10px;
-    width: calc(100% - 22px);
+    width: 100%; /* Full width */
     margin: 10px 0 20px;
     border-radius: 5px;
     border: 1px solid #ccc;
@@ -154,26 +154,27 @@ select {
 .input-container {
     display: flex;
     align-items: center;
-    width: 100%;
+    width: 103.5%; /* Full width */
     position: relative;
 }
 
 input {
     font-size: 1em;
     padding: 10px;
-    width: calc(100% - 40px); /* Adjusted width to make space for the microphone icon */
+    width: calc(100% - 40px); /* Full width adjusted for icon */
     margin: 10px 0 20px;
     border-radius: 5px;
     border: 1px solid #ccc;
     transition: border-color 0.3s;
-    flex: 1;
 }
 
 .microphone-icon {
     position: absolute;
-    right: 15px; /* Adjust this value to place the icon correctly */
+    right: 30px; /* Adjust this value to place the icon correctly */
     cursor: pointer;
     color: #007BFF;
+    top: 22px;
+    
 }
 
 select:focus, input:focus {
