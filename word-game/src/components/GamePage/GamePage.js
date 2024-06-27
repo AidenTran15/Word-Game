@@ -6,6 +6,7 @@ import Footer from '../Footer/Footer';
 import UserStats from '../UserStats/UserStats';
 import ResultModal from '../ResultModal/ResultModal';
 import DefinitionModal from '../DefinitionModal/DefinitionModal';
+import { FaVolumeUp } from 'react-icons/fa'; // Import the speaker icon
 import './GamePage.css';
 
 const GamePage = () => {
@@ -222,6 +223,11 @@ const GamePage = () => {
     }
   };
 
+  const handleSpeak = (text) => {
+    const speech = new SpeechSynthesisUtterance(text);
+    window.speechSynthesis.speak(speech);
+  };
+
   return (
     <div className="game-page">
       <Navbar />
@@ -268,7 +274,7 @@ const GamePage = () => {
             <option value="Test">Test</option>
           </select>
           {nextWord && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
-            <h2>Next word: {nextWord}</h2>
+            <h2>Next word: {nextWord} <FaVolumeUp onClick={() => handleSpeak(nextWord)} style={{ cursor: 'pointer' }} /></h2>
           )}
           {(!nextWord || nextWord === `${userName} won!` || nextWord === 'Computer wins!') && (
             <h2>{nextWord}</h2>
