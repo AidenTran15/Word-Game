@@ -270,6 +270,19 @@ button:disabled {
     background: #e1e1e1; /* Change background color on hover */
 }
 
+/* Styling for the next word and speaker icon */
+.next-word-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the text and icon */
+    margin-bottom: 20px;
+}
+
+.speaker-icon {
+    margin-left: 8px;
+    cursor: pointer;
+}
+
 /* Media query for smaller screens */
 @media (max-width: 600px) {
     .stats-container {
