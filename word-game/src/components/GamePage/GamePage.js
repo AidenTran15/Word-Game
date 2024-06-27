@@ -6,7 +6,7 @@ import Footer from '../Footer/Footer';
 import UserStats from '../UserStats/UserStats';
 import ResultModal from '../ResultModal/ResultModal';
 import DefinitionModal from '../DefinitionModal/DefinitionModal';
-import { FaVolumeUp } from 'react-icons/fa'; // Import the speaker icon
+import { FaVolumeUp, FaMicrophone } from 'react-icons/fa'; // Import the speaker and microphone icons
 import './GamePage.css';
 
 const GamePage = () => {
@@ -228,6 +228,21 @@ const GamePage = () => {
     window.speechSynthesis.speak(speech);
   };
 
+  const handleVoiceInput = () => {
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = 'en-US';
+    recognition.start();
+
+    recognition.onresult = (event) => {
+      const spokenWord = event.results[0][0].transcript;
+      setWord(spokenWord);
+    };
+
+    recognition.onerror = (event) => {
+      setError('Error with voice input: ' + event.error);
+    };
+  };
+
   return (
     <div className="game-page">
       <Navbar />
@@ -282,13 +297,16 @@ const GamePage = () => {
           {(!nextWord || nextWord === `${userName} won!` || nextWord === 'Computer wins!') && (
             <h2>{nextWord}</h2>
           )}
-          <input 
-            type="text" 
-            value={word}
-            onChange={(e) => setWord(e.target.value)}
-            placeholder="Enter the word"
-            disabled={!gameInProgress}
-          />
+          <div className="input-container">
+            <input 
+              type="text" 
+              value={word}
+              onChange={(e) => setWord(e.target.value)}
+              placeholder="Enter the word"
+              disabled={!gameInProgress}
+            />
+            <FaMicrophone onClick={handleVoiceInput} className="microphone-icon" />
+          </div>
           {error && <p className="error-message">{error}</p>}
           <div className="button-group">
             <button type="submit" disabled={!gameInProgress}>Submit</button>
