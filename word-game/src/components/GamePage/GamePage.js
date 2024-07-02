@@ -326,6 +326,7 @@ const GamePage = () => {
         {usedWords.length > 0 && (
           <div className="used-words-section">
             <h2>Used Words</h2>
+            <p className="tip-text"><em>Tip: Click on the word to see the definition.</em></p>
             <div className="words-grid">
               <ul>
                 {usedWords.map((word, index) => (

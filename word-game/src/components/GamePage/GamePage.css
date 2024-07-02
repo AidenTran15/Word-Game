@@ -299,6 +299,14 @@ button:disabled {
     cursor: pointer;
 }
 
+.tip-text {
+    font-size: 0.88em; /* Make the text smaller */
+    text-align: center; /* Center the text */
+    margin-top: 10px; /* Add some margin for spacing */
+    color: #666; /* Optional: Change color for better visibility */
+  }
+  
+
 /* Media query for smaller screens */
 @media (max-width: 600px) {
     .stats-container {
