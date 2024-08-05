@@ -77,64 +77,55 @@ const GamePage = () => {
     }
   }, [wordSubmitted]);
 
-  const validateWord = async (wordToValidate) => {
+  const fetchNextWordFromAI = async (userWord, attempts = 0) => {
+    const lastLetter = userWord[userWord.length - 1];
+    if (attempts > 5) { // Avoid infinite retries
+      setNextWord('No more valid words available!');
+      setGameInProgress(false);
+      setGameOver(true);
+      return;
+    }
+  
     try {
-      const response = await axios.get('https://nscjwcove7.execute-api.ap-southeast-2.amazonaws.com/prod/validate-word', {
-        params: { category: category === 'Everything' ? '' : category, word: wordToValidate }
+      const response = await axios.post('http://localhost:5000/generate-word', {
+        lastLetter: lastLetter,
       });
+  
+      const newWord = response.data.word.toLowerCase();
+      if (newWord && !usedWords.includes(newWord) && newWord !== userWord.toLowerCase()) {
+        setNextWord(newWord.charAt(0).toUpperCase() + newWord.slice(1));
+        setUsedWords([...usedWords, userWord.toLowerCase(), newWord]);
+        setWordsEntered(wordsEntered + 1);
+      } else {
+        fetchNextWordFromAI(userWord, attempts + 1); // Retry with incremented attempts
+      }
+      setWord('');
+    } catch (error) {
+      if (error.response && error.response.status === 429) {
+        // Retry after a delay if rate limit is hit
+        console.error('Too many requests, retrying after delay...');
+        setTimeout(() => fetchNextWordFromAI(userWord, attempts + 1), 60000); // Retry after 1 minute
+      } else {
+        console.error('Error fetching next word from AI:', error.response ? error.response.data : error.message);
+        setError('Error fetching next word from AI');
+      }
+    }
+  };
+
+  const validateWord = async (word) => {
+    try {
+      const response = await axios.post('http://localhost:5000/validate-word', { word });
+      console.log('Validation response:', response.data); // Add logging
       return response.data.valid;
     } catch (error) {
-      setError('Error validating word');
+      console.error('Error validating word:', error);
       return false;
     }
   };
-
-  const fetchNextWord = async (userWord, attempts = 0) => {
-    try {
-      if (attempts > 5) { // Avoid infinite recursion
-        setNextWord('No more valid words available!');
-        setGameInProgress(false);
-        setGameOver(true);
-        return;
-      }
-
-      const userInputWord = userWord ? userWord : word;
-      console.log(`Fetching next word for user input: ${userInputWord}, attempts: ${attempts}`);
-      const response = await axios.get('https://nscjwcove7.execute-api.ap-southeast-2.amazonaws.com/prod/word-game', {
-        params: { category: category === 'Everything' ? '' : category, word: userInputWord, usedWords: usedWords.join(',') }
-      });
-
-      const { data } = response;
-      console.log('Response data:', data);
-      if (data.nextWords) {
-        const newWord = data.nextWords[0].toLowerCase();
-        if (!usedWords.includes(newWord) && newWord !== userInputWord.toLowerCase()) {
-          console.log(`New word accepted: ${newWord}`);
-          setNextWord(data.nextWords[0].charAt(0).toUpperCase() + data.nextWords[0].slice(1));
-          setError(null);
-          setUsedWords([...usedWords, userInputWord.toLowerCase(), newWord]);
-          setWordsEntered(wordsEntered + 1);
-        } else {
-          console.log(`New word rejected (duplicate or same as user input): ${newWord}`);
-          fetchNextWord(userInputWord, attempts + 1); // Recursively fetch a new word
-        }
-      } else if (data.message === 'You won!') {
-        handleWin();
-      } else if (data.message === 'Computer wins!') {
-        handleSurrender();
-      } else {
-        setError('Unexpected response structure');
-      }
-
-      setWord('');
-    } catch (error) {
-      console.error('Error fetching next word:', error);
-      setError('Error fetching next word');
-    }
-  };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
     if (nextWord && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!') {
       const lastLetter = nextWord[nextWord.length - 1].toLowerCase();
       if (word[0].toLowerCase() !== lastLetter) {
@@ -146,13 +137,14 @@ const GamePage = () => {
       setError('This word has already been used.');
       return;
     }
-
+  
     const isValid = await validateWord(word);
     if (!isValid) {
       setError('Invalid word');
       return;
     }
-
+  
+    setError(null); // Clear error message if the word is valid
     setWordSubmitted(true);
     if (!gameStarted) {
       setGameStarted(true);
@@ -160,10 +152,17 @@ const GamePage = () => {
     if (!positionUp) {
       setPositionUp(true);
     }
-
-    fetchNextWord(word);
+  
+    fetchNextWordFromAI(word);
   };
-
+  
+  const handleWordChange = (e) => {
+    setWord(e.target.value);
+    if (error) {
+      setError(null); // Clear error message when user starts typing a new word
+    }
+  };
+  
   const handleReset = () => {
     updateRecord();
     setCategory('Everything');
@@ -182,15 +181,13 @@ const GamePage = () => {
   };
 
   const handleSeeResult = async () => {
-    setError(null); // Ensure the error state is cleared
+    setError(null);
     const lastLetter = usedWords[usedWords.length - 1].slice(-1).toLowerCase();
-    console.log(`Last letter for result: '${lastLetter}'`);
     try {
       const response = await axios.get('https://nscjwcove7.execute-api.ap-southeast-2.amazonaws.com/prod/word-game', {
         params: { category: category === 'Everything' ? '' : category, word: lastLetter, usedWords: '' }
       });
       const { data } = response;
-      console.log('Response data for result:', data);
       if (data.nextWords) {
         setResultWords(data.nextWords);
       } else {
@@ -209,7 +206,7 @@ const GamePage = () => {
       setShowDefinitionModal(true);
     } else {
       try {
-        const response = await axios.get('https://api.dictionaryapi.dev/api/v2/entries/en/' + word);
+        const response = await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
         const { data } = response;
         if (data && data.length > 0 && data[0].meanings && data[0].meanings.length > 0) {
           const definition = data[0].meanings[0].definitions[0].definition;
@@ -273,56 +270,56 @@ const GamePage = () => {
           )}
         </div>
         <form onSubmit={handleSubmit} className="game-form">
-          <label htmlFor="category">Select Topic</label>
-          <select id="category" value={category} onChange={(e) => setCategory(e.target.value)} disabled={!gameInProgress}>
-            <option value="Everything">All (Include all topics in the list)</option>
-            <option value="Animal">Animal</option>
-            <option value="Body">Body</option>
-            <option value="Country">Country</option>
-            <option value="City">City</option>
-            <option value="Emotional&Feeling&Character">Emotional, Feeling and Character</option>
-            <option value="Food&Drink">Food and Drink</option>
-            <option value="Fruit">Fruit</option>
-            <option value="Hobbies">Hobbies</option>
-            <option value="Natural">Natural</option>
-            <option value="Supermarket">Supermarket</option>
-            <option value="Occupation">Occupation</option>
-          </select>
-          {nextWord && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
-            <h2 className="next-word-container">
-              Next word: {nextWord}
-              <FaVolumeUp onClick={() => handleSpeak(nextWord)} className="speaker-icon" />
-            </h2>
-          )}
-          {(!nextWord || nextWord === `${userName} won!` || nextWord === 'Computer wins!') && (
-            <h2>{nextWord}</h2>
-          )}
-          <div className="input-container">
-            <input 
-              type="text" 
-              value={word}
-              onChange={(e) => setWord(e.target.value)}
-              placeholder="Enter the word"
-              disabled={!gameInProgress}
-            />
-            <FaMicrophone onClick={handleVoiceInput} className="microphone-icon" />
-          </div>
-          {error && <p className="error-message">{error}</p>}
-          <div className="button-group">
-            <button type="submit" disabled={!gameInProgress}>Submit</button>
-            {gameStarted && gameInProgress && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
-              <button type="button" onClick={handleSurrender}>Surrender</button>
-            )}
-            {(!gameInProgress || gameOver) && (
-              <button type="button" onClick={handleReset}>Reset</button>
-            )}
-          </div>
-          {gameOver && (
-            <div className="button-group">
-              {showResultButton && nextWord !== `${userName} won!` && <button className="result-button" onClick={handleSeeResult}>See result</button>}
-            </div>
-          )}
-        </form>
+  <label htmlFor="category">Select Topic</label>
+  <select id="category" value={category} onChange={(e) => setCategory(e.target.value)} disabled={!gameInProgress}>
+    <option value="Everything">All (Include all topics in the list)</option>
+    <option value="Animal">Animal</option>
+    <option value="Body">Body</option>
+    <option value="Country">Country</option>
+    <option value="City">City</option>
+    <option value="Emotional&Feeling&Character">Emotional, Feeling and Character</option>
+    <option value="Food&Drink">Food and Drink</option>
+    <option value="Fruit">Fruit</option>
+    <option value="Hobbies">Hobbies</option>
+    <option value="Natural">Natural</option>
+    <option value="Supermarket">Supermarket</option>
+    <option value="Occupation">Occupation</option>
+  </select>
+  {nextWord && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
+    <h2 className="next-word-container">
+      Next word: {nextWord}
+      <FaVolumeUp onClick={() => handleSpeak(nextWord)} className="speaker-icon" />
+    </h2>
+  )}
+  {(!nextWord || nextWord === `${userName} won!` || nextWord === 'Computer wins!') && (
+    <h2>{nextWord}</h2>
+  )}
+  <div className="input-container">
+    <input 
+      type="text" 
+      value={word}
+      onChange={handleWordChange} // Update the word change handler
+      placeholder="Enter the word"
+      disabled={!gameInProgress}
+    />
+    <FaMicrophone onClick={handleVoiceInput} className="microphone-icon" />
+  </div>
+  {error && <p className="error-message">{error}</p>}
+  <div className="button-group">
+    <button type="submit" disabled={!gameInProgress}>Submit</button>
+    {gameStarted && gameInProgress && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
+      <button type="button" onClick={handleSurrender}>Surrender</button>
+    )}
+    {(!gameInProgress || gameOver) && (
+      <button type="button" onClick={handleReset}>Reset</button>
+    )}
+  </div>
+  {gameOver && (
+    <div className="button-group">
+      {showResultButton && nextWord !== `${userName} won!` && <button className="result-button" onClick={handleSeeResult}>See result</button>}
+    </div>
+  )}
+</form>
         {usedWords.length > 0 && (
           <div className="used-words-section">
             <h2>Used Words</h2>
