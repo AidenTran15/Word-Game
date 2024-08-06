@@ -89,7 +89,7 @@ const GamePage = () => {
   const fetchNextWordFromAI = async (userWord, attempts = 0) => {
     const lastLetter = userWord[userWord.length - 1];
     if (attempts > 3) { // Match the server retry limit
-      setNextWord('No more valid words available!');
+      setNextWord('You Won!');
       setGameInProgress(false);
       setGameOver(true);
       return;
@@ -113,6 +113,9 @@ const GamePage = () => {
       if (error.response && error.response.status === 429) {
         // Retry after a delay if rate limit is hit
         console.error('Too many requests, retrying after delay...');
+        setTimeout(() => fetchNextWordFromAI(userWord, attempts + 1), Math.pow(2, attempts) * 1000); // Exponential backoff
+      } else if (error.message.includes('Network Error') || error.message.includes('ERR_CONNECTION_REFUSED')) {
+        console.error('Network error, retrying after delay...');
         setTimeout(() => fetchNextWordFromAI(userWord, attempts + 1), Math.pow(2, attempts) * 1000); // Exponential backoff
       } else {
         console.error('Error fetching next word from AI:', error.response ? error.response.data : error.message);
