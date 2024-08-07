@@ -175,13 +175,14 @@ const GamePage = () => {
     const lastLetter = usedWords[usedWords.length - 1].slice(-1).toLowerCase();
     console.log(`Last letter for result: '${lastLetter}'`);
     try {
-      const response = await axios.post('https://apiwordgame.aidenkiettran.com/generate-word', {
+      const response = await axios.post('hhttps://apiwordgame.aidenkiettran.com/generate-word', {
         lastLetter: lastLetter,
       });
       const { data } = response;
       console.log('Response data for result:', data);
-      if (data.nextWords) {
-        setResultWords(data.nextWords);
+
+      if (data && data.word) {
+        setResultWords([data.word]); // Put the single word in an array for rendering
       } else {
         setResultWords([]);
       }
@@ -237,9 +238,6 @@ const GamePage = () => {
   return (
     <div className="game-page">
       <Navbar />
-      {/* <div className="stats-container">
-        <UserStats userName={userName} wordsEntered={wordsEntered} record={record} />
-      </div> */}
       <div className={`game-container ${positionUp ? 'moved-up' : ''}`}>
         <div className="timer-container">
           {gameStarted && gameInProgress && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
@@ -264,7 +262,7 @@ const GamePage = () => {
           )}
         </div>
         <form onSubmit={handleSubmit} className="game-form">
-          <h2 className="lets-play">Let's Test</h2> {/* Add this line */}
+          <h2 className="lets-play">Let's Play</h2>
           {nextWord && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
             <h2 className="next-word-container">
               Next word: {nextWord}
@@ -278,7 +276,7 @@ const GamePage = () => {
             <input 
               type="text" 
               value={word}
-              onChange={handleWordChange} // Update the word change handler
+              onChange={handleWordChange}
               placeholder="Enter the word"
               disabled={!gameInProgress}
             />

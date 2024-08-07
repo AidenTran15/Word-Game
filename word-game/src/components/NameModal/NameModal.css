@@ -40,7 +40,8 @@
 
 .modal-buttons {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 10px; /* Adjust this value to control the space between buttons */
 }
 
 .save-button,
