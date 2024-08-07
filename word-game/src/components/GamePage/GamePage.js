@@ -78,7 +78,7 @@ const GamePage = () => {
 
   const validateWord = async (wordToValidate) => {
     try {
-      const response = await axios.post('http://13.236.186.40:5000/validate-word', { word: wordToValidate });
+      const response = await axios.post('https://apiwordgame.aidenkiettran.com/validate-word', { word: wordToValidate });
       return response.data.valid;
     } catch (error) {
       setError('Error validating word');
@@ -89,14 +89,14 @@ const GamePage = () => {
   const fetchNextWordFromAI = async (userWord, attempts = 0) => {
     const lastLetter = userWord[userWord.length - 1];
     if (attempts > 3) { // Match the server retry limit
-      setNextWord('No more valid words available!');
+      setNextWord('You Won!');
       setGameInProgress(false);
       setGameOver(true);
       return;
     }
 
     try {
-      const response = await axios.post('http://13.236.186.40:5000/generate-word', {
+      const response = await axios.post('https://apiwordgame.aidenkiettran.com/generate-word', {
         lastLetter: lastLetter,
       });
 
@@ -175,7 +175,7 @@ const GamePage = () => {
     const lastLetter = usedWords[usedWords.length - 1].slice(-1).toLowerCase();
     console.log(`Last letter for result: '${lastLetter}'`);
     try {
-      const response = await axios.post('http://13.236.186.40:5000/generate-word', {
+      const response = await axios.post('https://apiwordgame.aidenkiettran.com/generate-word', {
         lastLetter: lastLetter,
       });
       const { data } = response;
@@ -264,7 +264,7 @@ const GamePage = () => {
           )}
         </div>
         <form onSubmit={handleSubmit} className="game-form">
-          <h2 className="lets-play">Let's Play</h2> {/* Add this line */}
+          <h2 className="lets-play">Let's Test</h2> {/* Add this line */}
           {nextWord && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
             <h2 className="next-word-container">
               Next word: {nextWord}
