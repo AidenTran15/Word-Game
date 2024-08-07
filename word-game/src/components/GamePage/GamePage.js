@@ -78,7 +78,7 @@ const GamePage = () => {
 
   const validateWord = async (wordToValidate) => {
     try {
-      const response = await axios.post('http://localhost:5000/validate-word', { word: wordToValidate });
+      const response = await axios.post('http://13.236.186.40:5000/validate-word', { word: wordToValidate });
       return response.data.valid;
     } catch (error) {
       setError('Error validating word');
@@ -89,14 +89,14 @@ const GamePage = () => {
   const fetchNextWordFromAI = async (userWord, attempts = 0) => {
     const lastLetter = userWord[userWord.length - 1];
     if (attempts > 3) { // Match the server retry limit
-      setNextWord('You Won!');
+      setNextWord('No more valid words available!');
       setGameInProgress(false);
       setGameOver(true);
       return;
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/generate-word', {
+      const response = await axios.post('http://13.236.186.40:5000/generate-word', {
         lastLetter: lastLetter,
       });
 
@@ -113,9 +113,6 @@ const GamePage = () => {
       if (error.response && error.response.status === 429) {
         // Retry after a delay if rate limit is hit
         console.error('Too many requests, retrying after delay...');
-        setTimeout(() => fetchNextWordFromAI(userWord, attempts + 1), Math.pow(2, attempts) * 1000); // Exponential backoff
-      } else if (error.message.includes('Network Error') || error.message.includes('ERR_CONNECTION_REFUSED')) {
-        console.error('Network error, retrying after delay...');
         setTimeout(() => fetchNextWordFromAI(userWord, attempts + 1), Math.pow(2, attempts) * 1000); // Exponential backoff
       } else {
         console.error('Error fetching next word from AI:', error.response ? error.response.data : error.message);
@@ -178,7 +175,7 @@ const GamePage = () => {
     const lastLetter = usedWords[usedWords.length - 1].slice(-1).toLowerCase();
     console.log(`Last letter for result: '${lastLetter}'`);
     try {
-      const response = await axios.post('http://localhost:5000/generate-word', {
+      const response = await axios.post('http://13.236.186.40:5000/generate-word', {
         lastLetter: lastLetter,
       });
       const { data } = response;
@@ -205,7 +202,7 @@ const GamePage = () => {
   const handleWordClick = async (word) => {
     try {
       const response = await axios.get('https://api.dictionaryapi.dev/api/v2/entries/en/' + word);
-      const { data } = response;
+      const data = response.data;
       if (data && data.length > 0 && data[0].meanings && data[0].meanings.length > 0) {
         const definition = data[0].meanings[0].definitions[0].definition;
         setDefinition(definition);
@@ -240,9 +237,9 @@ const GamePage = () => {
   return (
     <div className="game-page">
       <Navbar />
-      <div className="stats-container">
+      {/* <div className="stats-container">
         <UserStats userName={userName} wordsEntered={wordsEntered} record={record} />
-      </div>
+      </div> */}
       <div className={`game-container ${positionUp ? 'moved-up' : ''}`}>
         <div className="timer-container">
           {gameStarted && gameInProgress && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
@@ -267,6 +264,7 @@ const GamePage = () => {
           )}
         </div>
         <form onSubmit={handleSubmit} className="game-form">
+          <h2 className="lets-play">Let's Play</h2> {/* Add this line */}
           {nextWord && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
             <h2 className="next-word-container">
               Next word: {nextWord}
