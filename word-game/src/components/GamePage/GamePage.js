@@ -239,6 +239,9 @@ const GamePage = () => {
   return (
     <div className="game-page">
       <Navbar />
+      <div className="stats-container">
+        <UserStats userName={userName} wordsEntered={wordsEntered} record={record} />
+      </div>
       <div className={`game-container ${positionUp ? 'moved-up' : ''}`}>
         <div className="timer-container">
           {gameStarted && gameInProgress && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
