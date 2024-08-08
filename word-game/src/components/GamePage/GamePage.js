@@ -175,12 +175,12 @@ const GamePage = () => {
     const lastLetter = usedWords[usedWords.length - 1].slice(-1).toLowerCase();
     console.log(`Last letter for result: '${lastLetter}'`);
     try {
-      const response = await axios.post('hhttps://apiwordgame.aidenkiettran.com/generate-word', {
+      const response = await axios.post('https://apiwordgame.aidenkiettran.com/generate-word', {
         lastLetter: lastLetter,
       });
       const { data } = response;
       console.log('Response data for result:', data);
-
+  
       if (data && data.word) {
         setResultWords([data.word]); // Put the single word in an array for rendering
       } else {
@@ -192,6 +192,7 @@ const GamePage = () => {
       setError('Error fetching result words');
     }
   };
+  
 
   const handleWordChange = (e) => {
     setWord(e.target.value);
