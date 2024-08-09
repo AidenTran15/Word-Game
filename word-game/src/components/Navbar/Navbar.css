@@ -1,11 +1,31 @@
 .navbar {
     background-color: #333;
     padding: 20px;
-    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .header-image {
     height: 60px; /* Adjust as needed */
     display: inline-block;
     padding-left: 20px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px; /* Adjust the spacing between links */
+    margin-left: auto; /* Push the links to the right */
+    padding-right: 80px;
+}
+
+.nav-link {
+    color: #007bff; /* Blue color for the links */
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: #0056b3; /* Darker blue on hover */
 }
