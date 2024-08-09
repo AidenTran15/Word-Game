@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
@@ -10,12 +10,26 @@ const SynonymFinderPage = () => {
   const [selectedOption, setSelectedOption] = useState('');
   const [feedback, setFeedback] = useState('');
   const [showModal, setShowModal] = useState(true);
-  const [loading, setLoading] = useState(false); // Add loading state
+  const [loading, setLoading] = useState(false);
+  const [score, setScore] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(60); // Increase the timer to 60 seconds
+  const [gameOver, setGameOver] = useState(false);
 
-  // Function to fetch a new question from the server
+  useEffect(() => {
+    if (timeLeft > 0 && !showModal && !gameOver) {
+      const timer = setInterval(() => {
+        setTimeLeft(timeLeft - 1);
+      }, 1000);
+
+      return () => clearInterval(timer);
+    } else if (timeLeft === 0) {
+      setGameOver(true);
+    }
+  }, [timeLeft, showModal, gameOver]);
+
   const fetchQuestion = async () => {
-    if (loading) return; // Prevent multiple requests
-    setLoading(true); // Set loading to true before fetching
+    if (loading || gameOver) return;
+    setLoading(true);
     try {
       const response = await axios.get('http://localhost:5000/generate-question');
       setQuestion(response.data);
@@ -24,21 +38,20 @@ const SynonymFinderPage = () => {
     } catch (error) {
       console.error('Error fetching question:', error);
     } finally {
-      setLoading(false); // Set loading to false after fetching
+      setLoading(false);
     }
   };
 
-  // Function to handle closing the modal
   const closeModal = () => {
     setShowModal(false);
-    fetchQuestion(); // Fetch the first question after closing the modal
+    fetchQuestion();
   };
 
-  // Function to handle clicking on an option
   const handleOptionClick = (option) => {
     setSelectedOption(option);
     if (option === question.correctAnswer) {
       setFeedback('Correct!');
+      setScore(score + 1);
     } else {
       setFeedback('Wrong!');
     }
@@ -50,16 +63,16 @@ const SynonymFinderPage = () => {
       <div className="synonym-finder-container">
         <h2 className="synonym-finder-title">Find the Word with a Similar Meaning</h2>
         {showModal && <IntroductionModal onClose={closeModal} />}
-        {!showModal && question.word && (
+        {!showModal && !gameOver && (
           <>
+            <div className="timer">Time Left: {timeLeft} seconds</div>
             <h3 className="word-title">Word: {question.word}</h3>
-
             <div className="synonym-options">
-              {question.options.map((option, index) => (
+              {question.options && question.options.map((option, index) => (
                 <button 
                   key={index} 
                   onClick={() => handleOptionClick(option)} 
-                  disabled={!!selectedOption}
+                  disabled={!!selectedOption || loading}
                 >
                   {option}
                 </button>
@@ -70,6 +83,11 @@ const SynonymFinderPage = () => {
               {loading ? 'Loading...' : 'Next Question'}
             </button>
           </>
+        )}
+        {gameOver && (
+          <div className="game-over">
+            <h3>Game Over! Your total score is: {score}</h3>
+          </div>
         )}
       </div>
       <Footer />

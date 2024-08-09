@@ -109,3 +109,16 @@
   margin-bottom: 40px;
   margin-top: 30px;
 }
+
+
+.timer {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #ff5555;
+}
+
+.game-over {
+  text-align: center;
+  font-size: 1.8rem;
+  color: #28a745;
+}
