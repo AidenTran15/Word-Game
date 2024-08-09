@@ -8,8 +8,8 @@ const Navbar = () => {
         <nav className="navbar">
             <img src={WordGameHeader} alt="Word Game" className="header-image" />
             <div className="nav-links">
-                <Link to="/game" className="nav-link">NextWord</Link>
-                <Link to="/synonym-finder" className="nav-link">Synonym-Finder</Link>
+                <Link to="/game" className="nav-link">Next Word</Link>
+                <Link to="/synonym-finder" className="nav-link">Synonym Finder</Link>
             </div>
         </nav>
     );

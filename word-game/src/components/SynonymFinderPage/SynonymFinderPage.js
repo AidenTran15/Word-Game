@@ -2,17 +2,16 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
+import IntroductionModal from '../SF_IntroductionModal/SF_IntroductionModal';
 import './SynonymFinderPage.css';
 
 const SynonymFinderPage = () => {
   const [question, setQuestion] = useState({});
   const [selectedOption, setSelectedOption] = useState('');
   const [feedback, setFeedback] = useState('');
+  const [showModal, setShowModal] = useState(true); // Initially show the modal
 
-  useEffect(() => {
-    fetchQuestion();
-  }, []);
-
+  // Function to fetch the question
   const fetchQuestion = async () => {
     try {
       const response = await axios.get('http://localhost:5000/generate-question');
@@ -22,6 +21,12 @@ const SynonymFinderPage = () => {
     } catch (error) {
       console.error('Error fetching question:', error);
     }
+  };
+
+  // Function to handle modal close
+  const closeModal = () => {
+    setShowModal(false);
+    fetchQuestion(); // Fetch the first question after closing the modal
   };
 
   const handleOptionClick = (option) => {
@@ -38,7 +43,8 @@ const SynonymFinderPage = () => {
       <Navbar />
       <div className="synonym-finder-container">
         <h2 className="synonym-finder-title">Find the Word with a Similar Meaning</h2>
-        {question.word && (
+        {showModal && <IntroductionModal onClose={closeModal} />}
+        {!showModal && question.word && (
           <>
             <p><strong>First Word:</strong> {question.word}</p>
             <div className="synonym-options">
