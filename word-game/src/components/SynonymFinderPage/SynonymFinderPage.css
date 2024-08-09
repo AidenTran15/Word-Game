@@ -16,7 +16,7 @@
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  margin-top: -180px; /* Moves the container up */
+  margin-top: 20px;
 }
 
 .synonym-finder-container:hover {
@@ -29,8 +29,6 @@
   font-size: 2em;
   margin-bottom: 10px;
   text-align: center;
-  position: relative;
-  margin-top: 6px;
   font-weight: normal;
 }
 
@@ -42,134 +40,21 @@
   border-bottom: 2px solid #000;
 }
 
-.synonym-finder-container p {
-  font-size: 20px;
-  margin: 15px 0;
-  color: #555;
-}
-
-.synonym-options {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 15px;
-  margin: 25px 0;
-}
-
-.synonym-options button {
-  padding: 12px 25px;
-  font-size: 18px;
-  border: none;
-  border-radius: 30px;
-  background-color: #3B71CA; /* Updated color */
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.synonym-options button:hover {
-  background-color: #2d57a6; /* A darker shade for hover effect */
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-.synonym-feedback {
-  font-size: 20px;
-  color: #ff0000;
-  margin: 20px 0;
-}
-
-.synonym-feedback-correct {
-  color: #28a745;
-}
-
-.synonym-finder-container button {
-  padding: 12px 25px;
-  font-size: 18px;
-  border: none;
-  border-radius: 30px;
-  background-color: #3B71CA; 
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.synonym-finder-container button:hover {
-  background-color: #2d57a6; /* A darker shade for hover effect */
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-.word-title {
-  font-size: 1.8rem; /* Increases the font size */
-  margin-top: 20px; /* Moves the element down */
-  text-align: center; /* Optional: Centers the text */
-  margin-bottom: 40px;
-  margin-top: 30px;
-}
-
-.timer {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-  color: #ff5555;
-}
-
-.game-over {
-  text-align: center;
-  font-size: 1.8rem;
-  color: #28a745;
-}
-
-.play-again-button {
-  padding: 12px 25px;
-  font-size: 18px;
-  border: none;
-  border-radius: 30px;
-  background-color: #28a745;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.play-again-button:hover {
-  background-color: #218838;
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-.correct {
-  background-color: #28a745 !important; /* Green for correct */
-  color: white;
-}
-
-.incorrect {
-  background-color: #dc3545 !important; /* Red for incorrect */
-  color: white;
-}
-
-.synonym-options button.correct,
-.synonym-options button.incorrect {
-  transform: none;
-  box-shadow: none;
-  cursor: default;
-}
-
-/* Used words section styling */
 /* Used words section styling */
 .used-words-section {
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 755px;
-  text-align: left;
+  width: 730px;
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   margin-top: 20px;
-  overflow-y: auto; /* Enable vertical scrolling for the whole section */
-  margin-bottom: 50px; /* Ensure enough margin at the bottom */
+}
+
+.used-words-section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
 }
 
 .used-words-section h2 {
@@ -178,7 +63,6 @@
   margin-bottom: 10px;
   text-align: center;
   position: relative;
-  margin-top: 6px;
   font-weight: normal;
 }
 
@@ -193,31 +77,32 @@
 .words-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  justify-content: center;
+  gap: 15px;
+  margin: 25px 0;
 }
 
 .words-column {
-  flex: 1 1 calc(50% - 10px); /* Two columns layout */
+  flex: 1 1 calc(50% - 10px);
+  max-width: calc(50% - 10px);
 }
 
 .words-column ul {
-  list-style-type: none !important; /* Ensure no bullets */
+  list-style-type: none;
   margin: 0;
-  padding-left: 0; /* Remove left padding */
-  overflow-y: auto; /* Add scroll for the whole section */
-  max-height: 100%; /* Ensure it takes full height */
+  padding-left: 0;
 }
 
 .words-column ul li {
   font-size: 1em;
   margin-bottom: 5px;
-  background: #f1f1f1; /* Add background color */
-  padding: 10px; /* Add padding */
-  border-radius: 5px; /* Round the corners */
-  text-transform: capitalize; /* Capitalize first letter */
+  background: #f1f1f1;
+  padding: 10px;
+  border-radius: 5px;
+  text-transform: capitalize;
   transition: background 0.3s;
 }
 
 .words-column ul li:hover {
-  background: #e1e1e1; /* Change background color on hover */
+  background: #e1e1e1;
 }

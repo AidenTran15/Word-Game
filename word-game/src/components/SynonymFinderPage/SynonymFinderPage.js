@@ -14,7 +14,7 @@ const SynonymFinderPage = () => {
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(60);
   const [gameOver, setGameOver] = useState(false);
-  const [usedWords, setUsedWords] = useState([]); // New state for storing used words
+  const [usedWords, setUsedWords] = useState([]);
 
   useEffect(() => {
     if (timeLeft > 0 && !showModal && !gameOver) {
@@ -40,7 +40,7 @@ const SynonymFinderPage = () => {
         ...prevUsedWords, 
         response.data.word,
         ...response.data.options
-      ]); // Add the word and options to the used words list
+      ]);
     } catch (error) {
       console.error('Error fetching question:', error);
     } finally {
@@ -74,7 +74,7 @@ const SynonymFinderPage = () => {
     setScore(0);
     setTimeLeft(60);
     setGameOver(false);
-    setUsedWords([]); // Reset the used words list
+    setUsedWords([]);
     fetchQuestion();
   };
 
@@ -116,20 +116,22 @@ const SynonymFinderPage = () => {
           </div>
         )}
       </div>
-      <div className="used-words-section">
-        <h2>Used Words</h2>
-        <div className="words-grid">
-          {[...Array(Math.ceil(usedWords.length / 20))].map((_, i) => (
-            <div key={i} className="words-column">
-              <ul>
-                {usedWords.slice(i * 20, (i + 1) * 20).map((word, index) => (
-                  <li key={index}>{word}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
+      {!showModal && (
+        <div className="used-words-section">
+          <h2>Used Words</h2>
+          <div className="words-grid">
+            {[...Array(Math.ceil(usedWords.length / 20))].map((_, i) => (
+              <div key={i} className="words-column">
+                <ul>
+                  {usedWords.slice(i * 20, (i + 1) * 20).map((word, index) => (
+                    <li key={index}>{word}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
       <Footer />
     </div>
   );
