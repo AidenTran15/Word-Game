@@ -34,7 +34,7 @@ const SynonymFinderPage = () => {
     if (option === question.correctAnswer) {
       setFeedback('Correct!');
     } else {
-      setFeedback(`Wrong! The correct answer is ${question.correctAnswer}`);
+      setFeedback('Wrong!');
     }
   };
 
