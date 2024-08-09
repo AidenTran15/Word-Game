@@ -12,7 +12,7 @@ const SynonymFinderPage = () => {
   const [showModal, setShowModal] = useState(true);
   const [loading, setLoading] = useState(false);
   const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(60); // 60-second timer
+  const [timeLeft, setTimeLeft] = useState(45); // 60-second timer
   const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
