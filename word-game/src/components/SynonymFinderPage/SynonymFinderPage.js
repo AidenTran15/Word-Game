@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
@@ -9,10 +9,13 @@ const SynonymFinderPage = () => {
   const [question, setQuestion] = useState({});
   const [selectedOption, setSelectedOption] = useState('');
   const [feedback, setFeedback] = useState('');
-  const [showModal, setShowModal] = useState(true); // Initially show the modal
+  const [showModal, setShowModal] = useState(true);
+  const [loading, setLoading] = useState(false); // Add loading state
 
-  // Function to fetch the question
+  // Function to fetch a new question from the server
   const fetchQuestion = async () => {
+    if (loading) return; // Prevent multiple requests
+    setLoading(true); // Set loading to true before fetching
     try {
       const response = await axios.get('http://localhost:5000/generate-question');
       setQuestion(response.data);
@@ -20,15 +23,18 @@ const SynonymFinderPage = () => {
       setFeedback('');
     } catch (error) {
       console.error('Error fetching question:', error);
+    } finally {
+      setLoading(false); // Set loading to false after fetching
     }
   };
 
-  // Function to handle modal close
+  // Function to handle closing the modal
   const closeModal = () => {
     setShowModal(false);
     fetchQuestion(); // Fetch the first question after closing the modal
   };
 
+  // Function to handle clicking on an option
   const handleOptionClick = (option) => {
     setSelectedOption(option);
     if (option === question.correctAnswer) {
@@ -60,7 +66,9 @@ const SynonymFinderPage = () => {
               ))}
             </div>
             {feedback && <p className={`synonym-feedback ${feedback === 'Correct!' ? 'synonym-feedback-correct' : ''}`}>{feedback}</p>}
-            <button onClick={fetchQuestion}>Next Question</button>
+            <button onClick={fetchQuestion} disabled={selectedOption === '' || loading}>
+              {loading ? 'Loading...' : 'Next Question'}
+            </button>
           </>
         )}
       </div>
