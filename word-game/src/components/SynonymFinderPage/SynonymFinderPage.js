@@ -36,7 +36,11 @@ const SynonymFinderPage = () => {
       setQuestion(response.data);
       setSelectedOption(null);
       setFeedback('');
-      setUsedWords((prevUsedWords) => [...prevUsedWords, response.data.word]); // Add the word to the used words list
+      setUsedWords((prevUsedWords) => [
+        ...prevUsedWords, 
+        response.data.word,
+        ...response.data.options
+      ]); // Add the word and options to the used words list
     } catch (error) {
       console.error('Error fetching question:', error);
     } finally {
