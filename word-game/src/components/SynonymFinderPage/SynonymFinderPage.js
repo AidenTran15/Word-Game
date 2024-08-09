@@ -15,9 +15,7 @@ const SynonymFinderPage = () => {
 
   const fetchQuestion = async () => {
     try {
-      console.log('Fetching new question...');
       const response = await axios.get('http://localhost:5000/generate-question');
-      console.log('New question data:', response.data);
       setQuestion(response.data);
       setSelectedOption('');
       setFeedback('');
@@ -39,7 +37,7 @@ const SynonymFinderPage = () => {
     <div className="synonym-finder-page">
       <Navbar />
       <div className="synonym-finder-container">
-        <h2>Find the Word with a Similar Meaning</h2>
+        <h2 className="synonym-finder-title">Find the Word with a Similar Meaning</h2>
         {question.word && (
           <>
             <p><strong>First Word:</strong> {question.word}</p>

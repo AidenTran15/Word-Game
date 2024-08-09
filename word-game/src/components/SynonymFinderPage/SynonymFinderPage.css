@@ -1,38 +1,50 @@
 /* SynonymFinderPage.css */
+
 .synonym-finder-page {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #6dd5ed, #2193b0); /* Gradient background */
+  background: linear-gradient(135deg, #6dd5ed, #2193b0);
   padding: 20px;
 }
 
 .synonym-finder-container {
-  width: 500px; /* Increased width for better layout */
+  width: 600px;
   padding: 30px;
-  background-color: rgba(255, 255, 255, 0.9); /* Slight transparency for modern look */
+  background-color: rgba(255, 255, 255, 0.9);
   border-radius: 15px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Deeper shadow for depth */
-  text-align: center; /* Center text within the container */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition effects */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .synonym-finder-container:hover {
-  transform: translateY(-5px); /* Slight lift effect on hover */
-  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+  transform: translateY(-5px);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
 }
 
-.synonym-finder-container h2 {
-  font-size: 28px; /* Larger heading */
-  margin-bottom: 25px;
-  color: #333;
-  font-family: 'Playfair Display', serif; /* Elegant font */
+.synonym-finder-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2em;
+  margin-bottom: 10px;
+  text-align: center;
+  position: relative;
+  margin-top: 6px;
+  font-weight: normal;
+}
+
+.synonym-finder-title::after {
+  content: '';
+  display: block;
+  width: 50%;
+  margin: 0.5em auto;
+  border-bottom: 2px solid #000;
 }
 
 .synonym-finder-container p {
-  font-size: 20px; /* Slightly larger font for readability */
+  font-size: 20px;
   margin: 15px 0;
   color: #555;
 }
@@ -41,26 +53,26 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 15px; /* More space between buttons */
+  gap: 15px;
   margin: 25px 0;
 }
 
 .synonym-options button {
-  padding: 12px 25px; /* Increased padding for buttons */
-  font-size: 18px; /* Larger button text */
+  padding: 12px 25px;
+  font-size: 18px;
   border: none;
-  border-radius: 30px; /* Rounded buttons for a modern look */
+  border-radius: 30px;
   background-color: #007bff;
   color: #fff;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* Smooth transitions */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for buttons */
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .synonym-options button:hover {
   background-color: #0056b3;
-  transform: translateY(-3px); /* Slight lift on hover */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .synonym-feedback {
@@ -74,19 +86,19 @@
 }
 
 .synonym-finder-container button {
-  padding: 12px 25px; /* Increased padding for buttons */
-  font-size: 18px; /* Larger button text */
+  padding: 12px 25px;
+  font-size: 18px;
   border: none;
-  border-radius: 30px; /* Rounded buttons for a modern look */
+  border-radius: 30px;
   background-color: #28a745;
   color: #fff;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* Smooth transitions */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for buttons */
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .synonym-finder-container button:hover {
   background-color: #218838;
-  transform: translateY(-3px); /* Slight lift on hover */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
