@@ -11,14 +11,16 @@
 }
 
 .synonym-finder-container {
-  width: 600px;
+  width: 680px;
   padding: 30px;
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 15px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-top: -180px; /* Moves the container up */
 }
+
 
 .synonym-finder-container:hover {
   transform: translateY(-5px);
@@ -102,3 +104,12 @@
   transform: translateY(-3px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
+
+.word-title {
+  font-size: 1.8rem; /* Increases the font size */
+  margin-top: 20px; /* Moves the element down */
+  text-align: center; /* Optional: Centers the text */
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+

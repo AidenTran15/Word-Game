@@ -46,7 +46,8 @@ const SynonymFinderPage = () => {
         {showModal && <IntroductionModal onClose={closeModal} />}
         {!showModal && question.word && (
           <>
-            <p><strong>First Word:</strong> {question.word}</p>
+            <h3 className="word-title">Word: {question.word}</h3>
+
             <div className="synonym-options">
               {question.options.map((option, index) => (
                 <button 
