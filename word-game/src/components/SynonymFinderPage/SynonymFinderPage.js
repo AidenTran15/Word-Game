@@ -114,11 +114,17 @@ const SynonymFinderPage = () => {
       </div>
       <div className="used-words-section">
         <h2>Used Words</h2>
-        <ul>
-          {usedWords.map((word, index) => (
-            <li key={index}>{word}</li>
+        <div className="words-grid">
+          {[...Array(Math.ceil(usedWords.length / 20))].map((_, i) => (
+            <div key={i} className="words-column">
+              <ul>
+                {usedWords.slice(i * 20, (i + 1) * 20).map((word, index) => (
+                  <li key={index}>{word}</li>
+                ))}
+              </ul>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
       <Footer />
     </div>
