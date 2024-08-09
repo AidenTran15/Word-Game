@@ -38,12 +38,12 @@ const SynonymFinderPage = () => {
   return (
     <div className="synonym-finder-page">
       <Navbar />
-      <div className="game-container">
+      <div className="synonym-finder-container">
         <h2>Find the Word with a Similar Meaning</h2>
         {question.word && (
           <>
             <p><strong>First Word:</strong> {question.word}</p>
-            <div className="options">
+            <div className="synonym-options">
               {question.options.map((option, index) => (
                 <button 
                   key={index} 
@@ -54,7 +54,7 @@ const SynonymFinderPage = () => {
                 </button>
               ))}
             </div>
-            {feedback && <p className="feedback">{feedback}</p>}
+            {feedback && <p className={`synonym-feedback ${feedback === 'Correct!' ? 'synonym-feedback-correct' : ''}`}>{feedback}</p>}
             <button onClick={fetchQuestion}>Next Question</button>
           </>
         )}
