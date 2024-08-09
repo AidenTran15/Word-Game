@@ -80,59 +80,61 @@ const SynonymFinderPage = () => {
 
   return (
     <div className="synonym-finder-page">
-      <Navbar />
-      <div className="synonym-finder-container">
-        <h2 className="synonym-finder-title">Find the Word with a Similar Meaning</h2>
-        {showModal && <IntroductionModal onClose={closeModal} />}
-        {!showModal && !gameOver && (
-          <>
-            <div className="timer">Time Left: {timeLeft} seconds</div>
-            <h3 className="word-title">Word: {question.word}</h3>
-            <div className="synonym-options">
-              {question.options && question.options.map((option, index) => (
-                <button
-                  key={index}
-                  onClick={() => handleOptionClick(option)}
-                  disabled={selectedOption !== null || loading}
-                  className={getButtonClass(option)}
-                >
-                  {option}
+      {showModal && <IntroductionModal onClose={closeModal} />}
+      {!showModal && (
+        <>
+          <Navbar />
+          <div className="synonym-finder-container">
+            <h2 className="synonym-finder-title">Find the Word with a Similar Meaning</h2>
+            {!gameOver && (
+              <>
+                <div className="timer">Time Left: {timeLeft} seconds</div>
+                <h3 className="word-title">Word: {question.word}</h3>
+                <div className="synonym-options">
+                  {question.options && question.options.map((option, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleOptionClick(option)}
+                      disabled={selectedOption !== null || loading}
+                      className={getButtonClass(option)}
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
+                {feedback && <h3 className={`synonym-feedback ${feedback.startsWith('Correct') ? 'synonym-feedback-correct' : ''}`}>{feedback}</h3>}
+
+                <button onClick={fetchQuestion} disabled={selectedOption === null || loading}>
+                  {loading ? 'Loading...' : 'Next Question'}
                 </button>
+              </>
+            )}
+            {gameOver && (
+              <div className="game-over">
+                <h3>Game Over! Your total score is: {score}</h3>
+                <button onClick={handlePlayAgain} className="play-again-button">
+                  Play Again
+                </button>
+              </div>
+            )}
+          </div>
+          <div className="used-words-section">
+            <h2>Used Words</h2>
+            <div className="words-grid">
+              {[...Array(Math.ceil(usedWords.length / 20))].map((_, i) => (
+                <div key={i} className="words-column">
+                  <ul>
+                    {usedWords.slice(i * 20, (i + 1) * 20).map((word, index) => (
+                      <li key={index}>{word}</li>
+                    ))}
+                  </ul>
+                </div>
               ))}
             </div>
-            {feedback && <h3 className={`synonym-feedback ${feedback.startsWith('Correct') ? 'synonym-feedback-correct' : ''}`}>{feedback}</h3>}
-
-            <button onClick={fetchQuestion} disabled={selectedOption === null || loading}>
-              {loading ? 'Loading...' : 'Next Question'}
-            </button>
-          </>
-        )}
-        {gameOver && (
-          <div className="game-over">
-            <h3>Game Over! Your total score is: {score}</h3>
-            <button onClick={handlePlayAgain} className="play-again-button">
-              Play Again
-            </button>
           </div>
-        )}
-      </div>
-      {!showModal && (
-        <div className="used-words-section">
-          <h2>Used Words</h2>
-          <div className="words-grid">
-            {[...Array(Math.ceil(usedWords.length / 20))].map((_, i) => (
-              <div key={i} className="words-column">
-                <ul>
-                  {usedWords.slice(i * 20, (i + 1) * 20).map((word, index) => (
-                    <li key={index}>{word}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
+          <Footer />
+        </>
       )}
-      <Footer />
     </div>
   );
 };

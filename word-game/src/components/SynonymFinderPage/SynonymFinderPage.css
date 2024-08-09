@@ -42,12 +42,13 @@
 
 /* Used words section styling */
 .used-words-section {
-  width: 730px;
+  width: 90%; 
+  max-width: 730px;
   padding: 30px;
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 15px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  text-align: center;
+  text-align: left; 
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   margin-top: 20px;
 }
@@ -61,7 +62,7 @@
   font-family: 'Playfair Display', serif;
   font-size: 2em;
   margin-bottom: 10px;
-  text-align: center;
+  text-align: center; /* Keep the title centered */
   position: relative;
   font-weight: normal;
 }
@@ -70,14 +71,14 @@
   content: '';
   display: block;
   width: 50%;
-  margin: 0.5em auto;
+  margin: 0.5em auto; /* Center the underline */
   border-bottom: 2px solid #000;
 }
 
 .words-grid {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start; /* Align items to the left */
   gap: 15px;
   margin: 25px 0;
 }
@@ -100,6 +101,7 @@
   padding: 10px;
   border-radius: 5px;
   text-transform: capitalize;
+  text-align: left; /* Ensure each word is left-aligned */
   transition: background 0.3s;
 }
 
