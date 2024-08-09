@@ -7,7 +7,7 @@ import './SynonymFinderPage.css';
 
 const SynonymFinderPage = () => {
   const [question, setQuestion] = useState({});
-  const [selectedOption, setSelectedOption] = useState(null); // Use null instead of an empty string for clarity
+  const [selectedOption, setSelectedOption] = useState(null);
   const [feedback, setFeedback] = useState('');
   const [showModal, setShowModal] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -33,7 +33,7 @@ const SynonymFinderPage = () => {
     try {
       const response = await axios.get('http://localhost:5000/generate-question');
       setQuestion(response.data);
-      setSelectedOption(null); // Reset selected option when a new question is loaded
+      setSelectedOption(null); 
       setFeedback('');
     } catch (error) {
       console.error('Error fetching question:', error);
@@ -48,24 +48,20 @@ const SynonymFinderPage = () => {
   };
 
   const handleOptionClick = (option) => {
-    console.log('Option clicked:', option); // Debug
     setSelectedOption(option);
     if (option === question.correctAnswer) {
-      console.log('Correct answer selected'); // Debug
       setFeedback('Correct!');
       setScore(score + 1);
     } else {
-      console.log('Incorrect answer selected'); // Debug
-      setFeedback('Wrong!');
+      setFeedback(`Wrong! The correct word is ${question.correctAnswer}.`);
     }
   };
 
   const getButtonClass = (option) => {
-    console.log('Button class check for option:', option); // Debug
-    if (selectedOption === null) return ''; // No option selected yet
-    if (option === question.correctAnswer) return 'correct'; // Apply correct class to the correct answer
-    if (option === selectedOption) return 'incorrect'; // Apply incorrect class to the selected option if it's wrong
-    return ''; // Default no class
+    if (selectedOption === null) return '';
+    if (option === question.correctAnswer) return 'correct';
+    if (option === selectedOption) return 'incorrect';
+    return '';
   };
 
   const handlePlayAgain = () => {
@@ -90,14 +86,14 @@ const SynonymFinderPage = () => {
                 <button
                   key={index}
                   onClick={() => handleOptionClick(option)}
-                  disabled={selectedOption !== null || loading} // Disable buttons after selection
+                  disabled={selectedOption !== null || loading}
                   className={getButtonClass(option)}
                 >
                   {option}
                 </button>
               ))}
             </div>
-            {feedback && <p className={`synonym-feedback ${feedback === 'Correct!' ? 'synonym-feedback-correct' : ''}`}>{feedback}</p>}
+            {feedback && <p className={`synonym-feedback ${feedback.startsWith('Correct') ? 'synonym-feedback-correct' : ''}`}>{feedback}</p>}
             <button onClick={fetchQuestion} disabled={selectedOption === null || loading}>
               {loading ? 'Loading...' : 'Next Question'}
             </button>
