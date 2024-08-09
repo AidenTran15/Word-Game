@@ -7,12 +7,12 @@ import './SynonymFinderPage.css';
 
 const SynonymFinderPage = () => {
   const [question, setQuestion] = useState({});
-  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedOption, setSelectedOption] = useState(null); // Use null instead of an empty string for clarity
   const [feedback, setFeedback] = useState('');
   const [showModal, setShowModal] = useState(true);
   const [loading, setLoading] = useState(false);
   const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(45); // 60-second timer
+  const [timeLeft, setTimeLeft] = useState(60);
   const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const SynonymFinderPage = () => {
     try {
       const response = await axios.get('http://localhost:5000/generate-question');
       setQuestion(response.data);
-      setSelectedOption('');
+      setSelectedOption(null); // Reset selected option when a new question is loaded
       setFeedback('');
     } catch (error) {
       console.error('Error fetching question:', error);
@@ -48,20 +48,31 @@ const SynonymFinderPage = () => {
   };
 
   const handleOptionClick = (option) => {
+    console.log('Option clicked:', option); // Debug
     setSelectedOption(option);
     if (option === question.correctAnswer) {
+      console.log('Correct answer selected'); // Debug
       setFeedback('Correct!');
       setScore(score + 1);
     } else {
+      console.log('Incorrect answer selected'); // Debug
       setFeedback('Wrong!');
     }
+  };
+
+  const getButtonClass = (option) => {
+    console.log('Button class check for option:', option); // Debug
+    if (selectedOption === null) return ''; // No option selected yet
+    if (option === question.correctAnswer) return 'correct'; // Apply correct class to the correct answer
+    if (option === selectedOption) return 'incorrect'; // Apply incorrect class to the selected option if it's wrong
+    return ''; // Default no class
   };
 
   const handlePlayAgain = () => {
     setScore(0);
     setTimeLeft(60);
     setGameOver(false);
-    fetchQuestion(); // Start a new game with a fresh question
+    fetchQuestion();
   };
 
   return (
@@ -76,17 +87,18 @@ const SynonymFinderPage = () => {
             <h3 className="word-title">Word: {question.word}</h3>
             <div className="synonym-options">
               {question.options && question.options.map((option, index) => (
-                <button 
-                  key={index} 
-                  onClick={() => handleOptionClick(option)} 
-                  disabled={!!selectedOption || loading}
+                <button
+                  key={index}
+                  onClick={() => handleOptionClick(option)}
+                  disabled={selectedOption !== null || loading} // Disable buttons after selection
+                  className={getButtonClass(option)}
                 >
                   {option}
                 </button>
               ))}
             </div>
             {feedback && <p className={`synonym-feedback ${feedback === 'Correct!' ? 'synonym-feedback-correct' : ''}`}>{feedback}</p>}
-            <button onClick={fetchQuestion} disabled={selectedOption === '' || loading}>
+            <button onClick={fetchQuestion} disabled={selectedOption === null || loading}>
               {loading ? 'Loading...' : 'Next Question'}
             </button>
           </>
