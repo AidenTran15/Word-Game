@@ -12,7 +12,7 @@ const SynonymFinderPage = () => {
   const [showModal, setShowModal] = useState(true);
   const [loading, setLoading] = useState(false);
   const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(60); // Increase the timer to 60 seconds
+  const [timeLeft, setTimeLeft] = useState(60); // 60-second timer
   const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
@@ -57,6 +57,13 @@ const SynonymFinderPage = () => {
     }
   };
 
+  const handlePlayAgain = () => {
+    setScore(0);
+    setTimeLeft(60);
+    setGameOver(false);
+    fetchQuestion(); // Start a new game with a fresh question
+  };
+
   return (
     <div className="synonym-finder-page">
       <Navbar />
@@ -87,6 +94,9 @@ const SynonymFinderPage = () => {
         {gameOver && (
           <div className="game-over">
             <h3>Game Over! Your total score is: {score}</h3>
+            <button onClick={handlePlayAgain} className="play-again-button">
+              Play Again
+            </button>
           </div>
         )}
       </div>
