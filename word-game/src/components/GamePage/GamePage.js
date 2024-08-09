@@ -180,7 +180,7 @@ const GamePage = () => {
       });
       const { data } = response;
       console.log('Response data for result:', data);
-  
+
       if (data && data.word) {
         setResultWords([data.word]); // Put the single word in an array for rendering
       } else {
@@ -192,7 +192,6 @@ const GamePage = () => {
       setError('Error fetching result words');
     }
   };
-  
 
   const handleWordChange = (e) => {
     setWord(e.target.value);
@@ -243,65 +242,69 @@ const GamePage = () => {
         <UserStats userName={userName} wordsEntered={wordsEntered} record={record} />
       </div>
       <div className={`game-container ${positionUp ? 'moved-up' : ''}`}>
-        <div className="timer-container">
-          {gameStarted && gameInProgress && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
-            <svg className="timer-svg" viewBox="0 0 36 36">
-              <path
-                className="timer-bg"
-                d="M18 2.0845
-                    a 15.9155 15.9155 0 0 1 0 31.831
-                    a 15.9155 15.9155 0 0 1 0 -31.831"
-              />
-              <path
-                className="timer-fg"
-                strokeDasharray={`${(timeLeft / 30) * 100}, 100`}
-                d="M18 2.0845
-                    a 15.9155 15.9155 0 0 1 0 31.831
-                    a 15.9155 15.9155 0 0 1 0 -31.831"
-              />
-              <text x="18" y="20.35" className="timer-text" textAnchor="middle" dy=".3em">
-                {timeLeft}s
-              </text>
-            </svg>
-          )}
-        </div>
-        <form onSubmit={handleSubmit} className="game-form">
-          <h2 className="lets-play">Let's Play</h2>
-          {nextWord && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
-            <h2 className="next-word-container">
-              Next word: {nextWord}
-              <FaVolumeUp onClick={() => handleSpeak(nextWord)} className="speaker-icon" />
-            </h2>
-          )}
-          {(!nextWord || nextWord === `${userName} won!` || nextWord === 'Computer wins!') && (
-            <h2>{nextWord}</h2>
-          )}
-          <div className="input-container">
-            <input 
-              type="text" 
-              value={word}
-              onChange={handleWordChange}
-              placeholder="Enter the word"
-              disabled={!gameInProgress}
-            />
-            <FaMicrophone onClick={handleVoiceInput} className="microphone-icon" />
-          </div>
-          {error && <p className="error-message">{error}</p>}
-          <div className="button-group">
-            <button type="submit" disabled={!gameInProgress}>Submit</button>
-            {gameStarted && gameInProgress && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
-              <button type="button" onClick={handleSurrender}>Surrender</button>
-            )}
-            {(!gameInProgress || gameOver) && (
-              <button type="button" onClick={handleReset}>Reset</button>
-            )}
-          </div>
-          {gameOver && (
-            <div className="button-group">
-              {showResultButton && nextWord !== `${userName} won!` && <button className="result-button" onClick={handleSeeResult}>See result</button>}
-            </div>
-          )}
-        </form>
+      <form onSubmit={handleSubmit} className="game-form">
+  <h2 className="lets-play">Let's Play</h2>
+
+  {/* Move the timer container below the "Let's Play" heading */}
+  <div className="timer-container">
+    {gameStarted && gameInProgress && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
+      <svg className="timer-svg" viewBox="0 0 36 36">
+        <path
+          className="timer-bg"
+          d="M18 2.0845
+              a 15.9155 15.9155 0 0 1 0 31.831
+              a 15.9155 15.9155 0 0 1 0 -31.831"
+        />
+        <path
+          className="timer-fg"
+          strokeDasharray={`${(timeLeft / 30) * 100}, 100`}
+          d="M18 2.0845
+              a 15.9155 15.9155 0 0 1 0 31.831
+              a 15.9155 15.9155 0 0 1 0 -31.831"
+        />
+        <text x="18" y="20.35" className="timer-text" textAnchor="middle" dy=".3em">
+          {timeLeft}s
+        </text>
+      </svg>
+    )}
+  </div>
+
+  {nextWord && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
+    <h2 className="next-word-container">
+      Next word: {nextWord}
+      <FaVolumeUp onClick={() => handleSpeak(nextWord)} className="speaker-icon" />
+    </h2>
+  )}
+  {(!nextWord || nextWord === `${userName} won!` || nextWord === 'Computer wins!') && (
+    <h2>{nextWord}</h2>
+  )}
+  <div className="input-container">
+    <input 
+      type="text" 
+      value={word}
+      onChange={handleWordChange}
+      placeholder="Enter the word"
+      disabled={!gameInProgress}
+    />
+    <FaMicrophone onClick={handleVoiceInput} className="microphone-icon" />
+  </div>
+  {error && <p className="error-message">{error}</p>}
+  <div className="button-group">
+    <button type="submit" disabled={!gameInProgress}>Submit</button>
+    {gameStarted && gameInProgress && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
+      <button type="button" onClick={handleSurrender}>Surrender</button>
+    )}
+    {(!gameInProgress || gameOver) && (
+      <button type="button" onClick={handleReset}>Reset</button>
+    )}
+  </div>
+  {gameOver && (
+    <div className="button-group">
+      {showResultButton && nextWord !== `${userName} won!` && <button className="result-button" onClick={handleSeeResult}>See result</button>}
+    </div>
+  )}
+</form>
+
         {usedWords.length > 0 && (
           <div className="used-words-section-nw">
             <h2>Used Words</h2>
@@ -326,3 +329,4 @@ const GamePage = () => {
 };
 
 export default GamePage;
+
