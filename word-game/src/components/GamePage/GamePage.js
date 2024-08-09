@@ -78,7 +78,7 @@ const GamePage = () => {
 
   const validateWord = async (wordToValidate) => {
     try {
-      const response = await axios.post('https://apiwordgame.aidenkiettran.com/validate-word', { word: wordToValidate });
+      const response = await axios.post('http://localhost:5000/validate-word', { word: wordToValidate });
       return response.data.valid;
     } catch (error) {
       setError('Error validating word');
@@ -96,7 +96,7 @@ const GamePage = () => {
     }
 
     try {
-      const response = await axios.post('https://apiwordgame.aidenkiettran.com/generate-word', {
+      const response = await axios.post('http://localhost:5000/generate-word', {
         lastLetter: lastLetter,
       });
 
@@ -175,7 +175,7 @@ const GamePage = () => {
     const lastLetter = usedWords[usedWords.length - 1].slice(-1).toLowerCase();
     console.log(`Last letter for result: '${lastLetter}'`);
     try {
-      const response = await axios.post('https://apiwordgame.aidenkiettran.com/generate-word', {
+      const response = await axios.post('http://localhost:5000/generate-word', {
         lastLetter: lastLetter,
       });
       const { data } = response;

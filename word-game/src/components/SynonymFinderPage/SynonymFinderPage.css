@@ -1,0 +1,82 @@
+/* SynonymFinderPage.css */
+.synonym-finder-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .game-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+  }
+  
+  .game-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .game-container p {
+    font-size: 18px;
+    margin: 10px 0;
+    color: #555;
+  }
+  
+  .options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+  }
+  
+  .options button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  .options button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+  }
+  
+  .feedback {
+    font-size: 18px;
+    color: #ff0000;
+    margin: 20px 0;
+  }
+  
+  .feedback.correct {
+    color: #28a745;
+  }
+  
+  .game-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  .game-container button:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+  }
+  
