@@ -93,7 +93,8 @@ const SynonymFinderPage = () => {
                 </button>
               ))}
             </div>
-            {feedback && <p className={`synonym-feedback ${feedback.startsWith('Correct') ? 'synonym-feedback-correct' : ''}`}>{feedback}</p>}
+            {feedback && <h3 className={`synonym-feedback ${feedback.startsWith('Correct') ? 'synonym-feedback-correct' : ''}`}>{feedback}</h3>}
+
             <button onClick={fetchQuestion} disabled={selectedOption === null || loading}>
               {loading ? 'Loading...' : 'Next Question'}
             </button>

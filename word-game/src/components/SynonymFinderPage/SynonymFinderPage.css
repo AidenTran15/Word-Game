@@ -156,3 +156,10 @@
   box-shadow: none;
   cursor: default;
 }
+
+.synonym-feedback-correct {
+  color: #28a745;
+  font-size: 1.6rem; /* Increase the size of the correct feedback text */
+  font-weight: bold; /* Make the text bold */
+}
+
