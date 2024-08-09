@@ -27,7 +27,7 @@
 .synonym-finder-title {
   font-family: 'Playfair Display', serif;
   font-size: 2em;
-  margin-bottom: 20px; /* Add more space below the title */
+  margin-bottom: 20px;
   text-align: center;
   font-weight: normal;
 }
@@ -40,55 +40,82 @@
   border-bottom: 2px solid #000;
 }
 
-.timer {
-  font-size: 1.28em; /* Increase the font size for the timer */
-  margin-bottom: 20px; /* Add more space below the timer */
-  color: #333; /* Optional: Change the color to make it more prominent */
+/* Timer container styling */
+/* Timer container styling */
+.timer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 50px;
+  margin-top: 20px; /* Add margin-top to move the timer down */
 }
 
+.timer-svg {
+  width: 80px;
+  height: 80px;
+}
+
+.timer-bg {
+  fill: none;
+  stroke: #eee;
+  stroke-width: 3.8;
+}
+
+.timer-fg {
+  fill: none;
+  stroke: #3B71CA;
+  stroke-width: 3.8;
+  stroke-linecap: round;
+  transition: stroke-dasharray 1s linear;
+}
+
+.timer-text {
+  fill: #000;
+  font-size: 0.7em;
+  text-anchor: middle;
+}
+
+
 .word-title {
-  font-size: 1.5em; /* Increase font size for the main word in the game */
-  margin-bottom: 20px; /* Add space below the main word */
+  font-size: 1.5em;
+  margin-bottom: 20px;
   font-weight: bold;
   text-transform: capitalize;
 }
 
 .synonym-options {
-  margin-bottom: 20px; /* Add space below the options */
+  margin-bottom: 20px;
 }
 
 .synonym-options button {
-  font-size: 1.2em; /* Increase font size for in-game options */
+  font-size: 1.2em;
   padding: 10px 20px;
-  margin: 10px; /* Add space between buttons */
+  margin: 10px;
   border-radius: 5px;
   transition: background 0.3s, transform 0.3s;
   cursor: pointer;
 }
 
 .synonym-feedback {
-  margin-bottom: 20px; /* Add space below the feedback message */
+  margin-bottom: 20px;
 }
 
-/* Game Over message styling */
 .game-over h3, .game-over p {
-  font-size: 1.5em; /* Increase font size for the game over message */
-  font-weight: bold; /* Optional: Make the text bold */
-  color: #333; /* Optional: Change the color for emphasis */
-  margin-bottom: 20px; /* Optional: Add some space below the message */
-  text-align: center; /* Center the game over message */
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
-/* Used words section styling */
-/* Increase the width of the used words section */
 .used-words-section {
-  width: 90%; /* Change this value to make it wider */
-  max-width: 730px; /* Optional: Set a maximum width */
+  width: 90%;
+  max-width: 730px;
   padding: 30px;
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 15px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  text-align: left; /* Left-align content by default */
+  text-align: left;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   margin-top: 20px;
 }
@@ -102,7 +129,7 @@
   font-family: 'Playfair Display', serif;
   font-size: 2em;
   margin-bottom: 10px;
-  text-align: center; /* Keep the title centered */
+  text-align: center;
   position: relative;
   font-weight: normal;
 }
@@ -111,14 +138,14 @@
   content: '';
   display: block;
   width: 50%;
-  margin: 0.5em auto; /* Center the underline */
+  margin: 0.5em auto;
   border-bottom: 2px solid #000;
 }
 
 .words-grid {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start; /* Align items to the left */
+  justify-content: flex-start;
   gap: 15px;
   margin: 25px 0;
 }
@@ -135,13 +162,13 @@
 }
 
 .words-column ul li {
-  font-size: 1.2em; /* Increase font size here */
+  font-size: 1.2em;
   margin-bottom: 5px;
   background: #f1f1f1;
   padding: 10px;
   border-radius: 5px;
   text-transform: capitalize;
-  text-align: left; /* Ensure each word is left-aligned */
+  text-align: left;
   transition: background 0.3s;
 }
 

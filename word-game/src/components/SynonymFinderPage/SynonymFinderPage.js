@@ -88,7 +88,26 @@ const SynonymFinderPage = () => {
             <h2 className="synonym-finder-title">Find the Word with a Similar Meaning</h2>
             {!gameOver && (
               <>
-                <div className="timer">Time Left: {timeLeft} seconds</div>
+                <div className="timer-container">
+                  <svg className="timer-svg" viewBox="0 0 36 36">
+                    <path
+                      className="timer-bg"
+                      d="M18 2.0845
+                          a 15.9155 15.9155 0 0 1 0 31.831
+                          a 15.9155 15.9155 0 0 1 0 -31.831"
+                    />
+                    <path
+                      className="timer-fg"
+                      strokeDasharray={`${(timeLeft / 60) * 100}, 100`} // Adjust based on total time
+                      d="M18 2.0845
+                          a 15.9155 15.9155 0 0 1 0 31.831
+                          a 15.9155 15.9155 0 0 1 0 -31.831"
+                    />
+                    <text x="18" y="20.35" className="timer-text" textAnchor="middle" dy=".3em">
+                      {timeLeft}s
+                    </text>
+                  </svg>
+                </div>
                 <h3 className="word-title">Word: {question.word}</h3>
                 <div className="synonym-options">
                   {question.options && question.options.map((option, index) => (
