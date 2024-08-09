@@ -14,6 +14,7 @@ const SynonymFinderPage = () => {
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(60);
   const [gameOver, setGameOver] = useState(false);
+  const [usedWords, setUsedWords] = useState([]); // New state for storing used words
 
   useEffect(() => {
     if (timeLeft > 0 && !showModal && !gameOver) {
@@ -33,8 +34,9 @@ const SynonymFinderPage = () => {
     try {
       const response = await axios.get('http://localhost:5000/generate-question');
       setQuestion(response.data);
-      setSelectedOption(null); 
+      setSelectedOption(null);
       setFeedback('');
+      setUsedWords((prevUsedWords) => [...prevUsedWords, response.data.word]); // Add the word to the used words list
     } catch (error) {
       console.error('Error fetching question:', error);
     } finally {
@@ -68,6 +70,7 @@ const SynonymFinderPage = () => {
     setScore(0);
     setTimeLeft(60);
     setGameOver(false);
+    setUsedWords([]); // Reset the used words list
     fetchQuestion();
   };
 
@@ -108,6 +111,14 @@ const SynonymFinderPage = () => {
             </button>
           </div>
         )}
+      </div>
+      <div className="used-words-section">
+        <h2>Used Words</h2>
+        <ul>
+          {usedWords.map((word, index) => (
+            <li key={index}>{word}</li>
+          ))}
+        </ul>
       </div>
       <Footer />
     </div>

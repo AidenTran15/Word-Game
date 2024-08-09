@@ -9,7 +9,7 @@
 }
 
 .synonym-finder-container {
-  width: 680px;
+  width: 730px;
   padding: 30px;
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 15px;
@@ -61,7 +61,7 @@
   font-size: 18px;
   border: none;
   border-radius: 30px;
-  background-color: #3B71CA; /* Updated color */
+  background-color: #3B71CA;
   color: #fff;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
@@ -69,7 +69,7 @@
 }
 
 .synonym-options button:hover {
-  background-color: #2d57a6; /* A darker shade for hover effect */
+  background-color: #2d57a6;
   transform: translateY(-3px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
@@ -82,6 +82,8 @@
 
 .synonym-feedback-correct {
   color: #28a745;
+  font-size: 1.6rem; /* Increase the size of the correct feedback text */
+  font-weight: bold; /* Make the text bold */
 }
 
 .synonym-finder-container button {
@@ -89,7 +91,7 @@
   font-size: 18px;
   border: none;
   border-radius: 30px;
-  background-color: #3B71CA; 
+  background-color: #3B71CA;
   color: #fff;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
@@ -97,17 +99,16 @@
 }
 
 .synonym-finder-container button:hover {
-  background-color: #2d57a6; /* A darker shade for hover effect */
+  background-color: #2d57a6;
   transform: translateY(-3px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .word-title {
-  font-size: 1.8rem; /* Increases the font size */
-  margin-top: 20px; /* Moves the element down */
-  text-align: center; /* Optional: Centers the text */
+  font-size: 1.8rem;
+  margin-top: 20px;
+  text-align: center;
   margin-bottom: 40px;
-  margin-top: 30px;
 }
 
 .timer {
@@ -141,12 +142,12 @@
 }
 
 .correct {
-  background-color: #28a745 !important; /* Green for correct */
+  background-color: #28a745 !important;
   color: white;
 }
 
 .incorrect {
-  background-color: #dc3545 !important; /* Red for incorrect */
+  background-color: #dc3545 !important;
   color: white;
 }
 
@@ -157,9 +158,52 @@
   cursor: default;
 }
 
-.synonym-feedback-correct {
-  color: #28a745;
-  font-size: 1.6rem; /* Increase the size of the correct feedback text */
-  font-weight: bold; /* Make the text bold */
+/* Used words section styling */
+.used-words-section {
+  width: 100%;
+  max-width: 750px;
+  padding: 20px;
+  margin-top: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
 }
 
+.used-words-section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2em;
+  margin-bottom: 10px;
+  text-align: center;
+  position: relative;
+  margin-top: 6px;
+  font-weight: normal;
+}
+
+.used-words-section h2::after {
+  content: '';
+  display: block;
+  width: 50%;
+  margin: 0.5em auto;
+  border-bottom: 2px solid #000;
+}
+
+.used-words-section ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.used-words-section ul li {
+  font-size: 1em;
+  margin-bottom: 5px;
+  background: #f1f1f1;
+  padding: 10px;
+  border-radius: 5px;
+  text-transform: capitalize;
+  transition: background 0.3s;
+}
+
+.used-words-section ul li:hover {
+  background: #e1e1e1;
+}
