@@ -303,7 +303,7 @@ const GamePage = () => {
           )}
         </form>
         {usedWords.length > 0 && (
-          <div className="used-words-section">
+          <div className="used-words-section-nw">
             <h2>Used Words</h2>
             <p className="tip-text"><em>Tip: Click on the word to see the definition.</em></p>
             <div className="words-grid">

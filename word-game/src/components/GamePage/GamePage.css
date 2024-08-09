@@ -220,7 +220,7 @@ button:disabled {
 }
 
 /* Used words section styling */
-.used-words-section {
+.used-words-section-nw {
     background: #fff;
     padding: 20px;
     border-radius: 10px;
@@ -234,7 +234,7 @@ button:disabled {
     margin-bottom: 50px; /* Ensure enough margin at the bottom */
 }
 
-.used-words-section h2 {
+.used-words-section-nw h2 {
     font-family: 'Playfair Display', serif;
     font-size: 2em;
     margin-bottom: 10px;
@@ -244,7 +244,7 @@ button:disabled {
     font-weight: normal;
 }
 
-.used-words-section h2::after {
+.used-words-section-nw h2::after {
     content: '';
     display: block;
     width: 50%;
@@ -252,7 +252,7 @@ button:disabled {
     border-bottom: 2px solid #000;
 }
 
-.used-words-section ul {
+.used-words-section-nw ul {
     list-style-type: none !important; /* Remove dot points */
     padding: 0 !important; /* Remove padding */
     margin: 0 !important; /* Remove margin */
@@ -327,7 +327,7 @@ button:disabled {
         top: -30px; /* Adjust based on your desired position for mobile */
     }
     
-    .used-words-section {
+    .used-words-section-nw {
         max-height: 150px; /* Adjust height for smaller screens */
         margin-bottom: 20px; /* Adjust margin for smaller screens */
     }
