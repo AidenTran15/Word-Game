@@ -155,7 +155,7 @@ const SynonymFinderPage = () => {
             )}
           </div>
           <div className="used-words-section">
-            <h2>Used Words</h2>
+            <h2>Vocabulary</h2>
             <div className="words-grid">
               {[...Array(Math.ceil(usedWords.length / 20))].map((_, i) => (
                 <div key={i} className="words-column">

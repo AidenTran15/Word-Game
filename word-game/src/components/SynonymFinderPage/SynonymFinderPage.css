@@ -41,7 +41,6 @@
 }
 
 /* Timer container styling */
-/* Timer container styling */
 .timer-container {
   display: flex;
   justify-content: center;
@@ -74,7 +73,6 @@
   font-size: 0.7em;
   text-anchor: middle;
 }
-
 
 .word-title {
   font-size: 1.5em;
@@ -118,6 +116,8 @@
   text-align: left;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   margin-top: 20px;
+  max-height: 400px; /* Set a maximum height */
+  overflow-y: auto; /* Enable vertical scrolling */
 }
 
 .used-words-section:hover {
@@ -150,23 +150,6 @@
   margin: 25px 0;
 }
 
-.words-grid ul li {
-  font-size: 1.2em;
-  margin-bottom: 5px;
-  background: #f1f1f1;
-  padding: 10px;
-  border-radius: 5px;
-  text-transform: capitalize;
-  text-align: left;
-  transition: background 0.3s;
-  cursor: pointer; /* Add cursor pointer to indicate clickability */
-}
-
-.words-grid ul li:hover {
-  background: #e1e1e1;
-}
-
-
 .words-column {
   flex: 1 1 calc(50% - 10px);
   max-width: calc(50% - 10px);
@@ -187,9 +170,9 @@
   text-transform: capitalize;
   text-align: left;
   transition: background 0.3s;
+  cursor: pointer; /* Add cursor pointer to indicate clickability */
 }
 
 .words-column ul li:hover {
   background: #e1e1e1;
 }
-
