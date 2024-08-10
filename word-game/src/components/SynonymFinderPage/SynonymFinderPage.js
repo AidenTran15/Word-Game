@@ -3,7 +3,7 @@ import axios from 'axios';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import IntroductionModal from '../SF_IntroductionModal/SF_IntroductionModal';
-import DefinitionModal from '../DefinitionModal/DefinitionModal'; // Import the DefinitionModal
+import DefinitionModal from '../DefinitionModal/DefinitionModal';
 import './SynonymFinderPage.css';
 
 const SynonymFinderPage = () => {
@@ -18,10 +18,11 @@ const SynonymFinderPage = () => {
   const [usedWords, setUsedWords] = useState([]);
   const [showDefinitionModal, setShowDefinitionModal] = useState(false);
   const [definition, setDefinition] = useState('');
-  const [englishDefinition, setEnglishDefinition] = useState(''); // Store English definition
-  const [vietnameseDefinition, setVietnameseDefinition] = useState(''); // Store Vietnamese definition
-  const [selectedWord, setSelectedWord] = useState(''); // Store the selected word
-  const [language, setLanguage] = useState('en'); // State for language toggle
+  const [englishDefinition, setEnglishDefinition] = useState('');
+  const [vietnameseDefinition, setVietnameseDefinition] = useState('');
+  const [phonetic, setPhonetic] = useState(''); // Initialize phonetic state
+  const [selectedWord, setSelectedWord] = useState('');
+  const [language, setLanguage] = useState('en');
 
   useEffect(() => {
     if (timeLeft > 0 && !showModal && !gameOver) {
@@ -44,9 +45,9 @@ const SynonymFinderPage = () => {
       setSelectedOption(null);
       setFeedback('');
       setUsedWords((prevUsedWords) => [
-        ...prevUsedWords, 
+        ...prevUsedWords,
         response.data.word,
-        ...response.data.options
+        ...response.data.options,
       ]);
     } catch (error) {
       console.error('Error fetching question:', error);
@@ -91,10 +92,10 @@ const SynonymFinderPage = () => {
         word,
       });
       const { englishDefinition, vietnameseDefinition } = response.data;
-      
+  
       setEnglishDefinition(englishDefinition);
       setVietnameseDefinition(vietnameseDefinition);
-      setSelectedWord(word);
+      setSelectedWord(word); // Set the selected word here
       setDefinition(englishDefinition); // Show English definition by default
       setShowDefinitionModal(true);
     } catch (error) {
@@ -103,10 +104,11 @@ const SynonymFinderPage = () => {
       setShowDefinitionModal(true);
     }
   };
+  
 
   const toggleLanguage = () => {
     setLanguage((prevLanguage) => (prevLanguage === 'en' ? 'vi' : 'en'));
-    setDefinition(language === 'en' ? vietnameseDefinition : englishDefinition); // Switch between definitions
+    setDefinition(language === 'en' ? vietnameseDefinition : englishDefinition);
   };
 
   return (
@@ -141,18 +143,27 @@ const SynonymFinderPage = () => {
                 </div>
                 <h3 className="word-title">Word: {question.word}</h3>
                 <div className="synonym-options">
-                  {question.options && question.options.map((option, index) => (
-                    <button
-                      key={index}
-                      onClick={() => handleOptionClick(option)}
-                      disabled={selectedOption !== null || loading}
-                      className={getButtonClass(option)}
-                    >
-                      {option}
-                    </button>
-                  ))}
+                  {question.options &&
+                    question.options.map((option, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleOptionClick(option)}
+                        disabled={selectedOption !== null || loading}
+                        className={getButtonClass(option)}
+                      >
+                        {option}
+                      </button>
+                    ))}
                 </div>
-                {feedback && <h3 className={`synonym-feedback ${feedback.startsWith('Correct') ? 'synonym-feedback-correct' : ''}`}>{feedback}</h3>}
+                {feedback && (
+                  <h3
+                    className={`synonym-feedback ${
+                      feedback.startsWith('Correct') ? 'synonym-feedback-correct' : ''
+                    }`}
+                  >
+                    {feedback}
+                  </h3>
+                )}
 
                 <button onClick={fetchQuestion} disabled={selectedOption === null || loading}>
                   {loading ? 'Loading...' : 'Next Question'}
@@ -187,14 +198,15 @@ const SynonymFinderPage = () => {
           <Footer />
         </>
       )}
-      <DefinitionModal
-        show={showDefinitionModal}
-        onClose={() => setShowDefinitionModal(false)}
-        definition={definition}
-        word={selectedWord} // Pass the clicked word
-        language={language} // Pass the current language state
-        toggleLanguage={toggleLanguage} // Pass the toggle language function
-      />
+<DefinitionModal
+  show={showDefinitionModal}
+  onClose={() => setShowDefinitionModal(false)}
+  definition={definition}
+  selectedWord={selectedWord} // Pass the selected word here
+  language={language}
+  toggleLanguage={toggleLanguage}
+/>
+
     </div>
   );
 };
