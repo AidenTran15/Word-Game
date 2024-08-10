@@ -176,3 +176,22 @@
 .words-column ul li:hover {
   background: #e1e1e1;
 }
+
+.language-toggle {
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+.toggle-button {
+  padding: 5px 10px;
+  font-size: 1em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #3B71CA;
+  color: white;
+}
+
+.toggle-button:hover {
+  background-color: #3356A8;
+}

@@ -18,6 +18,7 @@ const SynonymFinderPage = () => {
   const [usedWords, setUsedWords] = useState([]);
   const [showDefinitionModal, setShowDefinitionModal] = useState(false);
   const [definition, setDefinition] = useState('');
+  const [language, setLanguage] = useState('en'); // Add state for language toggle
 
   useEffect(() => {
     if (timeLeft > 0 && !showModal && !gameOver) {
@@ -83,16 +84,31 @@ const SynonymFinderPage = () => {
 
   const handleWordClick = async (word) => {
     try {
-      const response = await axios.get('https://api.dictionaryapi.dev/api/v2/entries/en/' + word);
-      const data = response.data;
-      if (data && data.length > 0 && data[0].meanings && data[0].meanings.length > 0) {
-        const definition = data[0].meanings[0].definitions[0].definition;
+      const response = await axios.post('http://localhost:5000/validate-word', {
+        word,
+        language,
+      });
+      const { englishDefinition, vietnameseDefinition } = response.data;
+      
+      const definition = language === 'en' ? englishDefinition : vietnameseDefinition;
+      
+      if (definition) {
         setDefinition(definition);
-        setShowDefinitionModal(true);
+      } else {
+        setDefinition('No definition found.');
       }
+      
+      setShowDefinitionModal(true);
     } catch (error) {
       console.error('Error fetching definition:', error);
+      setDefinition('No definition found.');
+      setShowDefinitionModal(true);
     }
+  };
+  
+
+  const toggleLanguage = () => {
+    setLanguage((prevLanguage) => (prevLanguage === 'en' ? 'vi' : 'en'));
   };
 
   return (
@@ -156,6 +172,11 @@ const SynonymFinderPage = () => {
           </div>
           <div className="used-words-section">
             <h2>Vocabulary</h2>
+            <div className="language-toggle">
+              <button onClick={toggleLanguage} className="toggle-button">
+                {language === 'en' ? 'VI' : 'EN'}
+              </button>
+            </div>
             <div className="words-grid">
               {[...Array(Math.ceil(usedWords.length / 20))].map((_, i) => (
                 <div key={i} className="words-column">
@@ -173,7 +194,12 @@ const SynonymFinderPage = () => {
           <Footer />
         </>
       )}
-      <DefinitionModal show={showDefinitionModal} onClose={() => setShowDefinitionModal(false)} definition={definition} />
+<DefinitionModal
+  show={showDefinitionModal}
+  onClose={() => setShowDefinitionModal(false)}
+  definition={definition}
+/>
+
     </div>
   );
 };
