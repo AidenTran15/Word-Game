@@ -3,7 +3,7 @@ import axios from 'axios';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import IntroductionModal from '../SF_IntroductionModal/SF_IntroductionModal';
-import DefinitionModal from '../DefinitionModal/DefinitionModal'; // Import the DefinitionModal
+import DefinitionModal from '../DefinitionModal/DefinitionModal';
 import './SynonymFinderPage.css';
 
 const SynonymFinderPage = () => {
@@ -18,7 +18,8 @@ const SynonymFinderPage = () => {
   const [usedWords, setUsedWords] = useState([]);
   const [showDefinitionModal, setShowDefinitionModal] = useState(false);
   const [definition, setDefinition] = useState('');
-  const [language, setLanguage] = useState('en'); // Add state for language toggle
+  const [language, setLanguage] = useState('en');
+  const [selectedWord, setSelectedWord] = useState(''); // New state to store the selected word
 
   useEffect(() => {
     if (timeLeft > 0 && !showModal && !gameOver) {
@@ -84,6 +85,7 @@ const SynonymFinderPage = () => {
 
   const handleWordClick = async (word) => {
     try {
+      setSelectedWord(word); // Set the selected word
       const response = await axios.post('http://localhost:5000/validate-word', {
         word,
         language,
@@ -105,7 +107,6 @@ const SynonymFinderPage = () => {
       setShowDefinitionModal(true);
     }
   };
-  
 
   const toggleLanguage = () => {
     setLanguage((prevLanguage) => (prevLanguage === 'en' ? 'vi' : 'en'));
@@ -194,12 +195,12 @@ const SynonymFinderPage = () => {
           <Footer />
         </>
       )}
-<DefinitionModal
-  show={showDefinitionModal}
-  onClose={() => setShowDefinitionModal(false)}
-  definition={definition}
-/>
-
+      <DefinitionModal
+        show={showDefinitionModal}
+        onClose={() => setShowDefinitionModal(false)}
+        word={selectedWord} // Pass the selected word to the modal
+        definition={definition}
+      />
     </div>
   );
 };

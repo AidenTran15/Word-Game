@@ -9,34 +9,51 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
-}
-
-.modal-content {
+  }
+  
+  .modal-content {
     background-color: white;
-    padding: 20px;
+    padding: 40px; /* Adjusted padding */
     border-radius: 8px;
     text-align: center;
-    width: 500px; /* Increased width */
-}
-
-.modal-content h2 {
-    margin-bottom: 15px;
-}
-
-.modal-content p {
-    margin-bottom: 20px;
-    font-size: 16px;
-}
-
-.modal-content button {
-    padding: 10px 20px;
+    width: 700px; /* Increased the width of the modal */
+  }
+  
+  .modal-content h2 {
+    margin-top: 0; /* Removed any top margin */
+    margin-bottom: 30px; /* Increased margin below the title */
+    font-size: 30px; /* Increased font size of the title */
+    font-weight: bold; /* Made the title bold */
+    text-decoration: underline; /* Added underline to the title */
+  }
+  
+  .modal-content h3 {
+    margin-top: 20px; /* Adjusted margin above the word */
+    margin-bottom: 20px; /* Adjusted margin below the word */
+    font-size: 28px; /* Increased font size of the word */
+    font-weight: normal; /* Kept the word text unbold */
+  }
+  
+  .modal-content p {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    font-size: 24px; /* Increased font size of the definition */
+    font-weight: normal; /* Kept the definition text unbold */
+  }
+  
+  .modal-content button {
+    padding: 14px 28px;
     background-color: #007BFF;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-}
-
-.modal-content button:hover {
+    font-size: 18px; /* Increased font size of the button text */
+    font-weight: normal; /* Kept the button text unbold */
+    margin-top: 40px; /* Added margin above the button to move it further down */
+  }
+  
+  .modal-content button:hover {
     background-color: #0056b3;
-}
+  }
+  
