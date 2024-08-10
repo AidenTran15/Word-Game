@@ -3,6 +3,7 @@ import axios from 'axios';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import IntroductionModal from '../SF_IntroductionModal/SF_IntroductionModal';
+import DefinitionModal from '../DefinitionModal/DefinitionModal'; // Import the DefinitionModal
 import './SynonymFinderPage.css';
 
 const SynonymFinderPage = () => {
@@ -15,6 +16,8 @@ const SynonymFinderPage = () => {
   const [timeLeft, setTimeLeft] = useState(60);
   const [gameOver, setGameOver] = useState(false);
   const [usedWords, setUsedWords] = useState([]);
+  const [showDefinitionModal, setShowDefinitionModal] = useState(false);
+  const [definition, setDefinition] = useState('');
 
   useEffect(() => {
     if (timeLeft > 0 && !showModal && !gameOver) {
@@ -78,6 +81,20 @@ const SynonymFinderPage = () => {
     fetchQuestion();
   };
 
+  const handleWordClick = async (word) => {
+    try {
+      const response = await axios.get('https://api.dictionaryapi.dev/api/v2/entries/en/' + word);
+      const data = response.data;
+      if (data && data.length > 0 && data[0].meanings && data[0].meanings.length > 0) {
+        const definition = data[0].meanings[0].definitions[0].definition;
+        setDefinition(definition);
+        setShowDefinitionModal(true);
+      }
+    } catch (error) {
+      console.error('Error fetching definition:', error);
+    }
+  };
+
   return (
     <div className="synonym-finder-page">
       {showModal && <IntroductionModal onClose={closeModal} />}
@@ -98,7 +115,7 @@ const SynonymFinderPage = () => {
                     />
                     <path
                       className="timer-fg"
-                      strokeDasharray={`${(timeLeft / 60) * 100}, 100`} // Adjust based on total time
+                      strokeDasharray={`${(timeLeft / 60) * 100}, 100`}
                       d="M18 2.0845
                           a 15.9155 15.9155 0 0 1 0 31.831
                           a 15.9155 15.9155 0 0 1 0 -31.831"
@@ -144,7 +161,9 @@ const SynonymFinderPage = () => {
                 <div key={i} className="words-column">
                   <ul>
                     {usedWords.slice(i * 20, (i + 1) * 20).map((word, index) => (
-                      <li key={index}>{word}</li>
+                      <li key={index} onClick={() => handleWordClick(word)}>
+                        {word}
+                      </li>
                     ))}
                   </ul>
                 </div>
@@ -154,6 +173,7 @@ const SynonymFinderPage = () => {
           <Footer />
         </>
       )}
+      <DefinitionModal show={showDefinitionModal} onClose={() => setShowDefinitionModal(false)} definition={definition} />
     </div>
   );
 };
