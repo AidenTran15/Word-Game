@@ -9,34 +9,34 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
-  }
-  
-  .modal-content {
+}
+
+.modal-content {
     background-color: white;
     padding: 20px;
     border-radius: 8px;
     text-align: center;
-    width: 300px;
-  }
-  
-  .modal-content h2 {
+    width: 500px; /* Increased width */
+}
+
+.modal-content h2 {
     margin-bottom: 15px;
-  }
-  
-  .modal-content p {
+}
+
+.modal-content p {
     margin-bottom: 20px;
     font-size: 16px;
-  }
-  
-  .modal-content button {
+}
+
+.modal-content button {
     padding: 10px 20px;
     background-color: #007BFF;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-  }
-  
-  .modal-content button:hover {
+}
+
+.modal-content button:hover {
     background-color: #0056b3;
-  }
+}
