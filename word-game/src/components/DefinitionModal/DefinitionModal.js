@@ -9,7 +9,7 @@ const DefinitionModal = ({ show, onClose, definition, selectedWord, language, to
       <div className="modal-content">
         <h2>Word Definition</h2>
         <h3>{selectedWord || 'No word selected'}</h3> {/* Display the selected word */}
-        <h3>{definition || 'No definition found.'}</h3>
+        <h4>{definition || 'No definition found.'}</h4>
         <button onClick={toggleLanguage}>
           {language === 'en' ? 'View in Vietnamese' : 'View in English'}
         </button>
