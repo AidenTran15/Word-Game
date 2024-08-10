@@ -3,7 +3,7 @@ import axios from 'axios';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import IntroductionModal from '../SF_IntroductionModal/SF_IntroductionModal';
-import DefinitionModal from '../DefinitionModal/DefinitionModal';
+import DefinitionModal from '../DefinitionModal/DefinitionModal'; // Import the DefinitionModal
 import './SynonymFinderPage.css';
 
 const SynonymFinderPage = () => {
@@ -18,8 +18,10 @@ const SynonymFinderPage = () => {
   const [usedWords, setUsedWords] = useState([]);
   const [showDefinitionModal, setShowDefinitionModal] = useState(false);
   const [definition, setDefinition] = useState('');
-  const [language, setLanguage] = useState('en');
-  const [selectedWord, setSelectedWord] = useState(''); // New state to store the selected word
+  const [englishDefinition, setEnglishDefinition] = useState(''); // Store English definition
+  const [vietnameseDefinition, setVietnameseDefinition] = useState(''); // Store Vietnamese definition
+  const [selectedWord, setSelectedWord] = useState(''); // Store the selected word
+  const [language, setLanguage] = useState('en'); // State for language toggle
 
   useEffect(() => {
     if (timeLeft > 0 && !showModal && !gameOver) {
@@ -85,21 +87,15 @@ const SynonymFinderPage = () => {
 
   const handleWordClick = async (word) => {
     try {
-      setSelectedWord(word); // Set the selected word
       const response = await axios.post('http://localhost:5000/validate-word', {
         word,
-        language,
       });
       const { englishDefinition, vietnameseDefinition } = response.data;
       
-      const definition = language === 'en' ? englishDefinition : vietnameseDefinition;
-      
-      if (definition) {
-        setDefinition(definition);
-      } else {
-        setDefinition('No definition found.');
-      }
-      
+      setEnglishDefinition(englishDefinition);
+      setVietnameseDefinition(vietnameseDefinition);
+      setSelectedWord(word);
+      setDefinition(englishDefinition); // Show English definition by default
       setShowDefinitionModal(true);
     } catch (error) {
       console.error('Error fetching definition:', error);
@@ -110,6 +106,7 @@ const SynonymFinderPage = () => {
 
   const toggleLanguage = () => {
     setLanguage((prevLanguage) => (prevLanguage === 'en' ? 'vi' : 'en'));
+    setDefinition(language === 'en' ? vietnameseDefinition : englishDefinition); // Switch between definitions
   };
 
   return (
@@ -173,11 +170,6 @@ const SynonymFinderPage = () => {
           </div>
           <div className="used-words-section">
             <h2>Vocabulary</h2>
-            <div className="language-toggle">
-              <button onClick={toggleLanguage} className="toggle-button">
-                {language === 'en' ? 'VI' : 'EN'}
-              </button>
-            </div>
             <div className="words-grid">
               {[...Array(Math.ceil(usedWords.length / 20))].map((_, i) => (
                 <div key={i} className="words-column">
@@ -198,8 +190,10 @@ const SynonymFinderPage = () => {
       <DefinitionModal
         show={showDefinitionModal}
         onClose={() => setShowDefinitionModal(false)}
-        word={selectedWord} // Pass the selected word to the modal
         definition={definition}
+        word={selectedWord} // Pass the clicked word
+        language={language} // Pass the current language state
+        toggleLanguage={toggleLanguage} // Pass the toggle language function
       />
     </div>
   );

@@ -21,24 +21,36 @@
   
   .modal-content h2 {
     margin-top: 0; /* Removed any top margin */
-    margin-bottom: 30px; /* Increased margin below the title */
+    margin-bottom: 20px; /* Increased margin below the title */
     font-size: 30px; /* Increased font size of the title */
     font-weight: bold; /* Made the title bold */
     text-decoration: underline; /* Added underline to the title */
   }
   
   .modal-content h3 {
-    margin-top: 20px; /* Adjusted margin above the word */
-    margin-bottom: 20px; /* Adjusted margin below the word */
-    font-size: 28px; /* Increased font size of the word */
-    font-weight: normal; /* Kept the word text unbold */
-  }
-  
-  .modal-content p {
-    margin-top: 20px;
-    margin-bottom: 30px;
+    margin-top: 20px; /* Adjusted margin above the word and definition */
+    margin-bottom: 20px; /* Increased margin below the definition */
     font-size: 24px; /* Increased font size of the definition */
     font-weight: normal; /* Kept the definition text unbold */
+  }
+  
+  .modal-content .language-toggle {
+    margin-top: 20px;
+    margin-bottom: 20px; /* Adjusted margin for better spacing */
+  }
+  
+  .modal-content .toggle-button {
+    padding: 8px 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px; /* Increased font size of the button text */
+  }
+  
+  .modal-content .toggle-button:hover {
+    background-color: #0056b3;
   }
   
   .modal-content button {
@@ -50,7 +62,7 @@
     cursor: pointer;
     font-size: 18px; /* Increased font size of the button text */
     font-weight: normal; /* Kept the button text unbold */
-    margin-top: 40px; /* Added margin above the button to move it further down */
+    margin-top: 20px; /* Added margin above the button to move it down */
   }
   
   .modal-content button:hover {
