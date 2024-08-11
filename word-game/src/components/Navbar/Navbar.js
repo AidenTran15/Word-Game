@@ -15,11 +15,11 @@ const Navbar = () => {
             <img src={WordGameHeader} alt="Word Game" className="header-image" />
             <div className="nav-links">
                 <div className="dropdown">
-                    <button className="dropdown-button" onClick={toggleDropdown}>
-                        More Game
+                    <button className="dropdown-toggle blue-button" onClick={toggleDropdown}>
+                        More Game <span className="arrow">&#9660;</span> {/* Down arrow icon */}
                     </button>
                     {dropdownOpen && (
-                        <div className="dropdown-content">
+                        <div className="dropdown-menu">
                             <Link to="/game" className="dropdown-item">Next Word</Link>
                             <Link to="/synonym-finder" className="dropdown-item">Synonym Finder</Link>
                         </div>
