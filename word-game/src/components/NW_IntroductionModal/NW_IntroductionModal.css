@@ -21,6 +21,35 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.modal-content h2 {
+    font-size: 1.5em; /* Adjust the size as needed */
+    margin-bottom: 10px;
+    font-weight: bold; /* Ensure the text remains bold */
+}
+
+.modal-content p {
+    font-size: 1.2em; /* Increase the font size of the paragraph text */
+    margin-top: 10px;
+    line-height: 1.5; /* Improve readability with increased line height */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 600px) {
+    .modal-content {
+        max-width: 80% !important; /* Force the width to adjust */
+        padding: 15px; /* Adjusted padding for smaller screens */
+    }
+    
+    .modal-content h2 {
+        font-size: 2em; /* Adjust the header size for mobile screens */
+        padding-bottom: 20px;
+    }
+    
+    .modal-content p {
+        font-size: 1.2em; /* Adjust the paragraph text size for mobile screens */
+    }
+}
+
 .modal-button {
     margin-top: 20px;
     padding: 10px 20px;
