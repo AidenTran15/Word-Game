@@ -309,46 +309,49 @@ button:disabled {
 }
 
 /* Media query for smaller screens */
+
 @media (max-width: 600px) {
     .stats-container {
-        position: relative; /* Change position to relative for smaller screens */
-        right: auto; /* Reset right position */
-        margin-top: 80px; /* Adjust margin for smaller screens */
-        max-width: 100%; /* Ensure it takes full width for smaller screens */
-        width: 100%; /* Ensure it takes full width */
+        position: relative;
+        right: auto;
+        margin-top: 80px;
+        max-width: 100%;
+        width: 100%;
     }
 
     .game-container {
-        padding: 10px; /* Adjust padding for smaller screens */
-        margin-top: 80px; /* Adjust margin for smaller screens */
-        top: 0px; /* Reset top position for smaller screens */
-        width: 90%; /* Decrease width for smaller screens */
-        max-width: 100%; /* Ensure it takes full width */
+        padding: 10px;
+        margin-top: 20px;
+        top: 0px;
+        max-width: 88%; /* Decreased the width for mobile */
     }
 
     .game-container.moved-up {
-        top: -30px; /* Adjust based on your desired position for mobile */
+        top: -30px;
     }
     
     .used-words-section-nw {
-        max-height: 150px; /* Adjust height for smaller screens */
-        margin-bottom: 20px; /* Adjust margin for smaller screens */
-        width: 90%; /* Decrease width for smaller screens */
-        max-width: 100%; /* Ensure it takes full width */
+        max-height: 150px;
+        margin-bottom: 20px;
     }
 
     .blue-button {
-        padding: 8px 16px; /* Make the button smaller */
-        font-size: 16px; /* Adjust font size */
-        margin-right: 10px; /* Move the button slightly to the right */
+        padding: 8px 16px;
+        font-size: 16px;
+        margin-right: 10px;
     }
 
     .header-image {
-        height: 50px; /* Adjust header image size for mobile */
+        height: 50px;
     }
 
     .nav-links {
-        padding-right: 20px; /* Adjust right padding for mobile */
+        padding-right: 20px;
+    }
+
+    .game-form {
+        max-width: 95%; /* Decreased the width for the form */
+        padding: 20px; /* Adjust padding for mobile */
     }
 }
 
