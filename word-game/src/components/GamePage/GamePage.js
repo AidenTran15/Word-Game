@@ -28,6 +28,7 @@ const GamePage = () => {
   });
   const [positionUp, setPositionUp] = useState(false);
   const [showResultButton, setShowResultButton] = useState(false);
+  const [showResultModal, setShowResultModal] = useState(false); // New state for result modal visibility
   const [showModal, setShowModal] = useState(true);  // Show the modal initially
   const [resultWords, setResultWords] = useState([]);
   const [showDefinitionModal, setShowDefinitionModal] = useState(false);
@@ -50,8 +51,9 @@ const GamePage = () => {
     setNextWord('Computer wins!');
     setError(null);
     setGameInProgress(false);
-    setShowResultButton(true);
+    setShowResultButton(true); // Enable the result button
     setGameOver(true);
+    // Do not change showResultModal here
   }, [updateRecord]);
 
   const handleWin = () => {
@@ -169,6 +171,7 @@ const GamePage = () => {
     setWordsEntered(0);
     setPositionUp(false);
     setShowResultButton(false);
+    setShowResultModal(false); // Ensure modal is hidden on reset
     setGameOver(false);
   };
 
@@ -186,7 +189,7 @@ const GamePage = () => {
       } else {
         setResultWords([]);
       }
-      setShowResultButton(true);
+      setShowResultModal(true); // Show the modal when the button is clicked
     } catch (error) {
       setError('Error fetching result words');
     }
@@ -344,7 +347,7 @@ const GamePage = () => {
             )}
           </div>
           <Footer />
-          <ResultModal show={showResultButton} onClose={() => setShowResultButton(false)} words={resultWords} />
+          <ResultModal show={showResultModal} onClose={() => setShowResultModal(false)} words={resultWords} />
           <DefinitionModal
             show={showDefinitionModal}
             onClose={() => setShowDefinitionModal(false)}
