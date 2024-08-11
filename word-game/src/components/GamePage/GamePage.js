@@ -6,7 +6,7 @@ import Footer from '../Footer/Footer';
 import UserStats from '../UserStats/UserStats';
 import ResultModal from '../ResultModal/ResultModal';
 import DefinitionModal from '../DefinitionModal/DefinitionModal';
-import NW_IntroductionModal from '../NW_IntroductionModal/NW_IntroductionModal';
+import NW_IntroductionModal from '../NW_IntroductionModal/NW_IntroductionModal'; 
 import { FaVolumeUp, FaMicrophone } from 'react-icons/fa';
 import './GamePage.css';
 
@@ -17,7 +17,7 @@ const GamePage = () => {
   const [nextWord, setNextWord] = useState('');
   const [error, setError] = useState(null);
   const [usedWords, setUsedWords] = useState([]);
-  const [gameInProgress, setGameInProgress] = useState(false); // Start with game disabled
+  const [gameInProgress, setGameInProgress] = useState(true);
   const [wordSubmitted, setWordSubmitted] = useState(false);
   const [timeLeft, setTimeLeft] = useState(30);
   const [gameStarted, setGameStarted] = useState(false);
@@ -28,8 +28,7 @@ const GamePage = () => {
   });
   const [positionUp, setPositionUp] = useState(false);
   const [showResultButton, setShowResultButton] = useState(false);
-  const [showIntroductionModal, setShowIntroductionModal] = useState(true); // Separate state for Introduction modal
-  const [showResultModal, setShowResultModal] = useState(false); // Separate state for Result modal
+  const [showModal, setShowModal] = useState(true);  // Show the modal initially
   const [resultWords, setResultWords] = useState([]);
   const [showDefinitionModal, setShowDefinitionModal] = useState(false);
   const [definition, setDefinition] = useState('');
@@ -187,7 +186,7 @@ const GamePage = () => {
       } else {
         setResultWords([]);
       }
-      setShowResultModal(true);
+      setShowResultButton(true);
     } catch (error) {
       setError('Error fetching result words');
     }
@@ -244,115 +243,118 @@ const GamePage = () => {
   };
 
   const handleModalClose = () => {
-    setShowIntroductionModal(false); // This will close the introduction modal
-    setGameInProgress(true); // Enable the game after closing the modal
+    setShowModal(false);  // Close the modal when "I Understand" is clicked
   };
 
   return (
     <div className="game-page">
-      {showIntroductionModal && <NW_IntroductionModal onClose={handleModalClose} />} {/* Separate state for Introduction Modal */}
-
-      <Navbar />
-      <div className="stats-container">
-        <UserStats userName={userName} wordsEntered={wordsEntered} record={record} />
-      </div>
-      <div className={`game-container ${positionUp ? 'moved-up' : ''}`}>
-        <form onSubmit={handleSubmit} className="game-form">
-          <h2 className="lets-play">Let's Play</h2>
-          <div className="timer-container">
-            {gameStarted && gameInProgress && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
-              <svg className="timer-svg" viewBox="0 0 36 36">
-                <path
-                  className="timer-bg"
-                  d="M18 2.0845
-                      a 15.9155 15.9155 0 0 1 0 31.831
-                      a 15.9155 15.9155 0 0 1 0 -31.831"
-                />
-                <path
-                  className="timer-fg"
-                  strokeDasharray={`${(timeLeft / 30) * 100}, 100`}
-                  d="M18 2.0845
-                      a 15.9155 15.9155 0 0 1 0 31.831
-                      a 15.9155 15.9155 0 0 1 0 -31.831"
-                />
-                <text x="18" y="20.35" className="timer-text" textAnchor="middle" dy=".3em">
-                  {timeLeft}s
-                </text>
-              </svg>
-            )}
+      {showModal ? (
+        <NW_IntroductionModal onClose={handleModalClose} />
+      ) : (
+        <>
+          <Navbar />
+          <div className="stats-container">
+            <UserStats userName={userName} wordsEntered={wordsEntered} record={record} />
           </div>
-          {nextWord && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
-            <h2 className="next-word-container">
-              Next word: {nextWord}
-              <FaVolumeUp onClick={() => handleSpeak(nextWord)} className="speaker-icon" />
-            </h2>
-          )}
-          {(!nextWord || nextWord === `${userName} won!` || nextWord === 'Computer wins!') && <h2>{nextWord}</h2>}
-          <div className="input-container">
-            <input
-              type="text"
-              value={word}
-              onChange={handleWordChange}
-              placeholder="Enter the word"
-              disabled={!gameInProgress} // Disable input until the modal is closed
-            />
-            <FaMicrophone onClick={handleVoiceInput} className="microphone-icon" />
-          </div>
-          {error && <p className="error-message">{error}</p>}
-          <div className="button-group">
-            <button type="submit" disabled={!gameInProgress}>
-              Submit
-            </button>
-            {gameStarted && gameInProgress && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
-              <button type="button" onClick={handleSurrender}>
-                Surrender
-              </button>
-            )}
-            {(!gameInProgress || gameOver) && (
-              <button type="button" onClick={handleReset}>
-                Reset
-              </button>
-            )}
-          </div>
-          {gameOver && (
-            <div className="button-group">
-              {showResultButton && nextWord !== `${userName} won!` && (
-                <button className="result-button" onClick={handleSeeResult}>
-                  See result
-                </button>
+          <div className={`game-container ${positionUp ? 'moved-up' : ''}`}>
+            <form onSubmit={handleSubmit} className="game-form">
+              <h2 className="lets-play">Let's Play</h2>
+              <div className="timer-container">
+                {gameStarted && gameInProgress && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
+                  <svg className="timer-svg" viewBox="0 0 36 36">
+                    <path
+                      className="timer-bg"
+                      d="M18 2.0845
+                          a 15.9155 15.9155 0 0 1 0 31.831
+                          a 15.9155 15.9155 0 0 1 0 -31.831"
+                    />
+                    <path
+                      className="timer-fg"
+                      strokeDasharray={`${(timeLeft / 30) * 100}, 100`}
+                      d="M18 2.0845
+                          a 15.9155 15.9155 0 0 1 0 31.831
+                          a 15.9155 15.9155 0 0 1 0 -31.831"
+                    />
+                    <text x="18" y="20.35" className="timer-text" textAnchor="middle" dy=".3em">
+                      {timeLeft}s
+                    </text>
+                  </svg>
+                )}
+              </div>
+              {nextWord && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
+                <h2 className="next-word-container">
+                  Next word: {nextWord}
+                  <FaVolumeUp onClick={() => handleSpeak(nextWord)} className="speaker-icon" />
+                </h2>
               )}
-            </div>
-          )}
-        </form>
+              {(!nextWord || nextWord === `${userName} won!` || nextWord === 'Computer wins!') && <h2>{nextWord}</h2>}
+              <div className="input-container">
+                <input
+                  type="text"
+                  value={word}
+                  onChange={handleWordChange}
+                  placeholder="Enter the word"
+                  disabled={!gameInProgress}
+                />
+                <FaMicrophone onClick={handleVoiceInput} className="microphone-icon" />
+              </div>
+              {error && <p className="error-message">{error}</p>}
+              <div className="button-group">
+                <button type="submit" disabled={!gameInProgress}>
+                  Submit
+                </button>
+                {gameStarted && gameInProgress && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
+                  <button type="button" onClick={handleSurrender}>
+                    Surrender
+                  </button>
+                )}
+                {(!gameInProgress || gameOver) && (
+                  <button type="button" onClick={handleReset}>
+                    Reset
+                  </button>
+                )}
+              </div>
+              {gameOver && (
+                <div className="button-group">
+                  {showResultButton && nextWord !== `${userName} won!` && (
+                    <button className="result-button" onClick={handleSeeResult}>
+                      See result
+                    </button>
+                  )}
+                </div>
+              )}
+            </form>
 
-        {usedWords.length > 0 && (
-          <div className="used-words-section-nw">
-            <h2>Used Words</h2>
-            <p className="tip-text">
-              <em>Tip: Click on the word to see the definition.</em>
-            </p>
-            <div className="words-grid">
-              <ul>
-                {usedWords.map((word, index) => (
-                  <li key={index} onClick={() => handleWordClick(word)}>
-                    {word.charAt(0).toUpperCase() + word.slice(1)}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {usedWords.length > 0 && (
+              <div className="used-words-section-nw">
+                <h2>Used Words</h2>
+                <p className="tip-text">
+                  <em>Tip: Click on the word to see the definition.</em>
+                </p>
+                <div className="words-grid">
+                  <ul>
+                    {usedWords.map((word, index) => (
+                      <li key={index} onClick={() => handleWordClick(word)}>
+                        {word.charAt(0).toUpperCase() + word.slice(1)}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )}
           </div>
-        )}
-      </div>
-      <Footer />
-      <ResultModal show={showResultModal} onClose={() => setShowResultModal(false)} words={resultWords} /> {/* ResultModal state updated */}
-      <DefinitionModal
-        show={showDefinitionModal}
-        onClose={() => setShowDefinitionModal(false)}
-        definition={definition}
-        selectedWord={selectedWord}
-        language={language}
-        toggleLanguage={toggleLanguage}
-      />
+          <Footer />
+          <ResultModal show={showResultButton} onClose={() => setShowResultButton(false)} words={resultWords} />
+          <DefinitionModal
+            show={showDefinitionModal}
+            onClose={() => setShowDefinitionModal(false)}
+            definition={definition}
+            selectedWord={selectedWord}
+            language={language}
+            toggleLanguage={toggleLanguage}
+          />
+        </>
+      )}
     </div>
   );
 };
