@@ -6,7 +6,7 @@ import Footer from '../Footer/Footer';
 import UserStats from '../UserStats/UserStats';
 import ResultModal from '../ResultModal/ResultModal';
 import DefinitionModal from '../DefinitionModal/DefinitionModal';
-import { FaVolumeUp, FaMicrophone } from 'react-icons/fa'; // Import the speaker and microphone icons
+import { FaVolumeUp, FaMicrophone } from 'react-icons/fa';
 import './GamePage.css';
 
 const GamePage = () => {
@@ -31,7 +31,11 @@ const GamePage = () => {
   const [resultWords, setResultWords] = useState([]);
   const [showDefinitionModal, setShowDefinitionModal] = useState(false);
   const [definition, setDefinition] = useState('');
-  const [gameOver, setGameOver] = useState(false);
+  const [englishDefinition, setEnglishDefinition] = useState(''); // Store English definition
+  const [vietnameseDefinition, setVietnameseDefinition] = useState(''); // Store Vietnamese definition
+  const [selectedWord, setSelectedWord] = useState(''); // Store the selected word
+  const [gameOver, setGameOver] = useState(false); 
+  const [language, setLanguage] = useState('en'); // State for language toggle
 
   const updateRecord = useCallback(() => {
     if (wordsEntered > record) {
@@ -88,7 +92,7 @@ const GamePage = () => {
 
   const fetchNextWordFromAI = async (userWord, attempts = 0) => {
     const lastLetter = userWord[userWord.length - 1];
-    if (attempts > 3) { // Match the server retry limit
+    if (attempts > 3) {
       setNextWord('You Won!');
       setGameInProgress(false);
       setGameOver(true);
@@ -106,16 +110,13 @@ const GamePage = () => {
         setUsedWords([...usedWords, userWord.toLowerCase(), newWord]);
         setWordsEntered(wordsEntered + 1);
       } else {
-        fetchNextWordFromAI(userWord, attempts + 1); // Retry with incremented attempts
+        fetchNextWordFromAI(userWord, attempts + 1);
       }
       setWord('');
     } catch (error) {
       if (error.response && error.response.status === 429) {
-        // Retry after a delay if rate limit is hit
-        console.error('Too many requests, retrying after delay...');
-        setTimeout(() => fetchNextWordFromAI(userWord, attempts + 1), Math.pow(2, attempts) * 1000); // Exponential backoff
+        setTimeout(() => fetchNextWordFromAI(userWord, attempts + 1), Math.pow(2, attempts) * 1000);
       } else {
-        console.error('Error fetching next word from AI:', error.response ? error.response.data : error.message);
         setError('Error fetching next word from AI');
       }
     }
@@ -142,7 +143,7 @@ const GamePage = () => {
       return;
     }
 
-    setError(null); // Clear error message if the word is valid
+    setError(null);
     setWordSubmitted(true);
     if (!gameStarted) {
       setGameStarted(true);
@@ -171,24 +172,21 @@ const GamePage = () => {
   };
 
   const handleSeeResult = async () => {
-    setError(null); // Ensure the error state is cleared
+    setError(null);
     const lastLetter = usedWords[usedWords.length - 1].slice(-1).toLowerCase();
-    console.log(`Last letter for result: '${lastLetter}'`);
     try {
       const response = await axios.post('http://localhost:5000/generate-word', {
         lastLetter: lastLetter,
       });
       const { data } = response;
-      console.log('Response data for result:', data);
 
       if (data && data.word) {
-        setResultWords([data.word]); // Put the single word in an array for rendering
+        setResultWords([data.word]);
       } else {
         setResultWords([]);
       }
       setShowModal(true);
     } catch (error) {
-      console.error('Error fetching result words:', error);
       setError('Error fetching result words');
     }
   };
@@ -196,22 +194,25 @@ const GamePage = () => {
   const handleWordChange = (e) => {
     setWord(e.target.value);
     if (error) {
-      setError(null); // Clear error message when user starts typing a new word
+      setError(null);
     }
   };
 
   const handleWordClick = async (word) => {
     try {
-      const response = await axios.get('https://api.dictionaryapi.dev/api/v2/entries/en/' + word);
-      const data = response.data;
-      if (data && data.length > 0 && data[0].meanings && data[0].meanings.length > 0) {
-        const definition = data[0].meanings[0].definitions[0].definition;
-        setDefinition(definition);
-        setShowDefinitionModal(true);
-      }
+      const response = await axios.post('http://localhost:5000/validate-word', {
+        word,
+      });
+      const { englishDefinition, vietnameseDefinition } = response.data;
+
+      setEnglishDefinition(englishDefinition);
+      setVietnameseDefinition(vietnameseDefinition);
+      setSelectedWord(word);
+      setDefinition(englishDefinition);
+      setShowDefinitionModal(true);
     } catch (error) {
-      console.error('Error fetching definition:', error);
-      setError('Error fetching definition');
+      setDefinition('No definition found.');
+      setShowDefinitionModal(true);
     }
   };
 
@@ -235,6 +236,11 @@ const GamePage = () => {
     };
   };
 
+  const toggleLanguage = () => {
+    setLanguage((prevLanguage) => (prevLanguage === 'en' ? 'vi' : 'en'));
+    setDefinition(language === 'en' ? vietnameseDefinition : englishDefinition);
+  };
+
   return (
     <div className="game-page">
       <Navbar />
@@ -242,73 +248,80 @@ const GamePage = () => {
         <UserStats userName={userName} wordsEntered={wordsEntered} record={record} />
       </div>
       <div className={`game-container ${positionUp ? 'moved-up' : ''}`}>
-      <form onSubmit={handleSubmit} className="game-form">
-  <h2 className="lets-play">Let's Play</h2>
-
-  {/* Move the timer container below the "Let's Play" heading */}
-  <div className="timer-container">
-    {gameStarted && gameInProgress && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
-      <svg className="timer-svg" viewBox="0 0 36 36">
-        <path
-          className="timer-bg"
-          d="M18 2.0845
-              a 15.9155 15.9155 0 0 1 0 31.831
-              a 15.9155 15.9155 0 0 1 0 -31.831"
-        />
-        <path
-          className="timer-fg"
-          strokeDasharray={`${(timeLeft / 30) * 100}, 100`}
-          d="M18 2.0845
-              a 15.9155 15.9155 0 0 1 0 31.831
-              a 15.9155 15.9155 0 0 1 0 -31.831"
-        />
-        <text x="18" y="20.35" className="timer-text" textAnchor="middle" dy=".3em">
-          {timeLeft}s
-        </text>
-      </svg>
-    )}
-  </div>
-
-  {nextWord && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
-    <h2 className="next-word-container">
-      Next word: {nextWord}
-      <FaVolumeUp onClick={() => handleSpeak(nextWord)} className="speaker-icon" />
-    </h2>
-  )}
-  {(!nextWord || nextWord === `${userName} won!` || nextWord === 'Computer wins!') && (
-    <h2>{nextWord}</h2>
-  )}
-  <div className="input-container">
-    <input 
-      type="text" 
-      value={word}
-      onChange={handleWordChange}
-      placeholder="Enter the word"
-      disabled={!gameInProgress}
-    />
-    <FaMicrophone onClick={handleVoiceInput} className="microphone-icon" />
-  </div>
-  {error && <p className="error-message">{error}</p>}
-  <div className="button-group">
-    <button type="submit" disabled={!gameInProgress}>Submit</button>
-    {gameStarted && gameInProgress && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
-      <button type="button" onClick={handleSurrender}>Surrender</button>
-    )}
-    {(!gameInProgress || gameOver) && (
-      <button type="button" onClick={handleReset}>Reset</button>
-    )}
-  </div>
-  {gameOver && (
-    <div className="button-group">
-      {showResultButton && nextWord !== `${userName} won!` && <button className="result-button" onClick={handleSeeResult}>See result</button>}
-    </div>
-  )}
-</form>
+        <form onSubmit={handleSubmit} className="game-form">
+          <h2 className="lets-play">Let's Play</h2>
+          <div className="timer-container">
+            {gameStarted && gameInProgress && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
+              <svg className="timer-svg" viewBox="0 0 36 36">
+                <path
+                  className="timer-bg"
+                  d="M18 2.0845
+                      a 15.9155 15.9155 0 0 1 0 31.831
+                      a 15.9155 15.9155 0 0 1 0 -31.831"
+                />
+                <path
+                  className="timer-fg"
+                  strokeDasharray={`${(timeLeft / 30) * 100}, 100`}
+                  d="M18 2.0845
+                      a 15.9155 15.9155 0 0 1 0 31.831
+                      a 15.9155 15.9155 0 0 1 0 -31.831"
+                />
+                <text x="18" y="20.35" className="timer-text" textAnchor="middle" dy=".3em">
+                  {timeLeft}s
+                </text>
+              </svg>
+            )}
+          </div>
+          {nextWord && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
+            <h2 className="next-word-container">
+              Next word: {nextWord}
+              <FaVolumeUp onClick={() => handleSpeak(nextWord)} className="speaker-icon" />
+            </h2>
+          )}
+          {(!nextWord || nextWord === `${userName} won!` || nextWord === 'Computer wins!') && <h2>{nextWord}</h2>}
+          <div className="input-container">
+            <input
+              type="text"
+              value={word}
+              onChange={handleWordChange}
+              placeholder="Enter the word"
+              disabled={!gameInProgress}
+            />
+            <FaMicrophone onClick={handleVoiceInput} className="microphone-icon" />
+          </div>
+          {error && <p className="error-message">{error}</p>}
+          <div className="button-group">
+            <button type="submit" disabled={!gameInProgress}>
+              Submit
+            </button>
+            {gameStarted && gameInProgress && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
+              <button type="button" onClick={handleSurrender}>
+                Surrender
+              </button>
+            )}
+            {(!gameInProgress || gameOver) && (
+              <button type="button" onClick={handleReset}>
+                Reset
+              </button>
+            )}
+          </div>
+          {gameOver && (
+            <div className="button-group">
+              {showResultButton && nextWord !== `${userName} won!` && (
+                <button className="result-button" onClick={handleSeeResult}>
+                  See result
+                </button>
+              )}
+            </div>
+          )}
+        </form>
 
         {usedWords.length > 0 && (
           <div className="used-words-section-nw">
             <h2>Used Words</h2>
-            <p className="tip-text"><em>Tip: Click on the word to see the definition.</em></p>
+            <p className="tip-text">
+              <em>Tip: Click on the word to see the definition.</em>
+            </p>
             <div className="words-grid">
               <ul>
                 {usedWords.map((word, index) => (
@@ -323,10 +336,16 @@ const GamePage = () => {
       </div>
       <Footer />
       <ResultModal show={showModal} onClose={() => setShowModal(false)} words={resultWords} />
-      <DefinitionModal show={showDefinitionModal} onClose={() => setShowDefinitionModal(false)} definition={definition} />
+      <DefinitionModal
+        show={showDefinitionModal}
+        onClose={() => setShowDefinitionModal(false)}
+        definition={definition}
+        selectedWord={selectedWord} // Pass the selected word here
+        language={language}
+        toggleLanguage={toggleLanguage}
+      />
     </div>
   );
 };
 
 export default GamePage;
-
