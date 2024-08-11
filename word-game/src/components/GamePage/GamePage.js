@@ -6,6 +6,7 @@ import Footer from '../Footer/Footer';
 import UserStats from '../UserStats/UserStats';
 import ResultModal from '../ResultModal/ResultModal';
 import DefinitionModal from '../DefinitionModal/DefinitionModal';
+import NW_IntroductionModal from '../NW_IntroductionModal/NW_IntroductionModal';
 import { FaVolumeUp, FaMicrophone } from 'react-icons/fa';
 import './GamePage.css';
 
@@ -16,7 +17,7 @@ const GamePage = () => {
   const [nextWord, setNextWord] = useState('');
   const [error, setError] = useState(null);
   const [usedWords, setUsedWords] = useState([]);
-  const [gameInProgress, setGameInProgress] = useState(true);
+  const [gameInProgress, setGameInProgress] = useState(false); // Start with game disabled
   const [wordSubmitted, setWordSubmitted] = useState(false);
   const [timeLeft, setTimeLeft] = useState(30);
   const [gameStarted, setGameStarted] = useState(false);
@@ -27,15 +28,16 @@ const GamePage = () => {
   });
   const [positionUp, setPositionUp] = useState(false);
   const [showResultButton, setShowResultButton] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [showIntroductionModal, setShowIntroductionModal] = useState(true); // Separate state for Introduction modal
+  const [showResultModal, setShowResultModal] = useState(false); // Separate state for Result modal
   const [resultWords, setResultWords] = useState([]);
   const [showDefinitionModal, setShowDefinitionModal] = useState(false);
   const [definition, setDefinition] = useState('');
-  const [englishDefinition, setEnglishDefinition] = useState(''); // Store English definition
-  const [vietnameseDefinition, setVietnameseDefinition] = useState(''); // Store Vietnamese definition
-  const [selectedWord, setSelectedWord] = useState(''); // Store the selected word
-  const [gameOver, setGameOver] = useState(false); 
-  const [language, setLanguage] = useState('en'); // State for language toggle
+  const [englishDefinition, setEnglishDefinition] = useState('');
+  const [vietnameseDefinition, setVietnameseDefinition] = useState('');
+  const [selectedWord, setSelectedWord] = useState('');
+  const [gameOver, setGameOver] = useState(false);
+  const [language, setLanguage] = useState('en');
 
   const updateRecord = useCallback(() => {
     if (wordsEntered > record) {
@@ -185,7 +187,7 @@ const GamePage = () => {
       } else {
         setResultWords([]);
       }
-      setShowModal(true);
+      setShowResultModal(true);
     } catch (error) {
       setError('Error fetching result words');
     }
@@ -241,8 +243,15 @@ const GamePage = () => {
     setDefinition(language === 'en' ? vietnameseDefinition : englishDefinition);
   };
 
+  const handleModalClose = () => {
+    setShowIntroductionModal(false); // This will close the introduction modal
+    setGameInProgress(true); // Enable the game after closing the modal
+  };
+
   return (
     <div className="game-page">
+      {showIntroductionModal && <NW_IntroductionModal onClose={handleModalClose} />} {/* Separate state for Introduction Modal */}
+
       <Navbar />
       <div className="stats-container">
         <UserStats userName={userName} wordsEntered={wordsEntered} record={record} />
@@ -285,7 +294,7 @@ const GamePage = () => {
               value={word}
               onChange={handleWordChange}
               placeholder="Enter the word"
-              disabled={!gameInProgress}
+              disabled={!gameInProgress} // Disable input until the modal is closed
             />
             <FaMicrophone onClick={handleVoiceInput} className="microphone-icon" />
           </div>
@@ -335,12 +344,12 @@ const GamePage = () => {
         )}
       </div>
       <Footer />
-      <ResultModal show={showModal} onClose={() => setShowModal(false)} words={resultWords} />
+      <ResultModal show={showResultModal} onClose={() => setShowResultModal(false)} words={resultWords} /> {/* ResultModal state updated */}
       <DefinitionModal
         show={showDefinitionModal}
         onClose={() => setShowDefinitionModal(false)}
         definition={definition}
-        selectedWord={selectedWord} // Pass the selected word here
+        selectedWord={selectedWord}
         language={language}
         toggleLanguage={toggleLanguage}
       />
