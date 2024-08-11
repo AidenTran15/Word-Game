@@ -22,10 +22,12 @@
 }
 
 .modal-content h2 {
-    font-size: 1.5em; /* Adjust the size as needed */
+    font-size: 1.9em; /* Adjust the size as needed */
     margin-bottom: 10px;
     font-weight: bold; /* Ensure the text remains bold */
+    font-family: 'Playfair Display', serif;
 }
+
 
 .modal-content p {
     font-size: 1.2em; /* Increase the font size of the paragraph text */
