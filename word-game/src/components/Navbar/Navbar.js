@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css';
 import WordGameHeader from '../../assets/3.png'; // Adjust the path based on your file structure
 
 const Navbar = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const location = useLocation(); // Get the current location
 
     const toggleDropdown = () => {
         setDropdownOpen(!dropdownOpen);
@@ -20,8 +21,12 @@ const Navbar = () => {
                     </button>
                     {dropdownOpen && (
                         <div className="dropdown-menu">
-                            <Link to="/game" className="dropdown-item">Next Word</Link>
-                            <Link to="/synonym-finder" className="dropdown-item">Synonym Finder</Link>
+                            {location.pathname !== '/game' && (
+                                <Link to="/game" className="dropdown-item">Next Word</Link>
+                            )}
+                            {location.pathname !== '/synonym-finder' && (
+                                <Link to="/synonym-finder" className="dropdown-item">Synonym Finder</Link>
+                            )}
                         </div>
                     )}
                 </div>
