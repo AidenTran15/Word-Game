@@ -23,7 +23,6 @@
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   text-align: center;
   margin-top: 20px;
-  /* Remove hover effects from the entire container */
   transition: none;
 }
 
@@ -40,7 +39,6 @@
   width: 90%; /* Ensures the modal adjusts to different screen sizes */
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  /* Remove hover effects */
   transition: none;
 }
 

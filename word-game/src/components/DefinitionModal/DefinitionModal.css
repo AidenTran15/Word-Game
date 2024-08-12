@@ -20,29 +20,29 @@
   }
   
   .modal-content h2 {
-    margin-top: 0; /* Removed any top margin */
-    margin-bottom: 20px; /* Increased margin below the title */
-    font-size: 34px; /* Increased font size of the title */
-    font-weight: bold; /* Made the title bold */
-    text-decoration: underline; /* Added underline to the title */
+    margin-top: 0; 
+    margin-bottom: 20px; 
+    font-size: 34px; 
+    font-weight: bold; 
+    text-decoration: underline; 
   }
   
   .modal-content h3 {
-    margin-top: 20px; /* Adjusted margin above the word and definition */
-    margin-bottom: 20px; /* Increased margin below the definition */
-    font-size: 30px; /* Increased font size of the definition */
-    font-weight: normal; /* Kept the definition text unbold */
+    margin-top: 20px; 
+    margin-bottom: 20px; 
+    font-size: 30px; 
+    font-weight: normal; 
   }
   .modal-content h4 {
-    margin-top: 20px; /* Adjusted margin above the word and definition */
-    margin-bottom: 20px; /* Increased margin below the definition */
-    font-size: 22px; /* Increased font size of the definition */
-    font-weight: normal; /* Kept the definition text unbold */
+    margin-top: 20px; 
+    margin-bottom: 20px; 
+    font-size: 22px; 
+    font-weight: normal; 
   }
   
   .modal-content .language-toggle {
     margin-top: 20px;
-    margin-bottom: 20px; /* Adjusted margin for better spacing */
+    margin-bottom: 20px; 
   }
   
   .modal-content .toggle-button {

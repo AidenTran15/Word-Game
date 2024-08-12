@@ -11,44 +11,46 @@
     z-index: 9999; /* Ensure the overlay is on top of everything */
 }
 
-.modal-content {
+.modal-content-nw {
     background-color: white;
     padding: 20px;
     border-radius: 8px;
-    max-width: 500px;
-    width: 90%; /* Ensures the modal adjusts to different screen sizes */
+    max-width: 800px;
+    width: 90%; 
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.modal-content h2 {
-    font-size: 1.9em; /* Adjust the size as needed */
+.modal-content-nw h2 {
+    font-size: 2em; 
     margin-bottom: 10px;
-    font-weight: bold; /* Ensure the text remains bold */
+    font-weight: bold; 
     font-family: 'Playfair Display', serif;
+    text-decoration: underline; /* Add underline to the header */
 }
 
 
-.modal-content p {
-    font-size: 1.2em; /* Increase the font size of the paragraph text */
-    margin-top: 10px;
+
+.modal-content-nw p {
+    font-size: 1.4em; 
+    margin-top: 38px;
     line-height: 1.5; /* Improve readability with increased line height */
 }
 
 /* Media query for smaller screens */
 @media (max-width: 600px) {
-    .modal-content {
+    .modal-content-nw {
         max-width: 80% !important; /* Force the width to adjust */
         padding: 15px; /* Adjusted padding for smaller screens */
     }
     
-    .modal-content h2 {
+    .modal-content-nw h2 {
         font-size: 2em; /* Adjust the header size for mobile screens */
         padding-bottom: 20px;
     }
     
-    .modal-content p {
-        font-size: 1.2em; /* Adjust the paragraph text size for mobile screens */
+    .modal-content-nw p {
+        font-size: 1.4em; /* Adjust the paragraph text size for mobile screens */
     }
 }
 

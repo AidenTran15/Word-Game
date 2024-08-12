@@ -4,7 +4,7 @@ import './SF_IntroductionModal.css';
 const IntroductionModal = ({ onClose }) => {
   return (
     <div className="modal-overlay">
-      <div className="modal-content">
+      <div className="modal-content-nw">
         <h2>Welcome to Synonym Finder Game!</h2>
         <p>
           In this game, you'll be given a word, and your goal is to choose the correct synonym from the options provided. 

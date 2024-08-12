@@ -1,0 +1,88 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent dark overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #d4e0ff, #a6c1ff); /* Light blue gradient background */
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    position: relative;
+    width: 280px; /* Decreased the width */
+    max-width: 80%;
+    color: #fff;
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+    font-size: 26px; /* Slightly larger font */
+    font-family: 'Playfair Display', serif; /* Stylish serif font */
+    color: #ffffff; /* White color */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Subtle text shadow */
+}
+
+.modal-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.game-button {
+    padding: 8px 20px; /* Smaller padding for a smaller button */
+    border: none;
+    border-radius: 20px; /* Slightly smaller and rounded buttons */
+    cursor: pointer;
+    font-size: 16px; /* Reduced font size */
+    background: linear-gradient(135deg, #1e90ff, #1c75d8); /* Vibrant blue gradient */
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add shadow to buttons */
+}
+
+.game-button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Deeper shadow on hover */
+}
+
+.cancel-button {
+    margin-top: 20px;
+    padding: 8px 20px; /* Smaller padding for a smaller button */
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px; /* Reduced font size */
+    background-color: #555;
+    color: #fff;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add shadow to cancel button */
+}
+
+.cancel-button:hover {
+    background-color: #777;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Deeper shadow on hover */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 600px) {
+    .modal-content {
+        max-width: 80% !important; /* Force the width to adjust */
+        padding: 15px; /* Adjusted padding for smaller screens */
+    }
+    
+    .modal-content h2 {
+        font-size: 2em; /* Make it smaller on mobile screens */
+    }
+}

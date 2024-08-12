@@ -4,7 +4,7 @@ import './NW_IntroductionModal.css';
 const NW_IntroductionModal = ({ onClose }) => {
   return (
     <div className="modal-overlay">
-      <div className="modal-content">
+      <div className="modal-content-nw">
         <h2>Welcome to Next Word Game!</h2>
         <p>
           This is a fun game where you and the computer take turns to enter words.

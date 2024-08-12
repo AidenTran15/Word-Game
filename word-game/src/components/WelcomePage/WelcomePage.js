@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import NameModal from '../NameModal/NameModal';
+import NameModal from '../GameSelectionModal/GameSelectionModal';
 
 function WelcomePage() {
   const [showModal, setShowModal] = useState(false);
