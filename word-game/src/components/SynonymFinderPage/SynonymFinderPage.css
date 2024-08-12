@@ -46,7 +46,7 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 50px;
-  margin-top: 20px; /* Add margin-top to move the timer down */
+  margin-top: 20px;
 }
 
 .timer-svg {
@@ -116,8 +116,8 @@
   text-align: left;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   margin-top: 20px;
-  max-height: 400px; /* Set a maximum height */
-  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .used-words-section:hover {
@@ -170,7 +170,7 @@
   text-transform: capitalize;
   text-align: left;
   transition: background 0.3s;
-  cursor: pointer; /* Add cursor pointer to indicate clickability */
+  cursor: pointer;
 }
 
 .words-column ul li:hover {
@@ -195,3 +195,44 @@
 .toggle-button:hover {
   background-color: #3356A8;
 }
+
+/* Media Query for Mobile Devices */
+/* Other existing styles */
+
+/* Media Query for Mobile Devices */
+@media (max-width: 600px) {
+  .synonym-finder-container {
+    width: 90%;  /* Reduce the width to fit mobile screens */
+    padding: 20px;  /* Reduce padding for a more compact view */
+    margin-top: 10px;  /* Adjust margin */
+  }
+
+  .word-title {
+    font-size: 1.6em;  /* Decrease font size */
+  }
+
+  .synonym-options {
+    display: flex;
+    flex-direction: column;  /* Arrange buttons in a column */
+    align-items: center;  /* Center the buttons horizontally */
+    gap: 10px;  /* Add space between buttons */
+  }
+
+  .synonym-options button {
+    width: 90%;  /* Make buttons take full width */
+    font-size: 1em;  /* Decrease button font size */
+    padding: 11px 0;  /* Adjust padding for better touch area */
+    margin: 3px 0;  /* Decrease margin and add space between buttons */
+  }
+
+  .timer-container {
+    margin-bottom: 30px;  /* Adjust space around timer */
+  }
+
+  .used-words-section {
+    padding: 20px;  /* Reduce padding */
+    max-height: 200px;  /* Reduce height */
+  }
+}
+
+/* Styles for larger screens remain unchanged */
