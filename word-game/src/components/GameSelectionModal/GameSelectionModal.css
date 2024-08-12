@@ -1,88 +1,113 @@
-.modal-overlay {
+/* General modal overlay */
+.modal-overlay-gs {
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent dark overlay */
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
-    justify-content: center;
     align-items: center;
-    z-index: 1000;
+    justify-content: center;
+    z-index: 9999;
 }
 
-.modal-content {
-    background: linear-gradient(135deg, #d4e0ff, #a6c1ff); /* Light blue gradient background */
-    padding: 30px 40px;
-    border-radius: 15px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+/* Modal container */
+.modal-content-gs {
+    background-color: white;
+    padding: 20px 30px; /* Adjusted padding to move the content up */
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
     text-align: center;
-    position: relative;
-    width: 280px; /* Decreased the width */
-    max-width: 80%;
-    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.modal-content h2 {
-    margin-bottom: 20px;
-    font-size: 26px; /* Slightly larger font */
-    font-family: 'Playfair Display', serif; /* Stylish serif font */
-    color: #ffffff; /* White color */
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Subtle text shadow */
+/* Modal title */
+.modal-content-gs h2 {
+    font-size: 1.88em;
+    margin-bottom: 35px;
+    margin-top: -5px; /* Move the header up by reducing top margin */
+    font-family: 'Playfair Display', serif;
+    color: #333;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    text-decoration: underline; 
 }
 
+/* Buttons container */
 .modal-buttons {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    margin-top: 20px;
 }
 
+/* General game button styles */
 .game-button {
-    padding: 8px 20px; /* Smaller padding for a smaller button */
+    padding: 12px 20px;
+    font-size: 16px;
     border: none;
-    border-radius: 20px; /* Slightly smaller and rounded buttons */
-    cursor: pointer;
-    font-size: 16px; /* Reduced font size */
-    background: linear-gradient(135deg, #1e90ff, #1c75d8); /* Vibrant blue gradient */
-    color: #fff;
-    text-align: center;
+    border-radius: 8px;
+    color: white;
     text-decoration: none;
-    transition: transform 0.3s, box-shadow 0.3s;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add shadow to buttons */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
 }
 
-.game-button:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Deeper shadow on hover */
+/* Specific button styles */
+.game-button:first-child {
+    background-color: #4CAF50;
 }
 
+.game-button:first-child:hover {
+    background-color: #45a049;
+}
+
+.game-button:last-child {
+    background-color: #007bff;
+}
+
+.game-button:last-child:hover {
+    background-color: #0056b3;
+}
+
+/* Cancel button styles */
 .cancel-button {
     margin-top: 20px;
-    padding: 8px 20px; /* Smaller padding for a smaller button */
+    padding: 10px 20px;
+    font-size: 16px;
     border: none;
-    border-radius: 20px;
+    border-radius: 5px;
+    background-color: #ccc;
+    color: #333;
     cursor: pointer;
-    font-size: 16px; /* Reduced font size */
-    background-color: #555;
-    color: #fff;
-    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add shadow to cancel button */
+    transition: background-color 0.3s ease;
 }
 
 .cancel-button:hover {
-    background-color: #777;
-    transform: translateY(-4px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Deeper shadow on hover */
+    background-color: #999;
 }
 
-/* Media query for smaller screens */
+/* Responsive adjustments */
 @media (max-width: 600px) {
-    .modal-content {
-        max-width: 80% !important; /* Force the width to adjust */
-        padding: 15px; /* Adjusted padding for smaller screens */
+    .modal-content-gs {
+        padding: 15px 20px;
+        width: 90%;
     }
     
-    .modal-content h2 {
-        font-size: 2em; /* Make it smaller on mobile screens */
+    .modal-content-gs h2 {
+        font-size: 1.5em;
+    }
+
+    .game-button {
+        padding: 10px 16px;
+        font-size: 14px;
+    }
+
+    .cancel-button {
+        padding: 8px 16px;
+        font-size: 14px;
     }
 }
