@@ -75,23 +75,29 @@
 }
 
 .word-title {
-  font-size: 1.5em;
+  font-size: 1.8em;
   margin-bottom: 20px;
   font-weight: bold;
   text-transform: capitalize;
 }
 
 .synonym-options {
-  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between; /* Distribute buttons in a row */
+  margin-bottom: 30px;
+  gap: 10px; /* Add space between buttons */
+  font-size: 1.2em;
+  padding-top: 20px;
 }
 
 .synonym-options button {
-  font-size: 1.2em;
-  padding: 10px 20px;
-  margin: 10px;
+  flex: 1; /* Each button takes equal width */
+  font-size: 1.2em; /* Decrease font size */
+  padding: 8px 0; /* Reduce padding */
   border-radius: 5px;
   transition: background 0.3s, transform 0.3s;
   cursor: pointer;
+  margin: 3px; /* Reduce margin */
 }
 
 .synonym-feedback {
@@ -197,9 +203,6 @@
 }
 
 /* Media Query for Mobile Devices */
-/* Other existing styles */
-
-/* Media Query for Mobile Devices */
 @media (max-width: 600px) {
   .synonym-finder-container {
     width: 90%;  /* Reduce the width to fit mobile screens */
@@ -212,17 +215,16 @@
   }
 
   .synonym-options {
-    display: flex;
-    flex-direction: column;  /* Arrange buttons in a column */
-    align-items: center;  /* Center the buttons horizontally */
+    flex-wrap: wrap;  /* Wrap the buttons to the next line */
+    justify-content: center;  /* Center the buttons horizontally */
     gap: 10px;  /* Add space between buttons */
   }
 
   .synonym-options button {
-    width: 90%;  /* Make buttons take full width */
-    font-size: 1em;  /* Decrease button font size */
-    padding: 11px 0;  /* Adjust padding for better touch area */
-    margin: 3px 0;  /* Decrease margin and add space between buttons */
+    flex: 0 0 45%;  /* Each button takes 45% of the width on mobile */
+    font-size: 0.9em;  /* Decrease button font size further */
+    padding: 8px 0;  /* Reduce padding */
+    margin: 3px;  /* Reduce margin */
   }
 
   .timer-container {
@@ -234,5 +236,3 @@
     max-height: 200px;  /* Reduce height */
   }
 }
-
-/* Styles for larger screens remain unchanged */
