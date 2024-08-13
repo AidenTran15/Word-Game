@@ -1,30 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './VocabularyCardPage.css';
-import VCIntroductionModal from '../VC_IntroductionModal/VC_IntroductionModal'; // Updated import
-import Navbar from '../Navbar/Navbar'; // Import Navbar
-import Footer from '../Footer/Footer'; // Import Footer
+import VCIntroductionModal from '../VC_IntroductionModal/VC_IntroductionModal';
+import Navbar from '../Navbar/Navbar';
+import Footer from '../Footer/Footer';
 
 const VocabularyCardPage = () => {
   const [selectedTopic, setSelectedTopic] = useState('');
   const [word, setWord] = useState('');
   const [definition, setDefinition] = useState('');
   const [isFlipped, setIsFlipped] = useState(false);
-  const [showModal, setShowModal] = useState(true); // State to control modal visibility
+  const [showModal, setShowModal] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  const handleTopicSelect = async (topic) => {
-    setSelectedTopic(topic);
-    await fetchVocabularyWord(topic);
-  };
+  useEffect(() => {
+    if (selectedTopic) {
+      console.log("Fetching first word for the selected topic:", selectedTopic);
+      fetchVocabularyWord(selectedTopic);
+    }
+  }, [selectedTopic]);
 
   const fetchVocabularyWord = async (topic) => {
+    console.log("Fetching word for topic:", topic);
+    setLoading(true);
     try {
       const response = await axios.post('http://localhost:5000/generate-vocabulary-word', { topic });
+      console.log("Fetched word:", response.data.word);
       setWord(response.data.word);
       setDefinition(response.data.englishDefinition);
       setIsFlipped(false);
     } catch (error) {
       console.error('Error fetching vocabulary word:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -33,20 +41,21 @@ const VocabularyCardPage = () => {
   };
 
   const handleNextWord = async () => {
+    console.log("Fetching next word for topic:", selectedTopic);
     await fetchVocabularyWord(selectedTopic);
   };
 
   const handleModalClose = (topic) => {
+    console.log("Selected topic:", topic);  // This should log the selected topic correctly
     setSelectedTopic(topic);
-    setShowModal(false); // Close the modal
-    fetchVocabularyWord(topic); // Fetch the first word for the selected topic
+    setShowModal(false);
   };
 
   return (
     <>
-      <Navbar /> {/* Add Navbar here */}
+      <Navbar />
       <div className="vocabulary-game-container">
-        {showModal && <VCIntroductionModal onClose={handleModalClose} onSelectTopic={setSelectedTopic} />}
+        {showModal && <VCIntroductionModal onClose={handleModalClose} />}
         
         {!showModal && word && (
           <>
@@ -63,12 +72,18 @@ const VocabularyCardPage = () => {
                   <p>{definition}</p>
                 </div>
               </div>
-              <button className="next-word-button" onClick={handleNextWord}>Next Word</button>
+              <button 
+                className="next-word-button" 
+                onClick={handleNextWord}
+                disabled={loading}
+              >
+                {loading ? 'Loading...' : 'Next Word'}
+              </button>
             </div>
           </>
         )}
       </div>
-      <Footer /> {/* Add Footer here */}
+      <Footer />
     </>
   );
 };

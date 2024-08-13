@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import './VC_IntroductionModal.css';  // Updated to match the actual file name
+import './VC_IntroductionModal.css';  // Assuming the path is correct
 
-const VCIntroductionModal = ({ onClose, onSelectTopic }) => {
+const VCIntroductionModal = ({ onClose }) => {
   const [selectedTopic, setSelectedTopic] = useState('');
 
   const handleTopicChange = (event) => {
@@ -10,8 +10,9 @@ const VCIntroductionModal = ({ onClose, onSelectTopic }) => {
 
   const handleStartGame = () => {
     if (selectedTopic) {
-      onSelectTopic(selectedTopic);
-      onClose();
+      onClose(selectedTopic);
+    } else {
+      alert("Please select a topic to start the game.");
     }
   };
 
