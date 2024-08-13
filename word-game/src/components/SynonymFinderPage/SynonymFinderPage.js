@@ -90,6 +90,10 @@ const SynonymFinderPage = () => {
     fetchQuestion();
   };
 
+  const handleChangeLevel = () => {
+    window.location.reload(); // Refresh the page to allow user to select a new level
+  };
+
   const handleWordClick = async (word) => {
     try {
       const response = await axios.post('http://localhost:5000/validate-word', {
@@ -181,9 +185,14 @@ const SynonymFinderPage = () => {
             {gameOver && (
               <div className="game-over">
                 <h3>Game Over! Your total score is: {score}</h3>
-                <button onClick={handlePlayAgain} className="play-again-button">
-                  Play Again
-                </button>
+                <div className="game-over-buttons">
+                  <button onClick={handlePlayAgain} className="play-again-button">
+                    Play Again
+                  </button>
+                  <button onClick={handleChangeLevel} className="change-level-button">
+                    Change Level
+                  </button>
+                </div>
               </div>
             )}
           </div>
