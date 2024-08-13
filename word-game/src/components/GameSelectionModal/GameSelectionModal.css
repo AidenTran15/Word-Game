@@ -36,8 +36,8 @@
 
 /* Modal title */
 .modal-content-gs h2 {
-    font-size: 2.2em;
-    margin-bottom: 30px;
+    font-size: 2.6em;
+    margin-bottom: 40px;
     margin-top: -5px;
     padding-bottom: 5px;
     font-family: 'Playfair Display', serif;
@@ -114,7 +114,7 @@
     }
     
     .modal-content-gs h2 {
-        font-size: 1.8em;
+        font-size: 2em;
     }
 
     .game-button {

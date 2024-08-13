@@ -13,7 +13,7 @@ const SynonymFinderPage = () => {
   const [showModal, setShowModal] = useState(true);
   const [loading, setLoading] = useState(false);
   const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(600);
+  const [timeLeft, setTimeLeft] = useState(60);
   const [gameOver, setGameOver] = useState(false);
   const [usedWords, setUsedWords] = useState([]);
   const [showDefinitionModal, setShowDefinitionModal] = useState(false);
@@ -182,6 +182,9 @@ const SynonymFinderPage = () => {
           </div>
           <div className="used-words-section">
             <h2>Vocabulary</h2>
+            <p className="tip-text">
+                  <em>Tip: Click on the word to see the definition.</em>
+                </p>
             <div className="words-grid">
               {[...Array(Math.ceil(usedWords.length / 20))].map((_, i) => (
                 <div key={i} className="words-column">
