@@ -1,77 +1,81 @@
 .modal-overlay-dm {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .modal-content-dm {
-    background-color: white;
-    padding: 40px; /* Adjusted padding */
-    border-radius: 8px;
-    text-align: center;
-    width: 700px; /* Increased the width of the modal */
-  }
-  
-  .modal-content-dm h2 {
-    margin-top: 0; 
-    margin-bottom: 20px; 
-    font-size: 34px; 
-    font-weight: bold; 
-    text-decoration: underline; 
-  }
-  
-  .modal-content-dm h3 {
-    margin-top: 20px; 
-    margin-bottom: 20px; 
-    font-size: 30px; 
-    font-weight: normal; 
-  }
-  .modal-content-dm h4 {
-    margin-top: 20px; 
-    margin-bottom: 20px; 
-    font-size: 22px; 
-    font-weight: normal; 
-  }
-  
-  .modal-content-dm .language-toggle {
-    margin-top: 20px;
-    margin-bottom: 20px; 
-  }
-  
-  .modal-content-dm .toggle-button {
-    padding: 8px 16px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 18px; /* Increased font size of the button text */
-  }
-  
-  .modal-content-dm .toggle-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .modal-content-dm button {
-    padding: 14px 28px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 18px; /* Increased font size of the button text */
-    font-weight: normal; /* Kept the button text unbold */
-    margin-top: 20px; /* Added margin above the button to move it down */
-  }
-  
-  .modal-content-dm button:hover {
-    background-color: #0056b3;
-  }
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content-dm {
+  background-color: white;
+  padding: 40px;
+  border-radius: 8px;
+  text-align: center;
+  width: 700px;
+}
+
+.modal-content-dm h2 {
+  font-family: 'Playfair Display', serif; /* Use Playfair Display for a classic look */
+  font-size: 34px; /* Reduced font size */
+  font-weight: 700; /* Bold */
+  text-transform: uppercase; /* Uppercase text */
+  letter-spacing: 1px; /* Slightly increase letter spacing */
+  margin-top: -10px; /* Moved up by reducing margin-top */
+  margin-bottom: 22px;
+  padding-bottom: 5px; /* Added padding-bottom */
+  text-decoration: underline; 
+}
+
+.modal-content-dm h3 {
+  margin-top: 20px; 
+  margin-bottom: 20px; 
+  font-size: 30px; 
+  font-weight: normal; 
+}
+
+.modal-content-dm h4 {
+  margin-top: 20px; 
+  margin-bottom: 20px; 
+  font-size: 22px; 
+  font-weight: normal; 
+}
+
+.modal-content-dm .language-toggle {
+  margin-top: 20px;
+  margin-bottom: 20px; 
+}
+
+.modal-content-dm .toggle-button {
+  padding: 8px 16px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px; /* Increased font size of the button text */
+}
+
+.modal-content-dm .toggle-button:hover {
+  background-color: #0056b3;
+}
+
+.modal-content-dm button {
+  padding: 14px 28px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px; /* Increased font size of the button text */
+  font-weight: normal; /* Kept the button text unbold */
+  margin-top: 20px; /* Added margin above the button to move it down */
+}
+
+.modal-content-dm button:hover {
+  background-color: #0056b3;
+}
