@@ -93,7 +93,7 @@
 
 .synonym-options button {
   flex: 1;
-  font-size: 1.1em; /* Reduced font size */
+  font-size: 1em; /* Reduced font size */
   padding: 10px 0; /* Reduced padding */
   border-radius: 20px; /* Increased border-radius */
   border: 2px solid #3B71CA;
@@ -105,7 +105,8 @@
 }
 
 .synonym-options button:hover {
-  background-color: #f0f8ff;
+  background-color: #3356A8; /* Same as next question button hover */
+  color: white; /* Change text color to white */
 }
 
 .synonym-options button.selected {
