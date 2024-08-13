@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './VocabularyCardPage.css';
 import VC_IntroductionModal from '../VC_IntroductionModal/VC_IntroductionModal';
+import Navbar from '../Navbar/Navbar'; // Import Navbar
+import Footer from '../Footer/Footer'; // Import Footer
 
 const VocabularyCardPage = () => {
   const [selectedTopic, setSelectedTopic] = useState('');
@@ -41,29 +43,33 @@ const VocabularyCardPage = () => {
   };
 
   return (
-    <div className="vocabulary-game-container">
-      {showModal && <VC_IntroductionModal onClose={handleModalClose} onSelectTopic={setSelectedTopic} />}
-      
-      {!showModal && word && (
-        <>
-          <h1>Vocabulary Card Game</h1>
-          <div className="vocabulary-card-container">
-            <div 
-              className={`vocabulary-card ${isFlipped ? 'flipped' : ''}`} 
-              onClick={handleCardFlip}
-            >
-              <div className="card-front">
-                <h2>{word}</h2>
+    <>
+      <Navbar /> {/* Add Navbar here */}
+      <div className="vocabulary-game-container">
+        {showModal && <VC_IntroductionModal onClose={handleModalClose} onSelectTopic={setSelectedTopic} />}
+        
+        {!showModal && word && (
+          <>
+            <h1>Vocabulary Card Game</h1>
+            <div className="vocabulary-card-container">
+              <div 
+                className={`vocabulary-card ${isFlipped ? 'flipped' : ''}`} 
+                onClick={handleCardFlip}
+              >
+                <div className="card-front">
+                  <h2>{word}</h2>
+                </div>
+                <div className="card-back">
+                  <p>{definition}</p>
+                </div>
               </div>
-              <div className="card-back">
-                <p>{definition}</p>
-              </div>
+              <button className="next-word-button" onClick={handleNextWord}>Next Word</button>
             </div>
-            <button className="next-word-button" onClick={handleNextWord}>Next Word</button>
-          </div>
-        </>
-      )}
-    </div>
+          </>
+        )}
+      </div>
+      <Footer /> {/* Add Footer here */}
+    </>
   );
 };
 
