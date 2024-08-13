@@ -55,21 +55,34 @@
 }
 
 .speak-button {
-  background: none;
+  background: linear-gradient(135deg, #007BFF, #00c6ff);
   border: none;
   cursor: pointer;
-  font-size: 24px;
-  color: #007BFF;
-  transition: color 0.3s ease;
+  font-size: 18px; /* Reduced font size */
+  color: white;
+  padding: 8px; /* Reduced padding */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
 }
 
 .speak-button i {
-  margin-left: 8px;
+  margin-left: 0;
 }
 
 .speak-button:hover {
-  color: #0056b3;
+  transform: scale(1.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #0056b3, #0093ff);
 }
+
+.speak-button:active {
+  transform: scale(0.9);
+}
+
 
 .modal-content-dm .language-toggle {
   margin-top: 20px;
@@ -91,7 +104,7 @@
 }
 
 .modal-content-dm button {
-  padding: 14px 28px;
+  padding: 12px 24px;
   background-color: #007BFF;
   color: white;
   border: none;
