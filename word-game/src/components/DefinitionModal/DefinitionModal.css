@@ -20,34 +20,60 @@
 }
 
 .modal-content-dm h2 {
-  font-family: 'Playfair Display', serif; /* Use Playfair Display for a classic look */
-  font-size: 32px; /* Reduced font size */
-  font-weight: 700; /* Bold */
-  text-transform: uppercase; /* Uppercase text */
-  letter-spacing: 1px; /* Slightly increase letter spacing */
-  margin-top: -10px; /* Moved up by reducing margin-top */
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: -10px;
   margin-bottom: 20px;
-  padding-bottom: 5px; /* Added padding-bottom */
-  text-decoration: underline; 
+  padding-bottom: 5px;
+  text-decoration: underline;
 }
 
 .modal-content-dm h3 {
-  margin-top: 20px; 
-  margin-bottom: 20px; 
-  font-size: 30px; 
-  font-weight: normal; 
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 30px;
+  font-weight: normal;
 }
 
 .modal-content-dm h4 {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: normal;
+}
+
+.word-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   margin-top: 20px; 
   margin-bottom: 20px; 
-  font-size: 22px; 
-  font-weight: normal; 
+}
+
+.speak-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: #007BFF;
+  transition: color 0.3s ease;
+}
+
+.speak-button i {
+  margin-left: 8px;
+}
+
+.speak-button:hover {
+  color: #0056b3;
 }
 
 .modal-content-dm .language-toggle {
   margin-top: 20px;
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
 }
 
 .modal-content-dm .toggle-button {
@@ -57,7 +83,7 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 18px; /* Increased font size of the button text */
+  font-size: 18px;
 }
 
 .modal-content-dm .toggle-button:hover {
@@ -71,9 +97,9 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 18px; /* Increased font size of the button text */
-  font-weight: normal; /* Kept the button text unbold */
-  margin-top: 20px; /* Added margin above the button to move it down */
+  font-size: 18px;
+  font-weight: normal;
+  margin-top: 20px;
 }
 
 .modal-content-dm button:hover {
@@ -88,24 +114,24 @@
   }
 
   .modal-content-dm h2 {
-    font-size: 30px; /* Slightly smaller for mobile */
+    font-size: 30px;
   }
 
   .modal-content-dm h3 {
-    font-size: 26px; /* Slightly smaller for mobile */
+    font-size: 26px;
   }
 
   .modal-content-dm h4 {
-    font-size: 20px; /* Slightly smaller for mobile */
+    font-size: 20px;
   }
 
   .modal-content-dm button {
-    padding: 10px 20px; /* Smaller padding for mobile */
-    font-size: 16px; /* Smaller font size for mobile */
+    padding: 10px 20px;
+    font-size: 16px;
   }
 
   .modal-content-dm .toggle-button {
-    padding: 6px 12px; /* Smaller padding for mobile */
-    font-size: 16px; /* Smaller font size for mobile */
+    padding: 6px 12px;
+    font-size: 16px;
   }
 }
