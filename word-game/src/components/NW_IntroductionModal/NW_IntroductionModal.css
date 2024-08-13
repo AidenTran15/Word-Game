@@ -17,8 +17,8 @@
     background-color: #ffffff;
     padding: 30px; /* Increase padding for a spacious look */
     border-radius: 12px; /* Increase border radius for a smoother look */
-    max-width: 600px; /* Slightly smaller modal for a more focused design */
-    width: 90%;
+    max-width: 800px; /* Increase modal size */
+    width: 95%; /* Adjust width for responsiveness */
     text-align: center;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     transform: translateY(-20px); /* Initial slight move-up */
@@ -35,8 +35,10 @@
     font-size: 2em; /* Increased font size */
     margin-bottom: 10px; /* Reduce margin-bottom to bring text closer */
     margin-top: -5px; /* Move up slightly by adjusting margin-top */
+    padding-bottom: 5px; /* Added padding-bottom */
     font-family: 'Playfair Display', serif;
     color: #3B71CA; /* Color matching the button for a unified theme */
+    text-decoration: underline;
 }
 
 .modal-content-nw p {
@@ -49,7 +51,8 @@
 /* Media query for smaller screens */
 @media (max-width: 600px) {
     .modal-content-nw {
-        max-width: 90%;
+        max-width: 86%; /* Decreased max-width for smaller screens */
+        width: 90%; /* Ensure it takes 90% of the screen width */
         padding: 20px; /* Adjusted padding for smaller screens */
     }
     
