@@ -17,7 +17,7 @@ const Navbar = () => {
             <div className="nav-links">
                 <div className="dropdown">
                     <button className="dropdown-toggle blue-button" onClick={toggleDropdown}>
-                        More Game <span className="arrow">&#9660;</span> {/* Down arrow icon */}
+                        More Games <span className="arrow">&#9660;</span> {/* Down arrow icon */}
                     </button>
                     {dropdownOpen && (
                         <div className="dropdown-menu">
@@ -26,6 +26,9 @@ const Navbar = () => {
                             )}
                             {location.pathname !== '/synonym-finder' && (
                                 <Link to="/synonym-finder" className="dropdown-item">Synonym Finder</Link>
+                            )}
+                            {location.pathname !== '/vocabulary-card' && (
+                                <Link to="/vocabulary-card" className="dropdown-item">Vocabulary Card</Link>
                             )}
                         </div>
                     )}
