@@ -78,13 +78,25 @@
     transform: translateY(-3px); /* Slight lift on hover */
 }
 
-.game-button:last-child {
-    background-color: #007bff;
+/* Synonym Finder button styles */
+.synonym-finder-button {
+    background-color: #007bff; /* Blue color */
 }
 
-.game-button:last-child:hover {
+.synonym-finder-button:hover {
     background-color: #0056b3;
     box-shadow: 0 8px 20px rgba(0, 123, 255, 0.5); /* Subtle glow on hover */
+    transform: translateY(-3px); /* Slight lift on hover */
+}
+
+/* Vocabulary Card button styles */
+.vocabulary-card-button {
+    background-color: #FF5722; /* A distinct orange-red color */
+}
+
+.vocabulary-card-button:hover {
+    background-color: #E64A19;
+    box-shadow: 0 8px 20px rgba(255, 87, 34, 0.5); /* Subtle glow on hover */
     transform: translateY(-3px); /* Slight lift on hover */
 }
 
