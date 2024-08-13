@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './VocabularyCardPage.css';
-import VC_IntroductionModal from '../VC_IntroductionModal/VC_IntroductionModal';
+import VCIntroductionModal from '../VC_IntroductionModal/VC_IntroductionModal'; // Updated import
 import Navbar from '../Navbar/Navbar'; // Import Navbar
 import Footer from '../Footer/Footer'; // Import Footer
 
@@ -46,7 +46,7 @@ const VocabularyCardPage = () => {
     <>
       <Navbar /> {/* Add Navbar here */}
       <div className="vocabulary-game-container">
-        {showModal && <VC_IntroductionModal onClose={handleModalClose} onSelectTopic={setSelectedTopic} />}
+        {showModal && <VCIntroductionModal onClose={handleModalClose} onSelectTopic={setSelectedTopic} />}
         
         {!showModal && word && (
           <>

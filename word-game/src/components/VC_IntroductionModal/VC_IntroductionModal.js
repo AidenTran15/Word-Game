@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import './VC_IntroductionModal.css';
+import './VC_IntroductionModal.css';  // Updated to match the actual file name
 
-const VC_IntroductionModal = ({ onClose, onSelectTopic }) => {
+const VCIntroductionModal = ({ onClose, onSelectTopic }) => {
   const [selectedTopic, setSelectedTopic] = useState('');
 
   const handleTopicChange = (event) => {
@@ -24,7 +24,7 @@ const VC_IntroductionModal = ({ onClose, onSelectTopic }) => {
           Each card will show a word, and you can flip it to see its definition.
           Select a topic to get started!
         </p>
-        <div className="modal-content-nw">
+        <div className="topic-selection">
           <h2>Select your topic</h2>
           <select value={selectedTopic} onChange={handleTopicChange} className="topic-dropdown">
             <option value="" disabled>Select a topic</option>
@@ -52,4 +52,4 @@ const VC_IntroductionModal = ({ onClose, onSelectTopic }) => {
   );
 };
 
-export default VC_IntroductionModal;
+export default VCIntroductionModal;
