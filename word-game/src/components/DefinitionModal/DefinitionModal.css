@@ -45,6 +45,7 @@
   font-weight: normal;
 }
 
+/* Default: Inline with the Word */
 .word-section {
   display: flex;
   align-items: center;
@@ -54,6 +55,7 @@
   margin-bottom: 20px; 
 }
 
+/* Speaker button styling */
 .speak-button {
   background: linear-gradient(135deg, #007BFF, #00c6ff);
   border: none;
@@ -82,7 +84,6 @@
 .speak-button:active {
   transform: scale(0.9);
 }
-
 
 .modal-content-dm .language-toggle {
   margin-top: 20px;

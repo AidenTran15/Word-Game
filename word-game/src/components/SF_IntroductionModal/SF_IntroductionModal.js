@@ -19,7 +19,7 @@ const IntroductionModal = ({ onClose, onSelectLevel }) => {
         <h2>Welcome to Synonym Finder Game!</h2>
         <p>
           In this game, you'll be given a word, and your goal is to choose the correct synonym from the options provided.
-          You'll have 45 seconds to answer as many questions as you can. Each correct answer will earn you a point.
+          You'll have 60 seconds to answer as many questions as you can. Each correct answer will earn you a point.
         </p>
         <div className="lmodal-content-nw">
           <h2>Select your difficulty level</h2>
