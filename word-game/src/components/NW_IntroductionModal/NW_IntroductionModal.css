@@ -1,70 +1,80 @@
-.modal-overlay {
+.modal-overlay-nw {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+    background-color: rgba(0, 0, 0, 0.7); /* Darker semi-transparent black overlay */
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 9999; /* Ensure the overlay is on top of everything */
+    backdrop-filter: blur(5px); /* Adds a blur effect to the background */
+    transition: opacity 0.3s ease; /* Smooth fade-in effect */
 }
 
 .modal-content-nw {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    max-width: 700px;
-    width: 90%; 
+    background-color: #ffffff;
+    padding: 30px; /* Increase padding for a spacious look */
+    border-radius: 12px; /* Increase border radius for a smoother look */
+    max-width: 600px; /* Slightly smaller modal for a more focused design */
+    width: 90%;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-20px); /* Initial slight move-up */
+    animation: slide-down 0.3s ease forwards; /* Slide down animation */
+}
+
+@keyframes slide-down {
+    to {
+        transform: translateY(0);
+    }
 }
 
 .modal-content-nw h2 {
-    font-size: 2em; 
-    margin-bottom: 10px;
+    font-size: 2em; /* Increased font size */
+    margin-bottom: 10px; /* Reduce margin-bottom to bring text closer */
+    margin-top: -5px; /* Move up slightly by adjusting margin-top */
     font-family: 'Playfair Display', serif;
-    text-decoration: underline; /* Add underline to the header */
+    color: #3B71CA; /* Color matching the button for a unified theme */
 }
 
-
-
 .modal-content-nw p {
-    font-size: 1.4em; 
-    margin-top: 38px;
-    line-height: 1.5; /* Improve readability with increased line height */
+    font-size: 1.3em; /* Increased font size */
+    margin-top: 20px;
+    line-height: 1.6; /* Improve readability with increased line height */
+    color: #333; /* Darker text for better contrast */
 }
 
 /* Media query for smaller screens */
 @media (max-width: 600px) {
     .modal-content-nw {
-        max-width: 80% !important; /* Force the width to adjust */
-        padding: 15px; /* Adjusted padding for smaller screens */
+        max-width: 90%;
+        padding: 20px; /* Adjusted padding for smaller screens */
     }
     
     .modal-content-nw h2 {
-        font-size: 2em; /* Adjust the header size for mobile screens */
-        padding-bottom: 20px;
+        font-size: 1.8em; /* Adjust the header size for mobile screens */
     }
     
     .modal-content-nw p {
-        font-size: 1.4em; /* Adjust the paragraph text size for mobile screens */
+        font-size: 1.2em; /* Adjust the paragraph text size for mobile screens */
     }
 }
 
 .modal-button {
-    margin-top: 20px;
-    padding: 10px 20px;
+    margin-top: 25px; /* Slightly more space above the button */
+    padding: 12px 25px; /* Adjust padding for a more substantial feel */
     font-size: 16px;
     border: none;
     border-radius: 5px;
     background-color: #3B71CA;
     color: white;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .modal-button:hover {
     background-color: #2d57a6;
+    transform: translateY(-2px); /* Slight lift effect on hover */
 }

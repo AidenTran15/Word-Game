@@ -3,7 +3,7 @@ import './NW_IntroductionModal.css';
 
 const NW_IntroductionModal = ({ onClose }) => {
   return (
-    <div className="modal-overlay">
+    <div className="modal-overlay-nw">
       <div className="modal-content-nw">
         <h2>Welcome to Next Word Game!</h2>
         <p>
