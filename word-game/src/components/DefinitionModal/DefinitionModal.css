@@ -1,4 +1,4 @@
-.modal-overlay {
+.modal-overlay-dm {
     position: fixed;
     top: 0;
     left: 0;
@@ -11,7 +11,7 @@
     z-index: 1000;
   }
   
-  .modal-content {
+  .modal-content-dm {
     background-color: white;
     padding: 40px; /* Adjusted padding */
     border-radius: 8px;
@@ -19,7 +19,7 @@
     width: 700px; /* Increased the width of the modal */
   }
   
-  .modal-content h2 {
+  .modal-content-dm h2 {
     margin-top: 0; 
     margin-bottom: 20px; 
     font-size: 34px; 
@@ -27,25 +27,25 @@
     text-decoration: underline; 
   }
   
-  .modal-content h3 {
+  .modal-content-dm h3 {
     margin-top: 20px; 
     margin-bottom: 20px; 
     font-size: 30px; 
     font-weight: normal; 
   }
-  .modal-content h4 {
+  .modal-content-dm h4 {
     margin-top: 20px; 
     margin-bottom: 20px; 
     font-size: 22px; 
     font-weight: normal; 
   }
   
-  .modal-content .language-toggle {
+  .modal-content-dm .language-toggle {
     margin-top: 20px;
     margin-bottom: 20px; 
   }
   
-  .modal-content .toggle-button {
+  .modal-content-dm .toggle-button {
     padding: 8px 16px;
     background-color: #007BFF;
     color: white;
@@ -55,11 +55,11 @@
     font-size: 18px; /* Increased font size of the button text */
   }
   
-  .modal-content .toggle-button:hover {
+  .modal-content-dm .toggle-button:hover {
     background-color: #0056b3;
   }
   
-  .modal-content button {
+  .modal-content-dm button {
     padding: 14px 28px;
     background-color: #007BFF;
     color: white;
@@ -71,7 +71,7 @@
     margin-top: 20px; /* Added margin above the button to move it down */
   }
   
-  .modal-content button:hover {
+  .modal-content-dm button:hover {
     background-color: #0056b3;
   }
   

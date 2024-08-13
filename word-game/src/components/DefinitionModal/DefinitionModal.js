@@ -5,8 +5,8 @@ const DefinitionModal = ({ show, onClose, definition, selectedWord, language, to
   if (!show) return null;
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
+    <div className="modal-overlay-dm">
+      <div className="modal-content-dm">
         <h2>Word Definition</h2>
         <h3>{selectedWord || 'No word selected'}</h3> {/* Display the selected word */}
         <h4>{definition || 'No definition found.'}</h4>
