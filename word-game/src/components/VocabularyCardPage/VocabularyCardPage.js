@@ -1,18 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './VocabularyCardPage.css';
-
-const topics = [
-  'Travel', 'School', 'Fruit', 'Supermarket', 'Occupation', 'Airport', 'Animals', 
-  'Weather', 'Transportation', 'Sports', 'Hobbies', 'Emotion', 'Shopping', 
-  'Health', 'Hospitality', 'Restaurant'
-];
+import VC_IntroductionModal from '../VC_IntroductionModal/VC_IntroductionModal';
 
 const VocabularyCardPage = () => {
   const [selectedTopic, setSelectedTopic] = useState('');
   const [word, setWord] = useState('');
   const [definition, setDefinition] = useState('');
   const [isFlipped, setIsFlipped] = useState(false);
+  const [showModal, setShowModal] = useState(true); // State to control modal visibility
 
   const handleTopicSelect = async (topic) => {
     setSelectedTopic(topic);
@@ -38,32 +34,34 @@ const VocabularyCardPage = () => {
     await fetchVocabularyWord(selectedTopic);
   };
 
+  const handleModalClose = (topic) => {
+    setSelectedTopic(topic);
+    setShowModal(false); // Close the modal
+    fetchVocabularyWord(topic); // Fetch the first word for the selected topic
+  };
+
   return (
     <div className="vocabulary-game-container">
-      <h1>Vocabulary Card Game</h1>
-      <h2>Select a Topic</h2>
-      <div className="topic-selection">
-        {topics.map((topic) => (
-          <button key={topic} onClick={() => handleTopicSelect(topic)}>
-            {topic}
-          </button>
-        ))}
-      </div>
-      {word && (
-        <div className="vocabulary-card-container">
-          <div 
-            className={`vocabulary-card ${isFlipped ? 'flipped' : ''}`} 
-            onClick={handleCardFlip}
-          >
-            <div className="card-front">
-              <h2>{word}</h2>
+      {showModal && <VC_IntroductionModal onClose={handleModalClose} onSelectTopic={setSelectedTopic} />}
+      
+      {!showModal && word && (
+        <>
+          <h1>Vocabulary Card Game</h1>
+          <div className="vocabulary-card-container">
+            <div 
+              className={`vocabulary-card ${isFlipped ? 'flipped' : ''}`} 
+              onClick={handleCardFlip}
+            >
+              <div className="card-front">
+                <h2>{word}</h2>
+              </div>
+              <div className="card-back">
+                <p>{definition}</p>
+              </div>
             </div>
-            <div className="card-back">
-              <p>{definition}</p>
-            </div>
+            <button className="next-word-button" onClick={handleNextWord}>Next Word</button>
           </div>
-          <button className="next-word-button" onClick={handleNextWord}>Next Word</button>
-        </div>
+        </>
       )}
     </div>
   );

@@ -24,7 +24,7 @@ const VC_IntroductionModal = ({ onClose, onSelectTopic }) => {
           Each card will show a word, and you can flip it to see its definition.
           Select a topic to get started!
         </p>
-        <div className="topic-selection">
+        <div className="modal-content-nw">
           <h2>Select your topic</h2>
           <select value={selectedTopic} onChange={handleTopicChange} className="topic-dropdown">
             <option value="" disabled>Select a topic</option>
