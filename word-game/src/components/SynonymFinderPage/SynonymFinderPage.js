@@ -23,6 +23,7 @@ const SynonymFinderPage = () => {
   const [phonetic, setPhonetic] = useState('');
   const [selectedWord, setSelectedWord] = useState('');
   const [language, setLanguage] = useState('en');
+  const [selectedLevel, setSelectedLevel] = useState('easy'); // Default level
 
   useEffect(() => {
     if (timeLeft > 0 && !showModal && !gameOver) {
@@ -40,7 +41,8 @@ const SynonymFinderPage = () => {
     if (loading || gameOver) return;
     setLoading(true);
     try {
-      const response = await axios.get('https://apiwordgame.aidenkiettran.com/generate-question');
+      const endpoint = `http://localhost:5000/generate-question-${selectedLevel}-level`;
+      const response = await axios.get(endpoint);
       setQuestion(response.data);
       setSelectedOption(null);
       setFeedback('');
@@ -90,7 +92,7 @@ const SynonymFinderPage = () => {
 
   const handleWordClick = async (word) => {
     try {
-      const response = await axios.post('https://apiwordgame.aidenkiettran.com/validate-word', {
+      const response = await axios.post('http://localhost:5000/validate-word', {
         word,
       });
       const { englishDefinition, vietnameseDefinition } = response.data;
@@ -114,7 +116,12 @@ const SynonymFinderPage = () => {
 
   return (
     <div className="synonym-finder-page">
-      {showModal && <IntroductionModal onClose={closeModal} />}
+      {showModal && (
+        <IntroductionModal
+          onClose={closeModal}
+          onSelectLevel={setSelectedLevel} // Pass the selected level to the modal
+        />
+      )}
       {!showModal && (
         <>
           <Navbar />
