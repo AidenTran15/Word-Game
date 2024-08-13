@@ -13,14 +13,14 @@ const SynonymFinderPage = () => {
   const [showModal, setShowModal] = useState(true);
   const [loading, setLoading] = useState(false);
   const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(60);
+  const [timeLeft, setTimeLeft] = useState(600);
   const [gameOver, setGameOver] = useState(false);
   const [usedWords, setUsedWords] = useState([]);
   const [showDefinitionModal, setShowDefinitionModal] = useState(false);
   const [definition, setDefinition] = useState('');
   const [englishDefinition, setEnglishDefinition] = useState('');
   const [vietnameseDefinition, setVietnameseDefinition] = useState('');
-  const [phonetic, setPhonetic] = useState(''); // Initialize phonetic state
+  const [phonetic, setPhonetic] = useState('');
   const [selectedWord, setSelectedWord] = useState('');
   const [language, setLanguage] = useState('en');
 
@@ -40,7 +40,7 @@ const SynonymFinderPage = () => {
     if (loading || gameOver) return;
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:5000/generate-question');
+      const response = await axios.get('https://apiwordgame.aidenkiettran.com/generate-question');
       setQuestion(response.data);
       setSelectedOption(null);
       setFeedback('');
@@ -67,7 +67,9 @@ const SynonymFinderPage = () => {
       setFeedback('Correct!');
       setScore(score + 1);
     } else {
-      setFeedback(`Wrong! The correct word is ${question.correctAnswer}.`);
+      setTimeout(() => {
+        setFeedback(`Wrong! The correct word is ${question.correctAnswer}.`);
+      }, 1000);
     }
   };
 
@@ -92,11 +94,11 @@ const SynonymFinderPage = () => {
         word,
       });
       const { englishDefinition, vietnameseDefinition } = response.data;
-  
+
       setEnglishDefinition(englishDefinition);
       setVietnameseDefinition(vietnameseDefinition);
-      setSelectedWord(word); // Set the selected word here
-      setDefinition(englishDefinition); // Show English definition by default
+      setSelectedWord(word);
+      setDefinition(englishDefinition);
       setShowDefinitionModal(true);
     } catch (error) {
       console.error('Error fetching definition:', error);
@@ -104,7 +106,6 @@ const SynonymFinderPage = () => {
       setShowDefinitionModal(true);
     }
   };
-  
 
   const toggleLanguage = () => {
     setLanguage((prevLanguage) => (prevLanguage === 'en' ? 'vi' : 'en'));
@@ -149,7 +150,7 @@ const SynonymFinderPage = () => {
                         key={index}
                         onClick={() => handleOptionClick(option)}
                         disabled={selectedOption !== null || loading}
-                        className={getButtonClass(option)}
+                        className={`${getButtonClass(option)} ${selectedOption === option ? 'selected' : ''}`}
                       >
                         {option}
                       </button>
@@ -157,7 +158,7 @@ const SynonymFinderPage = () => {
                 </div>
                 {feedback && (
                   <h3
-                    className={`synonym-feedback ${
+                    className={`synonym-feedback synonym-feedback-visible ${
                       feedback.startsWith('Correct') ? 'synonym-feedback-correct' : ''
                     }`}
                   >
@@ -165,7 +166,7 @@ const SynonymFinderPage = () => {
                   </h3>
                 )}
 
-                <button onClick={fetchQuestion} disabled={selectedOption === null || loading}>
+                <button className="next-question-button" onClick={fetchQuestion} disabled={selectedOption === null || loading}>
                   {loading ? 'Loading...' : 'Next Question'}
                 </button>
               </>
@@ -198,15 +199,14 @@ const SynonymFinderPage = () => {
           <Footer />
         </>
       )}
-<DefinitionModal
-  show={showDefinitionModal}
-  onClose={() => setShowDefinitionModal(false)}
-  definition={definition}
-  selectedWord={selectedWord} // Pass the selected word here
-  language={language}
-  toggleLanguage={toggleLanguage}
-/>
-
+      <DefinitionModal
+        show={showDefinitionModal}
+        onClose={() => setShowDefinitionModal(false)}
+        definition={definition}
+        selectedWord={selectedWord}
+        language={language}
+        toggleLanguage={toggleLanguage}
+      />
     </div>
   );
 };

@@ -81,30 +81,84 @@
   text-transform: capitalize;
 }
 
+/* Synonym options buttons styling */
 .synonym-options {
   display: flex;
-  justify-content: space-between; /* Distribute buttons in a row */
+  justify-content: space-between;
   margin-bottom: 30px;
-  gap: 10px; /* Add space between buttons */
-  font-size: 1.2em;
+  gap: 10px;
+  font-size: 1.1em;
   padding-top: 20px;
 }
 
 .synonym-options button {
-  flex: 1; /* Each button takes equal width */
-  font-size: 1.2em; /* Decrease font size */
-  padding: 8px 0; /* Reduce padding */
-  border-radius: 5px;
-  transition: background 0.3s, transform 0.3s;
+  flex: 1;
+  font-size: 1.1em; /* Reduced font size */
+  padding: 10px 0; /* Reduced padding */
+  border-radius: 20px; /* Increased border-radius */
+  border: 2px solid #3B71CA;
+  background-color: #fff;
+  color: #3B71CA;
   cursor: pointer;
-  margin: 3px; /* Reduce margin */
+  transition: background 0.3s, transform 0.3s;
+  margin: 3px;
 }
 
+.synonym-options button:hover {
+  background-color: #f0f8ff;
+}
+
+.synonym-options button.selected {
+  background-color: #d0e8ff;
+}
+
+.synonym-options button.correct {
+  background-color: #00c851;
+  color: white;
+  border: 2px solid #00c851;
+}
+
+.synonym-options button.incorrect {
+  background-color: #ff4444;
+  color: white;
+  border: 2px solid #ff4444;
+}
+
+/* Next Question button styling */
+.next-question-button {
+  font-size: 1.1em; /* Reduced font size */
+  padding: 10px 10; /* Reduced padding */
+  border-radius: 20px; /* Increased border-radius */
+  background-color: #3B71CA;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+  margin-top: 20px;
+}
+
+.next-question-button:hover {
+  background-color: #3356A8;
+}
+
+.next-question-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Feedback styling */
 .synonym-feedback {
   margin-bottom: 20px;
+  font-size: 1.5em;
 }
 
-.game-over h3, .game-over p {
+.synonym-feedback-correct {
+  color: #00c851;
+}
+
+/* Game over section styling */
+.game-over h3,
+.game-over p {
   font-size: 1.5em;
   font-weight: bold;
   color: #333;
@@ -112,6 +166,22 @@
   text-align: center;
 }
 
+.play-again-button {
+  font-size: 1.1em; /* Reduced font size */
+  padding: 10px 10; /* Reduced padding */
+  border-radius: 20px; /* Increased border-radius */
+  background-color: #3B71CA;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.play-again-button:hover {
+  background-color: #3356A8;
+}
+
+/* Used words section styling */
 .used-words-section {
   width: 90%;
   max-width: 730px;
@@ -205,34 +275,34 @@
 /* Media Query for Mobile Devices */
 @media (max-width: 600px) {
   .synonym-finder-container {
-    width: 90%;  /* Reduce the width to fit mobile screens */
-    padding: 20px;  /* Reduce padding for a more compact view */
-    margin-top: 10px;  /* Adjust margin */
+    width: 90%;
+    padding: 20px;
+    margin-top: 10px;
   }
 
   .word-title {
-    font-size: 1.6em;  /* Decrease font size */
+    font-size: 1.6em;
   }
 
   .synonym-options {
-    flex-wrap: wrap;  /* Wrap the buttons to the next line */
-    justify-content: center;  /* Center the buttons horizontally */
-    gap: 10px;  /* Add space between buttons */
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
   }
 
   .synonym-options button {
-    flex: 0 0 45%;  /* Each button takes 45% of the width on mobile */
-    font-size: 0.9em;  /* Decrease button font size further */
-    padding: 8px 0;  /* Reduce padding */
-    margin: 3px;  /* Reduce margin */
+    flex: 0 0 45%;
+    font-size: 0.9em;
+    padding: 8px 0;
+    margin: 3px;
   }
 
   .timer-container {
-    margin-bottom: 30px;  /* Adjust space around timer */
+    margin-bottom: 30px;
   }
 
   .used-words-section {
-    padding: 20px;  /* Reduce padding */
-    max-height: 200px;  /* Reduce height */
+    padding: 20px;
+    max-height: 200px;
   }
 }
