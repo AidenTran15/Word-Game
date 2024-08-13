@@ -21,12 +21,12 @@
 
 .modal-content-dm h2 {
   font-family: 'Playfair Display', serif; /* Use Playfair Display for a classic look */
-  font-size: 34px; /* Reduced font size */
+  font-size: 32px; /* Reduced font size */
   font-weight: 700; /* Bold */
   text-transform: uppercase; /* Uppercase text */
   letter-spacing: 1px; /* Slightly increase letter spacing */
   margin-top: -10px; /* Moved up by reducing margin-top */
-  margin-bottom: 22px;
+  margin-bottom: 20px;
   padding-bottom: 5px; /* Added padding-bottom */
   text-decoration: underline; 
 }
@@ -78,4 +78,34 @@
 
 .modal-content-dm button:hover {
   background-color: #0056b3;
+}
+
+/* Media Query for Mobile Devices */
+@media (max-width: 600px) {
+  .modal-content-dm {
+    padding: 30px;
+    width: 90%;
+  }
+
+  .modal-content-dm h2 {
+    font-size: 30px; /* Slightly smaller for mobile */
+  }
+
+  .modal-content-dm h3 {
+    font-size: 26px; /* Slightly smaller for mobile */
+  }
+
+  .modal-content-dm h4 {
+    font-size: 20px; /* Slightly smaller for mobile */
+  }
+
+  .modal-content-dm button {
+    padding: 10px 20px; /* Smaller padding for mobile */
+    font-size: 16px; /* Smaller font size for mobile */
+  }
+
+  .modal-content-dm .toggle-button {
+    padding: 6px 12px; /* Smaller padding for mobile */
+    font-size: 16px; /* Smaller font size for mobile */
+  }
 }
