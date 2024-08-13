@@ -1,76 +1,94 @@
 .vocabulary-game-container {
     text-align: center;
     padding: 20px;
-  }
-  
-  .topic-selection button {
-    margin: 5px;
-    padding: 10px 20px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .topic-selection button:hover {
-    background-color: #0056b3;
-  }
-  
-  .vocabulary-card-container {
-    margin-top: 30px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-  }
-  
-  .vocabulary-card {
-    width: 300px;
-    height: 200px;
+    height: 100vh;
+    background-color: #f8f9fa;
+}
+
+.vocabulary-card-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    height: 350px; /* Increased height for the card */
     perspective: 1000px;
-    cursor: pointer;
-  }
-  
-  .vocabulary-card.flipped .card-front {
-    transform: rotateY(180deg);
-  }
-  
-  .vocabulary-card.flipped .card-back {
-    transform: rotateY(0);
-  }
-  
-  .card-front, .card-back {
+    margin-bottom: 80px; /* Space for the button below */
+}
+
+.vocabulary-card {
     width: 100%;
     height: 100%;
-    background-color: #007BFF;
-    color: white;
-    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    z-index: 1; /* Ensure the card is above other elements */
+}
+
+.vocabulary-card.flipped {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    width: 100%;
+    height: 100%;
     position: absolute;
     backface-visibility: hidden;
-    transition: transform 0.6s;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 24px;
-  }
-  
-  .card-back {
+    border-radius: 12px;
+    font-size: 30px;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #007BFF;
+    color: white;
+}
+
+.card-back {
     background-color: #0056b3;
     transform: rotateY(180deg);
-  }
-  
-  .next-word-button {
-    margin-top: 20px;
-    padding: 10px 20px;
+}
+
+.next-word-button {
+    position: absolute;
+    bottom: -60px; /* Move the button down */
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 24px;
+    font-size: 18px;
     background-color: #28a745;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-  }
-  
-  .next-word-button:hover {
+    z-index: 2; /* Ensure the button is above the background but below the card */
+    transition: background-color 0.3s ease, transform 0.1s ease; /* Reduced transform transition time */
+}
+
+.next-word-button:hover {
     background-color: #218838;
-  }
-  
+    transform: translateX(-50%) scale(1.02); /* Slight scaling to avoid position shift */
+}
+
+@media (max-width: 600px) {
+    .vocabulary-card-container {
+        max-width: 90%;
+        height: 250px;
+    }
+
+    .card-front, .card-back {
+        font-size: 24px;
+    }
+
+    .next-word-button {
+        font-size: 16px;
+        padding: 10px 20px;
+        bottom: -50px; /* Adjust for smaller screens */
+    }
+}
