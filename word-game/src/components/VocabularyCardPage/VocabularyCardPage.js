@@ -4,6 +4,7 @@ import './VocabularyCardPage.css';
 import VCIntroductionModal from '../VC_IntroductionModal/VC_IntroductionModal';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
+import DefinitionModal from '../DefinitionModal/DefinitionModal'; // Import your DefinitionModal
 
 const VocabularyCardPage = () => {
   const [selectedTopic, setSelectedTopic] = useState('');
@@ -13,6 +14,8 @@ const VocabularyCardPage = () => {
   const [showModal, setShowModal] = useState(true);
   const [loading, setLoading] = useState(false);
   const [usedWords, setUsedWords] = useState([]); // Store used words
+  const [showDefinitionModal, setShowDefinitionModal] = useState(false); // State to control the definition modal
+  const [selectedWord, setSelectedWord] = useState(''); // Store the word clicked
 
   useEffect(() => {
     if (selectedTopic) {
@@ -48,6 +51,20 @@ const VocabularyCardPage = () => {
     setShowModal(false);
   };
 
+  // Handle when a word is clicked
+  const handleWordClick = async (word) => {
+    try {
+      const response = await axios.post('https://apiwordgame.aidenkiettran.com/validate-word', { word });
+      setSelectedWord(word);
+      setDefinition(response.data.englishDefinition || 'No definition found.');
+      setShowDefinitionModal(true); // Show the definition modal
+    } catch (error) {
+      console.error('Error fetching definition:', error);
+      setDefinition('No definition found.');
+      setShowDefinitionModal(true); // Show the definition modal even on error
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -79,7 +96,9 @@ const VocabularyCardPage = () => {
                   <div key={i} className="words-column">
                     <ul>
                       {usedWords.slice(i * 20, (i + 1) * 20).map((usedWord, index) => (
-                        <li key={index}>{usedWord}</li>
+                        <li key={index} onClick={() => handleWordClick(usedWord)}>
+                          {usedWord}
+                        </li>
                       ))}
                     </ul>
                   </div>
@@ -93,6 +112,16 @@ const VocabularyCardPage = () => {
         )}
       </div>
       <Footer />
+
+      {/* Definition Modal */}
+      {showDefinitionModal && (
+        <DefinitionModal
+          show={showDefinitionModal}
+          onClose={() => setShowDefinitionModal(false)}
+          definition={definition}
+          selectedWord={selectedWord}
+        />
+      )}
     </>
   );
 };
