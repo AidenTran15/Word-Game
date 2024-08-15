@@ -12,24 +12,22 @@ const VocabularyCardPage = () => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [showModal, setShowModal] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [isInitialModal, setIsInitialModal] = useState(true);  // New state to track initial modal display
+  const [usedWords, setUsedWords] = useState([]); // Store used words
 
   useEffect(() => {
     if (selectedTopic) {
-      console.log("Fetching first word for the selected topic:", selectedTopic);
       fetchVocabularyWord(selectedTopic);
     }
   }, [selectedTopic]);
 
   const fetchVocabularyWord = async (topic) => {
-    console.log("Fetching word for topic:", topic);
     setLoading(true);
     try {
       const response = await axios.post('http://localhost:5000/generate-vocabulary-word', { topic });
-      console.log("Fetched word:", response.data.word);
       setWord(response.data.word);
       setDefinition(response.data.englishDefinition);
       setIsFlipped(false);
+      setUsedWords([...usedWords, response.data.word]); // Update used words
     } catch (error) {
       console.error('Error fetching vocabulary word:', error);
     } finally {
@@ -42,40 +40,24 @@ const VocabularyCardPage = () => {
   };
 
   const handleNextWord = async () => {
-    console.log("Fetching next word for topic:", selectedTopic);
     await fetchVocabularyWord(selectedTopic);
   };
 
   const handleModalClose = (topic) => {
-    console.log("Selected topic:", topic);
     setSelectedTopic(topic);
     setShowModal(false);
-    setIsInitialModal(false);  // Set to false after the first time
-  };
-
-  const handleChangeTopic = () => {
-    setShowModal(true);
   };
 
   return (
     <>
       <Navbar />
       <div className="vocabulary-game-container">
-        {showModal && (
-          <VCIntroductionModal 
-            onClose={handleModalClose} 
-            isInitialModal={isInitialModal} 
-          />
-        )}
-
+        {showModal && <VCIntroductionModal onClose={handleModalClose} />}
         {!showModal && word && (
           <>
             <h1>Vocabulary Card Game</h1>
             <div className="vocabulary-card-container">
-              <div 
-                className={`vocabulary-card ${isFlipped ? 'flipped' : ''}`} 
-                onClick={handleCardFlip}
-              >
+              <div className={`vocabulary-card ${isFlipped ? 'flipped' : ''}`} onClick={handleCardFlip}>
                 <div className="card-front">
                   <h2>{word}</h2>
                 </div>
@@ -83,18 +65,19 @@ const VocabularyCardPage = () => {
                   <p>{definition}</p>
                 </div>
               </div>
-              <button 
-                className="next-word-button" 
-                onClick={handleNextWord}
-                disabled={loading}
-              >
+              <button className="next-word-button" onClick={handleNextWord} disabled={loading}>
                 {loading ? 'Loading...' : 'Next Word'}
               </button>
             </div>
-            <button 
-              className="change-topic-button" 
-              onClick={handleChangeTopic}
-            >
+            <div className="used-words-section">
+              <h2>Used Words</h2>
+              <ul>
+                {usedWords.map((usedWord, index) => (
+                  <li key={index}>{usedWord}</li>
+                ))}
+              </ul>
+            </div>
+            <button className="change-topic-button" onClick={() => setShowModal(true)}>
               Change Topic
             </button>
           </>

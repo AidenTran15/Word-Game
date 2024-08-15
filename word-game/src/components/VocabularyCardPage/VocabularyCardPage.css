@@ -100,6 +100,25 @@
     margin-right: 10px;
   }
   
+  .used-words-section {
+    margin-top: 30px;
+  }
+  
+  .used-words-section h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .used-words-section ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .used-words-section ul li {
+    margin-bottom: 8px;
+    font-size: 18px;
+  }
+  
 
 @media (max-width: 600px) {
     .vocabulary-card-container {
