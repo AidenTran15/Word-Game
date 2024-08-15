@@ -47,12 +47,16 @@
     justify-content: center;
     align-items: center;
     border-radius: 20px;
-    font-size: 60px; /* Increased font size for the word */
-    text-transform: uppercase; /* Capitalize the word */
     padding: 20px;
     box-sizing: border-box;
-    color: white; /* Ensure the word is white */
     background-color: #3B71CA; /* Same blue color for both the front and back */
+}
+
+/* Styling specifically for the word */
+.vocabulary-word {
+    font-size: 40px; /* Increased font size for a bigger word */
+    color: white; /* Ensure the word is white */
+    text-transform: uppercase; /* Capitalize the word */
 }
 
 /* Normal font size for the back of the card */

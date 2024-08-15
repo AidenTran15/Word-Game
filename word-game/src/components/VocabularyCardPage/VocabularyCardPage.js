@@ -59,7 +59,7 @@ const VocabularyCardPage = () => {
             <div className="vocabulary-card-container">
               <div className={`vocabulary-card ${isFlipped ? 'flipped' : ''}`} onClick={handleCardFlip}>
                 <div className="card-front">
-                  <h2>{word}</h2>
+                  <h2 className="vocabulary-word">{word}</h2>
                 </div>
                 <div className="card-back">
                   <p>{definition}</p>
