@@ -16,6 +16,9 @@ const VocabularyCardPage = () => {
   const [usedWords, setUsedWords] = useState([]); // Store used words
   const [showDefinitionModal, setShowDefinitionModal] = useState(false); // State to control the definition modal
   const [selectedWord, setSelectedWord] = useState(''); // Store the word clicked
+  const [language, setLanguage] = useState('en'); // Track the language
+  const [englishDefinition, setEnglishDefinition] = useState(''); // Store English definition
+  const [vietnameseDefinition, setVietnameseDefinition] = useState(''); // Store Vietnamese definition
 
   useEffect(() => {
     if (selectedTopic) {
@@ -29,6 +32,8 @@ const VocabularyCardPage = () => {
       const response = await axios.post('http://localhost:5000/generate-vocabulary-word', { topic });
       setWord(response.data.word);
       setDefinition(response.data.englishDefinition);
+      setEnglishDefinition(response.data.englishDefinition);
+      setVietnameseDefinition(response.data.vietnameseDefinition || 'No Vietnamese definition available');
       setIsFlipped(false);
       setUsedWords([...usedWords, response.data.word]); // Update used words
     } catch (error) {
@@ -56,13 +61,22 @@ const VocabularyCardPage = () => {
     try {
       const response = await axios.post('https://apiwordgame.aidenkiettran.com/validate-word', { word });
       setSelectedWord(word);
+      setEnglishDefinition(response.data.englishDefinition || 'No definition found.');
+      setVietnameseDefinition(response.data.vietnameseDefinition || 'No Vietnamese definition available');
       setDefinition(response.data.englishDefinition || 'No definition found.');
+      setLanguage('en'); // Default to English when the modal opens
       setShowDefinitionModal(true); // Show the definition modal
     } catch (error) {
       console.error('Error fetching definition:', error);
       setDefinition('No definition found.');
       setShowDefinitionModal(true); // Show the definition modal even on error
     }
+  };
+
+  const toggleLanguage = () => {
+    const newLanguage = language === 'en' ? 'vi' : 'en';
+    setLanguage(newLanguage);
+    setDefinition(newLanguage === 'vi' ? vietnameseDefinition : englishDefinition);
   };
 
   return (
@@ -120,6 +134,8 @@ const VocabularyCardPage = () => {
           onClose={() => setShowDefinitionModal(false)}
           definition={definition}
           selectedWord={selectedWord}
+          language={language}
+          toggleLanguage={toggleLanguage}
         />
       )}
     </>
