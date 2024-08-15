@@ -6,18 +6,20 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f8f9fa;
+    background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
 }
 
+/* Card Styling */
 .vocabulary-card-container {
     position: relative;
     width: 100%;
     max-width: 400px;
-    height: 350px; /* Increased height for the card */
+    height: 450px; /* Increased height for the card */
     perspective: 1000px;
-    margin-bottom: 80px; /* Space for the button below */
+    margin-bottom: 80px;
 }
 
+/* Card with #3B71CA color */
 .vocabulary-card {
     width: 100%;
     height: 100%;
@@ -25,9 +27,10 @@
     cursor: pointer;
     transform-style: preserve-3d;
     transition: transform 0.6s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 12px;
-    z-index: 1; /* Ensure the card is above other elements */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;  /* More rounded corners for a modern look */
+    background-color: #3B71CA; /* New blue color for the card */
+    z-index: 1;
 }
 
 .vocabulary-card.flipped {
@@ -42,97 +45,60 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 12px;
+    border-radius: 20px;
     font-size: 30px;
     padding: 20px;
     box-sizing: border-box;
-    background-color: #007BFF;
-    color: white;
+    color: white; /* White text for contrast with blue background */
+    background-color: #3B71CA; /* Same blue color for both the front and back */
 }
 
+/* Different background for the card's back */
 .card-back {
-    background-color: #0056b3;
+    background-color: #2C5BB5; /* Slightly darker blue for the card's back */
     transform: rotateY(180deg);
 }
 
+/* Button Styling */
 .next-word-button {
     position: absolute;
-    bottom: -60px; /* Move the button down */
+    bottom: -60px;
     left: 50%;
     transform: translateX(-50%);
     padding: 12px 24px;
     font-size: 18px;
-    background-color: #28a745;
+    background-color: #3B71CA; /* Match the card color */
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 30px; /* Rounded button */
     cursor: pointer;
-    z-index: 2; /* Ensure the button is above the background but below the card */
-    transition: background-color 0.3s ease, transform 0.1s ease; /* Reduced transform transition time */
+    box-shadow: 0 5px 15px rgba(59, 113, 202, 0.4); /* Subtle shadow */
+    transition: background-color 0.3s ease, transform 0.1s ease;
 }
 
 .next-word-button:hover {
-    background-color: #218838;
-    transform: translateX(-50%) scale(1.02); /* Slight scaling to avoid position shift */
+    background-color: #2C5BB5; /* Hover effect with a darker shade */
+    transform: translateX(-50%) scale(1.05);
 }
 
-.topic-dropdown-container {
-    margin-bottom: 20px;
-  }
-  
-  .topic-dropdown {
-    padding: 10px;
-    font-size: 16px;
-    border: 2px solid #007bff;
-    border-radius: 8px;
-    background-color: white;
-    color: black;
-    cursor: pointer;
-    transition: border-color 0.3s ease;
-  }
-  
-  .topic-dropdown:focus {
-    border-color: #0056b3;
-  }
-  
-  .topic-dropdown-container label {
-    font-size: 18px;
-    margin-right: 10px;
-  }
-  
-  .used-words-section {
+/* Used Words Section Styling */
+.used-words-section {
     margin-top: 30px;
-  }
-  
-  .used-words-section h2 {
+}
+
+.used-words-section h2 {
     font-size: 24px;
+    color: #fff;
     margin-bottom: 10px;
-  }
-  
-  .used-words-section ul {
+}
+
+.used-words-section ul {
     list-style-type: none;
     padding-left: 0;
-  }
-  
-  .used-words-section ul li {
+}
+
+.used-words-section ul li {
     margin-bottom: 8px;
     font-size: 18px;
-  }
-  
-
-@media (max-width: 600px) {
-    .vocabulary-card-container {
-        max-width: 90%;
-        height: 250px;
-    }
-
-    .card-front, .card-back {
-        font-size: 24px;
-    }
-
-    .next-word-button {
-        font-size: 16px;
-        padding: 10px 20px;
-        bottom: -50px; /* Adjust for smaller screens */
-    }
+    color: #f8f9fa;
 }
