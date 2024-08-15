@@ -71,11 +71,20 @@ const VocabularyCardPage = () => {
             </div>
             <div className="used-words-section">
               <h2>Used Words</h2>
-              <ul>
-                {usedWords.map((usedWord, index) => (
-                  <li key={index}>{usedWord}</li>
+              <p className="tip-text">
+                <em>Tip: Click on a word to see the definition.</em>
+              </p>
+              <div className="words-grid">
+                {[...Array(Math.ceil(usedWords.length / 20))].map((_, i) => (
+                  <div key={i} className="words-column">
+                    <ul>
+                      {usedWords.slice(i * 20, (i + 1) * 20).map((usedWord, index) => (
+                        <li key={index}>{usedWord}</li>
+                      ))}
+                    </ul>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
             <button className="change-topic-button" onClick={() => setShowModal(true)}>
               Change Topic

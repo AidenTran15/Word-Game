@@ -54,7 +54,7 @@
 
 /* Styling specifically for the word */
 .vocabulary-word {
-    font-size: 40px; /* Increased font size for a bigger word */
+    font-size: 40px; /* Font size for the word */
     color: white; /* Ensure the word is white */
     text-transform: uppercase; /* Capitalize the word */
 }
@@ -102,21 +102,79 @@
 /* Used Words Section Styling */
 .used-words-section {
     margin-top: 30px;
+    width: 90%;
+    max-width: 730px;
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.used-words-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
 }
 
 .used-words-section h2 {
-    font-size: 24px;
-    color: #fff;
+    font-family: 'Playfair Display', serif;
+    font-size: 2em;
+    margin-bottom: 10px;
+    text-align: center;
+    position: relative;
+    font-weight: normal;
+}
+
+.used-words-section h2::after {
+    content: '';
+    display: block;
+    width: 50%;
+    margin: 0.5em auto;
+    border-bottom: 2px solid #000;
+}
+
+.tip-text {
+    font-size: 1.1em;
+    text-align: center;
+    color: #555;
     margin-bottom: 10px;
 }
 
-.used-words-section ul {
+.words-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.words-column {
+    flex: 1 1 calc(50% - 10px);
+    max-width: calc(50% - 10px);
+}
+
+.words-column ul {
     list-style-type: none;
+    margin: 0;
     padding-left: 0;
 }
 
-.used-words-section ul li {
-    margin-bottom: 8px;
-    font-size: 18px;
-    color: #f8f9fa;
+.words-column ul li {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+    background: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+    text-transform: capitalize;
+    text-align: left;
+    transition: background 0.3s;
+    cursor: pointer;
+}
+
+.words-column ul li:hover {
+    background: #e1e1e1;
 }
