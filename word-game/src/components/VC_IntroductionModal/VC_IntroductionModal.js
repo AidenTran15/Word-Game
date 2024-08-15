@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './VC_IntroductionModal.css';  // Assuming the path is correct
 
-const VCIntroductionModal = ({ onClose }) => {
+const VCIntroductionModal = ({ onClose, isInitialModal }) => {
   const [selectedTopic, setSelectedTopic] = useState('');
 
   const handleTopicChange = (event) => {
@@ -19,14 +19,18 @@ const VCIntroductionModal = ({ onClose }) => {
   return (
     <div className="modal-overlay">
       <div className="modal-content-nw">
-        <h2>Welcome to Vocabulary Card Game!</h2>
-        <p>
-          In this game, you'll learn new words related to a specific topic. 
-          Each card will show a word, and you can flip it to see its definition.
-          Select a topic to get started!
-        </p>
+        {isInitialModal && (
+          <>
+            <h2>Welcome to Vocabulary Card Game!</h2>
+            <p>
+              In this game, you'll learn new words related to a specific topic. 
+              Each card will show a word, and you can flip it to see its definition.
+              Select a topic to get started!
+            </p>
+          </>
+        )}
         <div className="topic-selection">
-          <h2>Select your topic</h2>
+          <h2>{isInitialModal ? 'Select your topic' : 'Change your topic'}</h2>
           <select value={selectedTopic} onChange={handleTopicChange} className="topic-dropdown">
             <option value="" disabled>Select a topic</option>
             <option value="Travel">Travel</option>
@@ -47,7 +51,9 @@ const VCIntroductionModal = ({ onClose }) => {
             <option value="Restaurant">Restaurant</option>
           </select>
         </div>
-        <button onClick={handleStartGame} className="modal-button">Start Game</button>
+        <button onClick={handleStartGame} className="modal-button">
+          {isInitialModal ? 'Start Game' : 'Change Topic'}
+        </button>
       </div>
     </div>
   );

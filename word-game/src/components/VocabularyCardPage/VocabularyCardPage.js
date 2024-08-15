@@ -12,6 +12,7 @@ const VocabularyCardPage = () => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [showModal, setShowModal] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [isInitialModal, setIsInitialModal] = useState(true);  // New state to track initial modal display
 
   useEffect(() => {
     if (selectedTopic) {
@@ -46,17 +47,27 @@ const VocabularyCardPage = () => {
   };
 
   const handleModalClose = (topic) => {
-    console.log("Selected topic:", topic);  // This should log the selected topic correctly
+    console.log("Selected topic:", topic);
     setSelectedTopic(topic);
     setShowModal(false);
+    setIsInitialModal(false);  // Set to false after the first time
+  };
+
+  const handleChangeTopic = () => {
+    setShowModal(true);
   };
 
   return (
     <>
       <Navbar />
       <div className="vocabulary-game-container">
-        {showModal && <VCIntroductionModal onClose={handleModalClose} />}
-        
+        {showModal && (
+          <VCIntroductionModal 
+            onClose={handleModalClose} 
+            isInitialModal={isInitialModal} 
+          />
+        )}
+
         {!showModal && word && (
           <>
             <h1>Vocabulary Card Game</h1>
@@ -80,6 +91,12 @@ const VocabularyCardPage = () => {
                 {loading ? 'Loading...' : 'Next Word'}
               </button>
             </div>
+            <button 
+              className="change-topic-button" 
+              onClick={handleChangeTopic}
+            >
+              Change Topic
+            </button>
           </>
         )}
       </div>
