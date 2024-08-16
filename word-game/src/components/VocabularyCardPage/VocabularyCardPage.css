@@ -1,29 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
 
+/* Title Styling */
 .vocabulary-card-title {
-    font-family: 'Raleway', sans-serif;  /* Modern and clean font */
-    font-size: 3rem;  /* Adjust size for better visibility */
-    font-weight: 700;  /* Make it bold for emphasis */
-    text-transform: uppercase;  /* Capitalize all letters for a bolder look */
-    letter-spacing: 2px;  /* Increase space between letters for a modern feel */
-    background: linear-gradient(90deg, #3B71CA, #66a6ff); /* Updated to stronger blue tones */
+    font-family: 'Raleway', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #3B71CA, #66a6ff);
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;  /* Gradient text effect */
-    margin-bottom: 20px;  /* Add spacing below the title */
-    text-shadow: 2px 4px 6px rgba(0, 72, 255, 0.5);  /* More blue in the text shadow */
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+    text-shadow: 2px 4px 6px rgba(0, 72, 255, 0.5);
     transition: transform 0.3s ease;
 }
 
 .vocabulary-card-title:hover {
-    transform: translateY(-5px);  /* Slight hover effect for interactivity */
-    text-shadow: 2px 4px 10px rgba(0, 72, 255, 0.8);  /* Stronger blue shadow on hover */
+    transform: translateY(-5px);
+    text-shadow: 2px 4px 10px rgba(0, 72, 255, 0.8);
 }
-
-
-
-
-
-
 
 .vocabulary-game-container {
     text-align: center;
@@ -41,12 +36,11 @@
     position: relative;
     width: 100%;
     max-width: 400px;
-    height: 450px; /* Increased height for the card */
+    height: 450px;
     perspective: 1000px;
     margin-bottom: 80px;
 }
 
-/* Card with #3B71CA color */
 .vocabulary-card {
     width: 100%;
     height: 100%;
@@ -55,8 +49,8 @@
     transform-style: preserve-3d;
     transition: transform 0.6s ease;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    border-radius: 20px;  /* More rounded corners for a modern look */
-    background-color: #3B71CA; /* New blue color for the card */
+    border-radius: 20px;
+    background-color: #3B71CA;
     z-index: 1;
 }
 
@@ -64,65 +58,73 @@
     transform: rotateY(180deg);
 }
 
-/* Larger font size only for the front of the card */
+/* Front and Back of the Card */
+.card-front, .card-back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
 .card-front {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    backface-visibility: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 20px;
-    padding: 20px;
-    box-sizing: border-box;
-    background-color: #3B71CA; /* Same blue color for both the front and back */
+    background-color: #3B71CA;
+    position: relative;
 }
 
-/* Styling specifically for the word */
 .vocabulary-word {
-    font-size: 40px; /* Font size for the word */
-    color: white; /* Ensure the word is white */
-    text-transform: uppercase; /* Capitalize the word */
+    font-size: 40px;
+    color: white;
+    text-transform: uppercase;
 }
 
-/* Normal font size for the back of the card */
 .card-back {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    backface-visibility: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 20px;
-    font-size: 30px; /* Keep the normal font size for the definition */
-    padding: 20px;
-    box-sizing: border-box;
+    font-size: 30px;
     color: white;
-    background-color: #2C5BB5; /* Slightly darker blue for the card's back */
+    background-color: #2C5BB5;
     transform: rotateY(180deg);
 }
+
+.speaker-icon {
+    position: absolute;
+    top: 28px; /* Moved down by 5px */
+    right: 28px; /* Moved left by 5px */
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.speaker-icon:hover {
+    transform: scale(1.1);
+    color: #ffff66;
+}
+
 
 /* Button Styling */
 .next-word-button {
     position: absolute;
-    bottom: -60px;
+    bottom: -80px;
     left: 50%;
     transform: translateX(-50%);
     padding: 12px 24px;
     font-size: 18px;
-    background-color: #3B71CA; /* Match the card color */
+    background-color: #3B71CA;
     color: white;
     border: none;
-    border-radius: 30px; /* Rounded button */
+    border-radius: 30px;
     cursor: pointer;
-    box-shadow: 0 5px 15px rgba(59, 113, 202, 0.4); /* Subtle shadow */
+    box-shadow: 0 5px 15px rgba(59, 113, 202, 0.4);
     transition: background-color 0.3s ease, transform 0.1s ease;
 }
 
 .next-word-button:hover {
-    background-color: #2C5BB5; /* Hover effect with a darker shade */
+    background-color: #2C5BB5;
     transform: translateX(-50%) scale(1.05);
 }
 

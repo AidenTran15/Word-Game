@@ -79,6 +79,12 @@ const VocabularyCardPage = () => {
     setDefinition(newLanguage === 'vi' ? vietnameseDefinition : englishDefinition);
   };
 
+  const speakWord = (word) => {
+    const utterance = new SpeechSynthesisUtterance(word);
+    utterance.lang = 'en-US'; // Set the language to English
+    speechSynthesis.speak(utterance);
+  };
+
   return (
     <>
       <Navbar />
@@ -92,6 +98,13 @@ const VocabularyCardPage = () => {
               <div className={`vocabulary-card ${isFlipped ? 'flipped' : ''}`} onClick={handleCardFlip}>
                 <div className="card-front">
                   <h2 className="vocabulary-word">{word}</h2>
+                  <i
+                    className="fas fa-volume-up speaker-icon"
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent the card from flipping when clicking the icon
+                      speakWord(word);
+                    }}
+                  ></i>
                 </div>
                 <div className="card-back">
                   <p>{definition}</p>
