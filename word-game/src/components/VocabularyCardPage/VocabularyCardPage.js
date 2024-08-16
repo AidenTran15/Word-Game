@@ -4,7 +4,7 @@ import './VocabularyCardPage.css';
 import VCIntroductionModal from '../VC_IntroductionModal/VC_IntroductionModal';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
-import DefinitionModal from '../DefinitionModal/DefinitionModal'; // Import your DefinitionModal
+import DefinitionModal from '../DefinitionModal/DefinitionModal';
 
 const VocabularyCardPage = () => {
   const [selectedTopic, setSelectedTopic] = useState('');
@@ -13,12 +13,13 @@ const VocabularyCardPage = () => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [showModal, setShowModal] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [usedWords, setUsedWords] = useState([]); // Store used words
-  const [showDefinitionModal, setShowDefinitionModal] = useState(false); // State to control the definition modal
-  const [selectedWord, setSelectedWord] = useState(''); // Store the word clicked
-  const [language, setLanguage] = useState('en'); // Track the language
-  const [englishDefinition, setEnglishDefinition] = useState(''); // Store English definition
-  const [vietnameseDefinition, setVietnameseDefinition] = useState(''); // Store Vietnamese definition
+  const [usedWords, setUsedWords] = useState([]);
+  const [showDefinitionModal, setShowDefinitionModal] = useState(false);
+  const [selectedWord, setSelectedWord] = useState('');
+  const [language, setLanguage] = useState('en');
+  const [englishDefinition, setEnglishDefinition] = useState('');
+  const [vietnameseDefinition, setVietnameseDefinition] = useState('');
+  const [isFavorited, setIsFavorited] = useState(false); // New state for star toggle
 
   useEffect(() => {
     if (selectedTopic) {
@@ -35,7 +36,7 @@ const VocabularyCardPage = () => {
       setEnglishDefinition(response.data.englishDefinition);
       setVietnameseDefinition(response.data.vietnameseDefinition || 'No Vietnamese definition available');
       setIsFlipped(false);
-      setUsedWords([...usedWords, response.data.word]); // Update used words
+      setUsedWords([...usedWords, response.data.word]);
     } catch (error) {
       console.error('Error fetching vocabulary word:', error);
     } finally {
@@ -56,33 +57,14 @@ const VocabularyCardPage = () => {
     setShowModal(false);
   };
 
-  // Handle when a word is clicked
-  const handleWordClick = async (word) => {
-    try {
-      const response = await axios.post('https://apiwordgame.aidenkiettran.com/validate-word', { word });
-      setSelectedWord(word);
-      setEnglishDefinition(response.data.englishDefinition || 'No definition found.');
-      setVietnameseDefinition(response.data.vietnameseDefinition || 'No Vietnamese definition available');
-      setDefinition(response.data.englishDefinition || 'No definition found.');
-      setLanguage('en'); // Default to English when the modal opens
-      setShowDefinitionModal(true); // Show the definition modal
-    } catch (error) {
-      console.error('Error fetching definition:', error);
-      setDefinition('No definition found.');
-      setShowDefinitionModal(true); // Show the definition modal even on error
-    }
+  const handleStarClick = () => {
+    setIsFavorited(!isFavorited); // Toggle the star state
   };
 
   const toggleLanguage = () => {
     const newLanguage = language === 'en' ? 'vi' : 'en';
     setLanguage(newLanguage);
     setDefinition(newLanguage === 'vi' ? vietnameseDefinition : englishDefinition);
-  };
-
-  const speakWord = (word) => {
-    const utterance = new SpeechSynthesisUtterance(word);
-    utterance.lang = 'en-US'; // Set the language to English
-    speechSynthesis.speak(utterance);
   };
 
   return (
@@ -97,12 +79,20 @@ const VocabularyCardPage = () => {
             <div className="vocabulary-card-container">
               <div className={`vocabulary-card ${isFlipped ? 'flipped' : ''}`} onClick={handleCardFlip}>
                 <div className="card-front">
+                  <div
+                    className={`star-icon ${isFavorited ? 'favorited' : ''}`}
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent card flip on click
+                      handleStarClick();
+                    }}
+                  >
+                    ★
+                  </div>
                   <h2 className="vocabulary-word">{word}</h2>
                   <i
                     className="fas fa-volume-up speaker-icon"
                     onClick={(e) => {
-                      e.stopPropagation(); // Prevent the card from flipping when clicking the icon
-                      speakWord(word);
+                      e.stopPropagation(); // Prevent card flip on click
                     }}
                   ></i>
                 </div>
@@ -114,34 +104,10 @@ const VocabularyCardPage = () => {
                 {loading ? 'Loading...' : 'Next Word'}
               </button>
             </div>
-            <div className="used-words-section">
-              <h2>Used Words</h2>
-              <p className="tip-text">
-                <em>Tip: Click on a word to see the definition.</em>
-              </p>
-              <div className="words-grid">
-                {[...Array(Math.ceil(usedWords.length / 20))].map((_, i) => (
-                  <div key={i} className="words-column">
-                    <ul>
-                      {usedWords.slice(i * 20, (i + 1) * 20).map((usedWord, index) => (
-                        <li key={index} onClick={() => handleWordClick(usedWord)}>
-                          {usedWord}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <button className="change-topic-button" onClick={() => setShowModal(true)}>
-              Change Topic
-            </button>
           </>
         )}
       </div>
       <Footer />
-
-      {/* Definition Modal */}
       {showDefinitionModal && (
         <DefinitionModal
           show={showDefinitionModal}
@@ -149,7 +115,7 @@ const VocabularyCardPage = () => {
           definition={definition}
           selectedWord={selectedWord}
           language={language}
-          toggleLanguage={toggleLanguage}
+          toggleLanguage={toggleLanguage} // Added toggleLanguage here
         />
       )}
     </>
