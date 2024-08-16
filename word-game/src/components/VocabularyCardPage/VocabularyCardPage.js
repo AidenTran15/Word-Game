@@ -86,7 +86,8 @@ const VocabularyCardPage = () => {
         {showModal && <VCIntroductionModal onClose={handleModalClose} />}
         {!showModal && word && (
           <>
-            <h1>Vocabulary Card Game</h1>
+            <h1 className="vocabulary-card-title">Vocabulary Card</h1>
+
             <div className="vocabulary-card-container">
               <div className={`vocabulary-card ${isFlipped ? 'flipped' : ''}`} onClick={handleCardFlip}>
                 <div className="card-front">

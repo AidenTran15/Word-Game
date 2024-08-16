@@ -1,3 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+
+.vocabulary-card-title {
+    font-family: 'Raleway', sans-serif;  /* Modern and clean font */
+    font-size: 3rem;  /* Adjust size for better visibility */
+    font-weight: 700;  /* Make it bold for emphasis */
+    text-transform: uppercase;  /* Capitalize all letters for a bolder look */
+    letter-spacing: 2px;  /* Increase space between letters for a modern feel */
+    background: linear-gradient(90deg, #3B71CA, #66a6ff); /* Updated to stronger blue tones */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;  /* Gradient text effect */
+    margin-bottom: 20px;  /* Add spacing below the title */
+    text-shadow: 2px 4px 6px rgba(0, 72, 255, 0.5);  /* More blue in the text shadow */
+    transition: transform 0.3s ease;
+}
+
+.vocabulary-card-title:hover {
+    transform: translateY(-5px);  /* Slight hover effect for interactivity */
+    text-shadow: 2px 4px 10px rgba(0, 72, 255, 0.8);  /* Stronger blue shadow on hover */
+}
+
+
+
+
+
+
+
 .vocabulary-game-container {
     text-align: center;
     padding: 20px;
