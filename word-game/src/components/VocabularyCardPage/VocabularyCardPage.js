@@ -36,7 +36,7 @@ const VocabularyCardPage = () => {
       setEnglishDefinition(response.data.englishDefinition);
       setVietnameseDefinition(response.data.vietnameseDefinition || 'No Vietnamese definition available');
       setIsFlipped(false);
-      setUsedWords([...usedWords, response.data.word]);
+      setUsedWords((prevWords) => [...prevWords, response.data.word]);
     } catch (error) {
       console.error('Error fetching vocabulary word:', error);
     } finally {
@@ -65,6 +65,23 @@ const VocabularyCardPage = () => {
     const newLanguage = language === 'en' ? 'vi' : 'en';
     setLanguage(newLanguage);
     setDefinition(newLanguage === 'vi' ? vietnameseDefinition : englishDefinition);
+  };
+
+  const handleWordClick = async (word) => {
+    try {
+      const response = await axios.post('http://localhost:5000/validate-word', { word });
+      const { englishDefinition, vietnameseDefinition } = response.data;
+
+      setEnglishDefinition(englishDefinition);
+      setVietnameseDefinition(vietnameseDefinition);
+      setSelectedWord(word);
+      setDefinition(englishDefinition);
+      setShowDefinitionModal(true);
+    } catch (error) {
+      console.error('Error fetching definition:', error);
+      setDefinition('No definition found.');
+      setShowDefinitionModal(true);
+    }
   };
 
   return (
@@ -103,6 +120,27 @@ const VocabularyCardPage = () => {
               <button className="next-word-button" onClick={handleNextWord} disabled={loading}>
                 {loading ? 'Loading...' : 'Next Word'}
               </button>
+            </div>
+
+            {/* Used Words Section */}
+            <div className="used-words-section">
+              <h2>Used Words</h2>
+              <p className="tip-text">
+                <em>Tip: Click on the word to see the definition.</em>
+              </p>
+              <div className="words-grid">
+                {[...Array(Math.ceil(usedWords.length / 20))].map((_, i) => (
+                  <div key={i} className="words-column">
+                    <ul>
+                      {usedWords.slice(i * 20, (i + 1) * 20).map((word, index) => (
+                        <li key={index} onClick={() => handleWordClick(word)}>
+                          {word}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
             </div>
           </>
         )}

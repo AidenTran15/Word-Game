@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
-
 /* Title Styling */
 .vocabulary-card-title {
     font-family: 'Raleway', sans-serif;
@@ -36,7 +34,7 @@
     position: relative;
     width: 100%;
     max-width: 400px;
-    height: 250px; /* Adjust this value based on your design */
+    height: 250px;
     perspective: 1000px;
     margin: 0 auto; /* Center the card horizontally */
     margin-bottom: 20px; /* Space between card and other elements */
@@ -142,69 +140,69 @@
 
 /* Used Words Section Styling */
 .used-words-section {
-    margin-top: 30px;
-    width: 90%;
-    max-width: 730px;
-    padding: 30px;
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 15px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    text-align: left;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    max-height: 400px;
-    overflow-y: auto;
+  margin-top: 30px;
+  width: 90%;
+  max-width: 730px;
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .used-words-section:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+  transform: translateY(-5px);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
 }
 
 .used-words-section h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2em;
-    margin-bottom: 10px;
-    text-align: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 2em;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
 .tip-text {
-    font-size: 1.1em;
-    text-align: center;
-    color: #555;
-    margin-bottom: 10px;
+  font-size: 1.1em;
+  text-align: center;
+  color: #555;
+  margin-bottom: 10px;
 }
 
 .words-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 15px;
-    margin: 25px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 15px;
+  margin: 25px 0;
 }
 
 .words-column {
-    flex: 1 1 calc(50% - 10px);
-    max-width: calc(50% - 10px);
+  flex: 1 1 calc(50% - 10px);
+  max-width: calc(50% - 10px);
 }
 
 .words-column ul {
-    list-style-type: none;
-    margin: 0;
-    padding-left: 0;
+  list-style-type: none;
+  margin: 0;
+  padding-left: 0;
 }
 
 .words-column ul li {
-    font-size: 1.2em;
-    margin-bottom: 5px;
-    background: #f1f1f1;
-    padding: 10px;
-    border-radius: 5px;
-    text-transform: capitalize;
-    text-align: left;
-    transition: background 0.3s;
-    cursor: pointer;
+  font-size: 1.2em;
+  margin-bottom: 5px;
+  background: #f1f1f1;
+  padding: 10px;
+  border-radius: 5px;
+  text-transform: capitalize;
+  text-align: left;
+  transition: background 0.3s;
+  cursor: pointer;
 }
 
 .words-column ul li:hover {
-    background: #e1e1e1;
+  background: #e1e1e1;
 }
