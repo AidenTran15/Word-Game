@@ -184,8 +184,13 @@ const VocabularyCardPage = () => {
               </div>
             </div>
 
-            {/* Add the Next Word button here */}
-            <button className="next-word-button" onClick={handleNextWord} disabled={loading}>
+            {/* Next Word Button */}
+            <button 
+              className="next-word-button" 
+              onClick={handleNextWord} 
+              onTouchStart={handleNextWord} // Add touch event handler
+              disabled={loading}
+            >
               {loading ? 'Loading...' : 'Next Word'}
             </button>
 

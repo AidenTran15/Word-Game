@@ -175,6 +175,7 @@
   cursor: pointer;
   box-shadow: 0 5px 15px rgba(59, 113, 202, 0.4);
   transition: background-color 0.3s ease, transform 0.1s ease;
+  z-index: 10; /* Ensure the button is above other elements */
 }
 
 .next-word-button:hover {
@@ -251,6 +252,7 @@
   background: #e1e1e1;
 }
 
+/* Mobile Responsiveness */
 @media (max-width: 768px) {
   .vocabulary-card-container {
     max-width: 90%;
@@ -276,21 +278,15 @@
   .vocabulary-card-title {
     font-size: 2.4rem;
     letter-spacing: 1px;
-    margin-top: 120px;
+    margin-top: 80px; /* Adjust to move the card upwards */
   }
 
-  .language-toggle {
-    width: 80px;
-    height: 25px;
-  }
-
-  .toggle-option {
-    width: 50%;
-    line-height: 25px;
+  .next-word-button {
+    margin-top: -85px; /* Adjust the margin to move button upwards */
   }
 
   .used-words-section {
-    margin-top: 20px;
+    margin-top: 10px; /* Move the Used Words section closer to the button */
     margin-bottom: 20px;
     width: 87%;
     max-width: 730px;
@@ -303,9 +299,5 @@
     font-size: 2em;
     margin-bottom: 10px;
     text-align: center;
-  }
-
-  .next-word-button {
-    margin-top: -85px; /* Move the button closer to the card */
   }
 }
