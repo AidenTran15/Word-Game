@@ -125,9 +125,10 @@ const VocabularyCardPage = () => {
                 </div>
                 <div className="card-back">
                   <p>{definition}</p>
-                  <button className="translate-button small-translate-button" onClick={(e) => toggleLanguage(e)}>
-                    {language === 'en' ? 'View in Vietnamese' : 'View in English'}
-                  </button>
+                  <div className="language-toggle" onClick={(e) => toggleLanguage(e)}>
+                    <span className={`toggle-option ${language === 'en' ? 'active' : ''}`}>EN</span>
+                    <span className={`toggle-option ${language === 'vi' ? 'active' : ''}`}>VI</span>
+                  </div>
                 </div>
               </div>
               <button className="next-word-button" onClick={handleNextWord} disabled={loading}>
