@@ -251,18 +251,26 @@
   background: #e1e1e1;
 }
 
-/* Mobile Responsiveness */
 @media (max-width: 768px) {
   .vocabulary-card-container {
     max-width: 90%;
   }
 
+  .vocabulary-card {
+    min-height: 250px; /* Reduce the minimum height for smaller screens */
+  }
+
+  .card-front, .card-back {
+    min-height: 250px; /* Ensure the card front and back also adapt to the smaller height */
+    padding: 10px; /* Reduce padding to save space */
+  }
+
   .card-back {
-    font-size: 22px;
+    font-size: 18px; /* Adjust font size to fit the smaller height */
   }
 
   .vocabulary-word {
-    font-size: 40px;
+    font-size: 30px; /* Reduce the size of the vocabulary word for smaller screens */
   }
 
   .vocabulary-card-title {
@@ -272,17 +280,13 @@
   }
 
   .language-toggle {
-    width: 90px;
-    height: 30px;
+    width: 80px;
+    height: 25px;
   }
 
   .toggle-option {
     width: 50%;
-    line-height: 32px;
-  }
-
-  .toggle-option.active {
-    background-color: #ffffff;
+    line-height: 25px;
   }
 
   .used-words-section {
@@ -300,7 +304,8 @@
     margin-bottom: 10px;
     text-align: center;
   }
-  /* .hide-on-mobile {
-    display: none;
-  } */
+
+  .next-word-button {
+    margin-top: -85px; /* Move the button closer to the card */
+  }
 }
