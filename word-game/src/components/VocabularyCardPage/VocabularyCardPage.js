@@ -32,7 +32,7 @@ const VocabularyCardPage = () => {
   const fetchVocabularyWord = async (topic) => {
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/generate-vocabulary-word', { topic });
+      const response = await axios.post('https://apiwordgame.aidenkiettran.com/generate-vocabulary-word', { topic });
       setWord(response.data.word);
       setDefinition(response.data.englishDefinition);
       setEnglishDefinition(response.data.englishDefinition);
@@ -48,39 +48,47 @@ const VocabularyCardPage = () => {
   };
 
   const setupSwipeDetection = () => {
+    const card = document.querySelector('.vocabulary-card');
+    
+    if (!card) {
+      return; // Exit early if the card element is not found
+    }
+  
     let touchStartX = 0;
     let touchEndX = 0;
-
+  
     const handleTouchStart = (e) => {
       touchStartX = e.changedTouches[0].screenX;
     };
-
+  
     const handleTouchMove = (e) => {
       touchEndX = e.changedTouches[0].screenX;
     };
-
+  
     const handleTouchEnd = () => {
       if (touchStartX - touchEndX > 50) {
         // swipe left (ignore)
       }
-
+  
       if (touchEndX - touchStartX > 50) {
         // swipe right to next word
         handleNextWord();
       }
     };
-
-    const card = document.querySelector('.vocabulary-card');
+  
+    // Add event listeners only if the card element exists
     card.addEventListener('touchstart', handleTouchStart);
     card.addEventListener('touchmove', handleTouchMove);
     card.addEventListener('touchend', handleTouchEnd);
-
+  
     return () => {
+      // Clean up event listeners
       card.removeEventListener('touchstart', handleTouchStart);
       card.removeEventListener('touchmove', handleTouchMove);
       card.removeEventListener('touchend', handleTouchEnd);
     };
   };
+  ;
 
   const handleCardFlip = () => {
     setIsFlipped(!isFlipped);
@@ -117,7 +125,7 @@ const VocabularyCardPage = () => {
 
   const handleWordClick = async (word) => {
     try {
-      const response = await axios.post('http://localhost:5000/validate-word', { word });
+      const response = await axios.post('https://apiwordgame.aidenkiettran.com/validate-word', { word });
       const { englishDefinition, vietnameseDefinition } = response.data;
 
       setEnglishDefinition(englishDefinition);

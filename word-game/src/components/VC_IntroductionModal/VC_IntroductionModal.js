@@ -35,7 +35,6 @@ const VCIntroductionModal = ({ onClose, isInitialModal }) => {
             <option value="" disabled>Select a topic</option>
             <option value="Travel">Travel</option>
             <option value="School">School</option>
-            <option value="Fruit">Fruit</option>
             <option value="Supermarket">Supermarket</option>
             <option value="Occupation">Occupation</option>
             <option value="Airport">Airport</option>

@@ -41,7 +41,7 @@ const SynonymFinderPage = () => {
     if (loading || gameOver) return;
     setLoading(true);
     try {
-      const endpoint = `http://localhost:5000/generate-question-${selectedLevel}-level`;
+      const endpoint = `https://apiwordgame.aidenkiettran.com/generate-question-${selectedLevel}-level`;
       const response = await axios.get(endpoint);
       setQuestion(response.data);
       setSelectedOption(null);
@@ -96,7 +96,7 @@ const SynonymFinderPage = () => {
 
   const handleWordClick = async (word) => {
     try {
-      const response = await axios.post('http://localhost:5000/validate-word', {
+      const response = await axios.post('https://apiwordgame.aidenkiettran.com/validate-word', {
         word,
       });
       const { englishDefinition, vietnameseDefinition } = response.data;
