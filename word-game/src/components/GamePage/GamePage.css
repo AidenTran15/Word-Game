@@ -291,14 +291,22 @@ button:disabled {
 .next-word-container {
     display: flex;
     align-items: center;
-    justify-content: center; /* Center the text and icon */
+    justify-content: center; /* Center the text and icon horizontally */
     margin-bottom: 20px;
     margin-top: -20px;
+    font-size: 1.8em; /* Adjust font size if needed */
+    font-weight: bold; /* Make the text bold */
 }
 
-.speaker-icon {
-    margin-left: 8px;
+.speaker-icon-nw {
+    margin-left: 10px; /* Add space between the word and the icon */
     cursor: pointer;
+    font-size: 1.5em; /* Adjust the size of the icon */
+    color: #3B71CA; /* Change color to match the theme */
+}
+
+.speaker-icon-nw:hover {
+    color: #3356A8; /* Darken the icon color on hover */
 }
 
 .tip-text {

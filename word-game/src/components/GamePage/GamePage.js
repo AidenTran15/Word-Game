@@ -285,11 +285,11 @@ const GamePage = () => {
                 )}
               </div>
               {nextWord && nextWord !== `${userName} won!` && nextWord !== 'Computer wins!' && (
-                <h2 className="next-word-container">
-                  Next word: {nextWord}
-                  <FaVolumeUp onClick={() => handleSpeak(nextWord)} className="speaker-icon" />
-                </h2>
-              )}
+  <h2 className="next-word-container">
+    <span>Next word: {nextWord}</span>
+    <FaVolumeUp onClick={() => handleSpeak(nextWord)} className="speaker-icon-nw" />
+  </h2>
+)}
               {(!nextWord || nextWord === `${userName} won!` || nextWord === 'Computer wins!') && <h2>{nextWord}</h2>}
               <div className="input-container">
                 <input
