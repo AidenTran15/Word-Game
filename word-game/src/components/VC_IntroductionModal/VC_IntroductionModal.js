@@ -30,7 +30,7 @@ const VCIntroductionModal = ({ onClose, isInitialModal }) => {
           </>
         )}
         <div className="topic-selection">
-          <h2>{isInitialModal ? 'Select your topic' : 'Change your topic'}</h2>
+          <h2>{isInitialModal ? 'Select your topic' : 'Select the topic'}</h2>
           <select value={selectedTopic} onChange={handleTopicChange} className="topic-dropdown">
             <option value="" disabled>Select a topic</option>
             <option value="Travel">Travel</option>
