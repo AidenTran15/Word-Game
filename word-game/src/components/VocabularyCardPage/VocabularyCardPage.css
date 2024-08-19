@@ -284,4 +284,23 @@
   .toggle-option.active {
     background-color: #ffffff;
   }
+
+  .used-words-section {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 87%;
+    max-width: 730px;
+    padding: 10px;
+    max-height: 600px;
+  }
+
+  .used-words-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2em;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  /* .hide-on-mobile {
+    display: none;
+  } */
 }
