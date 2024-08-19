@@ -30,17 +30,17 @@
   position: relative;
   width: 100%;
   max-width: 550px;
-  height: 350px;
+  min-height: 350px; /* Set a minimum height for the card */
   perspective: 1000px;
   margin: 0 auto;
   margin-bottom: 20px;
 }
 
-
 /* Card Styling */
 .vocabulary-card {
   width: 100%;
-  height: 100%;
+  min-height: 350px; /* The card will start with this height */
+  height: auto; /* Allow the card to grow if the content exceeds the min-height */
   position: relative;
   cursor: pointer;
   transform-style: preserve-3d;
@@ -58,7 +58,8 @@
 /* Front and Back of the Card */
 .card-front, .card-back {
   width: 100%;
-  height: 100%;
+  min-height: 350px; /* Set the initial minimum height */
+  height: auto; /* Allow the height to adjust if content grows */
   position: absolute;
   backface-visibility: hidden;
   display: flex;
@@ -82,6 +83,13 @@
   position: relative;
 }
 
+/* Center the vocabulary word in the middle of the card */
+.card-front .vocabulary-word, 
+.card-back p {
+  margin: 0;
+  text-align: center;
+  word-wrap: break-word;
+}
 
 /* Language Toggle Button Styling */
 .language-toggle {
@@ -95,9 +103,9 @@
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease;
-  position: absolute; /* Position it inside the card */
-  top: 20px; /* From the top */
-  right: 20px; /* From the right */
+  position: absolute;
+  top: 20px; /* Position it at the top of the card */
+  right: 20px; /* Position it on the right side */
 }
 
 .toggle-option {
@@ -121,6 +129,8 @@
   font-size: 40px;
   color: white;
   text-transform: uppercase;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 /* Speaker Icon Styling */
@@ -142,9 +152,9 @@
 /* Star Icon Styling */
 .star-icon {
   position: absolute;
-  top: 20px;
-  left: 20px;
-  font-size: 30px;
+  top: 12px;
+  left: 25px;
+  font-size: 35px;
   color: white;
   cursor: pointer;
   transition: color 0.3s ease;
@@ -241,17 +251,11 @@
   background: #e1e1e1;
 }
 
-
-/* Decrease card width for smaller screens */
+/* Mobile Responsiveness */
 @media (max-width: 768px) {
   .vocabulary-card-container {
     max-width: 90%;
-    height: 28%;
   }
-
-  /* .hide-on-mobile {
-    display: none;
-  } */
 
   .card-back {
     font-size: 22px;
@@ -260,20 +264,23 @@
   .vocabulary-word {
     font-size: 40px;
   }
+
   .vocabulary-card-title {
     font-size: 2.4rem;
     letter-spacing: 1px;
     margin-top: 120px;
   }
-  .language-toggle{
+
+  .language-toggle {
     width: 90px;
     height: 30px;
   }
+
   .toggle-option {
     width: 50%;
     line-height: 32px;
   }
-  
+
   .toggle-option.active {
     background-color: #ffffff;
   }
