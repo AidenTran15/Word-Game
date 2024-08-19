@@ -26,6 +26,7 @@ const VocabularyCardPage = () => {
     if (selectedTopic) {
       fetchVocabularyWord(selectedTopic);
     }
+    setupSwipeDetection();
   }, [selectedTopic]);
 
   const fetchVocabularyWord = async (topic) => {
@@ -44,6 +45,41 @@ const VocabularyCardPage = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const setupSwipeDetection = () => {
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    const handleTouchStart = (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    };
+
+    const handleTouchMove = (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+    };
+
+    const handleTouchEnd = () => {
+      if (touchStartX - touchEndX > 50) {
+        // swipe left (ignore)
+      }
+
+      if (touchEndX - touchStartX > 50) {
+        // swipe right to next word
+        handleNextWord();
+      }
+    };
+
+    const card = document.querySelector('.vocabulary-card');
+    card.addEventListener('touchstart', handleTouchStart);
+    card.addEventListener('touchmove', handleTouchMove);
+    card.addEventListener('touchend', handleTouchEnd);
+
+    return () => {
+      card.removeEventListener('touchstart', handleTouchStart);
+      card.removeEventListener('touchmove', handleTouchMove);
+      card.removeEventListener('touchend', handleTouchEnd);
+    };
   };
 
   const handleCardFlip = () => {
@@ -137,7 +173,8 @@ const VocabularyCardPage = () => {
                   </div>
                 </div>
               </div>
-              <button className="next-word-button" onClick={handleNextWord} disabled={loading}>
+              {/* Hide the Next Word button for mobile devices */}
+              <button className="next-word-button hide-on-mobile" onClick={handleNextWord} disabled={loading}>
                 {loading ? 'Loading...' : 'Next Word'}
               </button>
             </div>

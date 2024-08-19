@@ -13,14 +13,6 @@
   transition: transform 0.3s ease;
 }
 
-/* Adjust title size for smaller screens */
-@media (max-width: 768px) {
-  .vocabulary-card-title {
-    font-size: 2.5rem;
-    letter-spacing: 1px;
-  }
-}
-
 /* Vocabulary Game Container */
 .vocabulary-game-container {
   text-align: center;
@@ -44,13 +36,6 @@
   margin-bottom: 20px;
 }
 
-/* Decrease card width for smaller screens */
-@media (max-width: 768px) {
-  .vocabulary-card-container {
-    max-width: 90%;
-    height: auto;
-  }
-}
 
 /* Card Styling */
 .vocabulary-card {
@@ -97,16 +82,6 @@
   position: relative;
 }
 
-/* Adjust font size for smaller screens */
-@media (max-width: 768px) {
-  .card-back {
-    font-size: 22px;
-  }
-
-  .vocabulary-word {
-    font-size: 30px;
-  }
-}
 
 /* Language Toggle Button Styling */
 .language-toggle {
@@ -264,4 +239,42 @@
 
 .words-column ul li:hover {
   background: #e1e1e1;
+}
+
+
+/* Decrease card width for smaller screens */
+@media (max-width: 768px) {
+  .vocabulary-card-container {
+    max-width: 90%;
+    height: 28%;
+  }
+
+  /* .hide-on-mobile {
+    display: none;
+  } */
+
+  .card-back {
+    font-size: 22px;
+  }
+
+  .vocabulary-word {
+    font-size: 40px;
+  }
+  .vocabulary-card-title {
+    font-size: 2.4rem;
+    letter-spacing: 1px;
+    margin-top: 120px;
+  }
+  .language-toggle{
+    width: 90px;
+    height: 30px;
+  }
+  .toggle-option {
+    width: 50%;
+    line-height: 32px;
+  }
+  
+  .toggle-option.active {
+    background-color: #ffffff;
+  }
 }
