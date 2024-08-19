@@ -64,7 +64,7 @@ const VocabularyCardPage = () => {
   };
 
   const toggleLanguage = (e) => {
-    e.stopPropagation(); // Prevent the card from flipping when the button is clicked
+    e.stopPropagation(); // Prevent the card from flipping when clicking the language toggle
     const newLanguage = language === 'en' ? 'vi' : 'en';
     setLanguage(newLanguage);
     setDefinition(newLanguage === 'vi' ? vietnameseDefinition : englishDefinition);
@@ -111,7 +111,7 @@ const VocabularyCardPage = () => {
                   <div
                     className={`star-icon ${isFavorited ? 'favorited' : ''}`}
                     onClick={(e) => {
-                      e.stopPropagation();
+                      e.stopPropagation(); // Prevent card flip when clicking the star icon
                       handleStarClick();
                     }}
                   >
@@ -120,12 +120,18 @@ const VocabularyCardPage = () => {
                   <h2 className="vocabulary-word">{word}</h2>
                   <i
                     className="fas fa-volume-up speaker-icon"
-                    onClick={(e) => handleSpeak(e)} // Use the handleSpeak function
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent card flip when clicking the speaker icon
+                      handleSpeak(e);
+                    }}
                   ></i>
                 </div>
                 <div className="card-back">
                   <p>{definition}</p>
-                  <div className="language-toggle" onClick={(e) => toggleLanguage(e)}>
+                  <div className="language-toggle" onClick={(e) => {
+                    e.stopPropagation(); // Prevent card flip when clicking the language toggle
+                    toggleLanguage(e);
+                  }}>
                     <span className={`toggle-option ${language === 'en' ? 'active' : ''}`}>EN</span>
                     <span className={`toggle-option ${language === 'vi' ? 'active' : ''}`}>VI</span>
                   </div>

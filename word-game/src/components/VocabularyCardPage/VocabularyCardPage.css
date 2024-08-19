@@ -13,11 +13,15 @@
   transition: transform 0.3s ease;
 }
 
-.vocabulary-card-title:hover {
-  transform: translateY(-5px);
-  text-shadow: 2px 4px 10px rgba(0, 72, 255, 0.8);
+/* Adjust title size for smaller screens */
+@media (max-width: 768px) {
+  .vocabulary-card-title {
+    font-size: 2.5rem;
+    letter-spacing: 1px;
+  }
 }
 
+/* Vocabulary Game Container */
 .vocabulary-game-container {
   text-align: center;
   padding: 0px;
@@ -38,6 +42,14 @@
   perspective: 1000px;
   margin: 0 auto;
   margin-bottom: 20px;
+}
+
+/* Decrease card width for smaller screens */
+@media (max-width: 768px) {
+  .vocabulary-card-container {
+    max-width: 90%;
+    height: auto;
+  }
 }
 
 /* Card Styling */
@@ -85,6 +97,17 @@
   position: relative;
 }
 
+/* Adjust font size for smaller screens */
+@media (max-width: 768px) {
+  .card-back {
+    font-size: 22px;
+  }
+
+  .vocabulary-word {
+    font-size: 30px;
+  }
+}
+
 /* Language Toggle Button Styling */
 .language-toggle {
   display: flex;
@@ -98,8 +121,8 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease;
   position: absolute; /* Position it inside the card */
-  top: 25px; /* From the top */
-  right: 25px; /* From the right */
+  top: 20px; /* From the top */
+  right: 20px; /* From the right */
 }
 
 .toggle-option {
@@ -176,7 +199,7 @@
 
 /* Used Words Section Styling */
 .used-words-section {
-  margin-top: 30px;
+  margin-top: 60px;
   width: 90%;
   max-width: 730px;
   padding: 30px;
