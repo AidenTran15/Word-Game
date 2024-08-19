@@ -70,6 +70,15 @@ const VocabularyCardPage = () => {
     setDefinition(newLanguage === 'vi' ? vietnameseDefinition : englishDefinition);
   };
 
+  const handleSpeak = (e) => {
+    e.stopPropagation(); // Prevent card flip
+    if (word) {
+      const utterance = new SpeechSynthesisUtterance(word);
+      utterance.lang = 'en-US'; // Set the language to English
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
   const handleWordClick = async (word) => {
     try {
       const response = await axios.post('http://localhost:5000/validate-word', { word });
@@ -111,9 +120,7 @@ const VocabularyCardPage = () => {
                   <h2 className="vocabulary-word">{word}</h2>
                   <i
                     className="fas fa-volume-up speaker-icon"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                    }}
+                    onClick={(e) => handleSpeak(e)} // Use the handleSpeak function
                   ></i>
                 </div>
                 <div className="card-back">
