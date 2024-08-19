@@ -124,7 +124,7 @@ const VocabularyCardPage = () => {
 
             {/* Used Words Section */}
             <div className="used-words-section">
-              <h2>Used Words</h2>
+              <h2>Vocabulary</h2>
               <p className="tip-text">
                 <em>Tip: Click on the word to see the definition.</em>
               </p>

@@ -140,7 +140,7 @@
 
 /* Used Words Section Styling */
 .used-words-section {
-  margin-top: 30px;
+  margin-top: 80px; 
   width: 90%;
   max-width: 730px;
   padding: 30px;
@@ -152,6 +152,7 @@
   max-height: 400px;
   overflow-y: auto;
 }
+
 
 .used-words-section:hover {
   transform: translateY(-5px);
