@@ -1,209 +1,229 @@
 /* Title Styling */
 .vocabulary-card-title {
-    font-family: 'Raleway', sans-serif;
-    font-size: 3rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    background: linear-gradient(90deg, #3B71CA, #66a6ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 20px;
-    text-shadow: 2px 4px 6px rgba(0, 72, 255, 0.5);
-    transition: transform 0.3s ease;
+  font-family: 'Raleway', sans-serif;
+  font-size: 3rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: linear-gradient(90deg, #3B71CA, #66a6ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+  text-shadow: 2px 4px 6px rgba(0, 72, 255, 0.5);
+  transition: transform 0.3s ease;
 }
 
 .vocabulary-card-title:hover {
-    transform: translateY(-5px);
-    text-shadow: 2px 4px 10px rgba(0, 72, 255, 0.8);
+  transform: translateY(-5px);
+  text-shadow: 2px 4px 10px rgba(0, 72, 255, 0.8);
 }
 
 .vocabulary-game-container {
-    text-align: center;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+  text-align: center;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
 }
 
 /* Card Container Styling */
 .vocabulary-card-container {
-    position: relative;
-    width: 100%;
-    max-width: 400px;
-    height: 250px;
-    perspective: 1000px;
-    margin: 0 auto; /* Center the card horizontally */
-    margin-bottom: 20px; /* Space between card and other elements */
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  height: 250px;
+  perspective: 1000px;
+  margin: 0 auto;
+  margin-bottom: 20px;
 }
 
 /* Card Styling */
 .vocabulary-card {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    cursor: pointer;
-    transform-style: preserve-3d;
-    transition: transform 0.6s ease;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    border-radius: 20px;
-    background-color: #3B71CA;
-    z-index: 1;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  background-color: #3B71CA;
+  z-index: 1;
 }
 
 .vocabulary-card.flipped {
-    transform: rotateY(180deg);
+  transform: rotateY(180deg);
 }
 
 /* Front and Back of the Card */
 .card-front, .card-back {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    backface-visibility: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 20px;
-    padding: 20px;
-    box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .card-front {
-    background-color: #3B71CA;
+  background-color: #3B71CA;
 }
 
 .card-back {
-    font-size: 30px;
-    color: white;
-    background-color: #2C5BB5;
-    transform: rotateY(180deg);
+  font-size: 30px;
+  color: white;
+  background-color: #2C5BB5;
+  transform: rotateY(180deg);
 }
 
+/* Smaller Translate Button */
+.small-translate-button {
+  margin-top: 10px;
+  padding: 8px 12px;
+  font-size: 14px;
+  background-color: #2C5BB5;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.small-translate-button:hover {
+  background-color: #3B71CA;
+  transform: scale(1.05);
+}
+
+/* Vocabulary Word */
 .vocabulary-word {
-    font-size: 40px;
-    color: white;
-    text-transform: uppercase;
+  font-size: 40px;
+  color: white;
+  text-transform: uppercase;
 }
 
 /* Speaker Icon Styling */
 .speaker-icon {
-    position: absolute;
-    top: 28px;
-    right: 28px;
-    font-size: 30px;
-    color: white;
-    cursor: pointer;
-    transition: transform 0.2s ease, color 0.2s ease;
+  position: absolute;
+  top: 28px;
+  right: 28px;
+  font-size: 30px;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
 }
 
 .speaker-icon:hover {
-    transform: scale(1.1);
-    color: #ffff66;
+  transform: scale(1.1);
+  color: #ffff66;
 }
 
 /* Star Icon Styling */
 .star-icon {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    font-size: 30px;
-    color: white;
-    cursor: pointer;
-    transition: color 0.3s ease;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 30px;
+  color: white;
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
 
 .star-icon.favorited {
-    color: yellow;
+  color: yellow;
 }
 
 /* Button Styling */
 .next-word-button {
-    padding: 12px 24px;
-    font-size: 18px;
-    background-color: #3B71CA;
-    color: white;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    box-shadow: 0 5px 15px rgba(59, 113, 202, 0.4);
-    transition: background-color 0.3s ease, transform 0.1s ease;
+  padding: 12px 24px;
+  font-size: 18px;
+  background-color: #3B71CA;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(59, 113, 202, 0.4);
+  transition: background-color 0.3s ease, transform 0.1s ease;
 }
 
 .next-word-button:hover {
-    background-color: #2C5BB5;
-    transform: scale(1.05);
+  background-color: #2C5BB5;
+  transform: scale(1.05);
 }
 
 /* Used Words Section Styling */
 .used-words-section {
-  margin-top: 80px; 
-  width: 90%;
-  max-width: 730px;
-  padding: 30px;
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 15px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  text-align: left;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  max-height: 400px;
-  overflow-y: auto;
+margin-top: 30px;
+width: 90%;
+max-width: 730px;
+padding: 30px;
+background-color: rgba(255, 255, 255, 0.9);
+border-radius: 15px;
+box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+text-align: left;
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+max-height: 400px;
+overflow-y: auto;
 }
 
-
 .used-words-section:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+transform: translateY(-5px);
+box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
 }
 
 .used-words-section h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 2em;
-  margin-bottom: 10px;
-  text-align: center;
+font-family: 'Playfair Display', serif;
+font-size: 2em;
+margin-bottom: 10px;
+text-align: center;
 }
 
 .tip-text {
-  font-size: 1.1em;
-  text-align: center;
-  color: #555;
-  margin-bottom: 10px;
+font-size: 1.1em;
+text-align: center;
+color: #555;
+margin-bottom: 10px;
 }
 
 .words-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 15px;
-  margin: 25px 0;
+display: flex;
+flex-wrap: wrap;
+justify-content: flex-start;
+gap: 15px;
+margin: 25px 0;
 }
 
 .words-column {
-  flex: 1 1 calc(50% - 10px);
-  max-width: calc(50% - 10px);
+flex: 1 1 calc(50% - 10px);
+max-width: calc(50% - 10px);
 }
 
 .words-column ul {
-  list-style-type: none;
-  margin: 0;
-  padding-left: 0;
+list-style-type: none;
+margin: 0;
+padding-left: 0;
 }
 
 .words-column ul li {
-  font-size: 1.2em;
-  margin-bottom: 5px;
-  background: #f1f1f1;
-  padding: 10px;
-  border-radius: 5px;
-  text-transform: capitalize;
-  text-align: left;
-  transition: background 0.3s;
-  cursor: pointer;
+font-size: 1.2em;
+margin-bottom: 5px;
+background: #f1f1f1;
+padding: 10px;
+border-radius: 5px;
+text-transform: capitalize;
+text-align: left;
+transition: background 0.3s;
+cursor: pointer;
 }
 
 .words-column ul li:hover {
-  background: #e1e1e1;
+background: #e1e1e1;
 }

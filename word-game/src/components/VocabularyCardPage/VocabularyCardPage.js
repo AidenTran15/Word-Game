@@ -19,7 +19,8 @@ const VocabularyCardPage = () => {
   const [language, setLanguage] = useState('en');
   const [englishDefinition, setEnglishDefinition] = useState('');
   const [vietnameseDefinition, setVietnameseDefinition] = useState('');
-  const [isFavorited, setIsFavorited] = useState(false); // New state for star toggle
+  const [isFavorited, setIsFavorited] = useState(false);
+  const [translatedWords, setTranslatedWords] = useState([]);
 
   useEffect(() => {
     if (selectedTopic) {
@@ -37,6 +38,7 @@ const VocabularyCardPage = () => {
       setVietnameseDefinition(response.data.vietnameseDefinition || 'No Vietnamese definition available');
       setIsFlipped(false);
       setUsedWords((prevWords) => [...prevWords, response.data.word]);
+      setTranslatedWords((prevWords) => [...prevWords, response.data.vietnameseWord || response.data.word]);
     } catch (error) {
       console.error('Error fetching vocabulary word:', error);
     } finally {
@@ -58,10 +60,11 @@ const VocabularyCardPage = () => {
   };
 
   const handleStarClick = () => {
-    setIsFavorited(!isFavorited); // Toggle the star state
+    setIsFavorited(!isFavorited);
   };
 
-  const toggleLanguage = () => {
+  const toggleLanguage = (e) => {
+    e.stopPropagation(); // Prevent the card from flipping when the button is clicked
     const newLanguage = language === 'en' ? 'vi' : 'en';
     setLanguage(newLanguage);
     setDefinition(newLanguage === 'vi' ? vietnameseDefinition : englishDefinition);
@@ -99,7 +102,7 @@ const VocabularyCardPage = () => {
                   <div
                     className={`star-icon ${isFavorited ? 'favorited' : ''}`}
                     onClick={(e) => {
-                      e.stopPropagation(); // Prevent card flip on click
+                      e.stopPropagation();
                       handleStarClick();
                     }}
                   >
@@ -109,12 +112,15 @@ const VocabularyCardPage = () => {
                   <i
                     className="fas fa-volume-up speaker-icon"
                     onClick={(e) => {
-                      e.stopPropagation(); // Prevent card flip on click
+                      e.stopPropagation();
                     }}
                   ></i>
                 </div>
                 <div className="card-back">
                   <p>{definition}</p>
+                  <button className="translate-button small-translate-button" onClick={(e) => toggleLanguage(e)}>
+                    {language === 'en' ? 'View in Vietnamese' : 'View in English'}
+                  </button>
                 </div>
               </div>
               <button className="next-word-button" onClick={handleNextWord} disabled={loading}>
@@ -122,7 +128,6 @@ const VocabularyCardPage = () => {
               </button>
             </div>
 
-            {/* Used Words Section */}
             <div className="used-words-section">
               <h2>Vocabulary</h2>
               <p className="tip-text">
@@ -132,7 +137,7 @@ const VocabularyCardPage = () => {
                 {[...Array(Math.ceil(usedWords.length / 20))].map((_, i) => (
                   <div key={i} className="words-column">
                     <ul>
-                      {usedWords.slice(i * 20, (i + 1) * 20).map((word, index) => (
+                      {(language === 'en' ? usedWords : translatedWords).slice(i * 20, (i + 1) * 20).map((word, index) => (
                         <li key={index} onClick={() => handleWordClick(word)}>
                           {word}
                         </li>
@@ -153,7 +158,7 @@ const VocabularyCardPage = () => {
           definition={definition}
           selectedWord={selectedWord}
           language={language}
-          toggleLanguage={toggleLanguage} // Added toggleLanguage here
+          toggleLanguage={toggleLanguage}
         />
       )}
     </>
