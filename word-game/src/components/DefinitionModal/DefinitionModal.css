@@ -17,6 +17,7 @@
   border-radius: 8px;
   text-align: center;
   width: 700px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .modal-content-dm h2 {
@@ -33,26 +34,27 @@
 
 .modal-content-dm h3 {
   margin-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   font-size: 30px;
   font-weight: normal;
 }
 
 .modal-content-dm h4 {
-  margin-top: 20px;
+  margin-top: 10px;
   margin-bottom: 20px;
-  font-size: 22px;
+  font-size: 24px;
   font-weight: normal;
+  color: gray;
 }
 
-/* Default: Inline with the Word */
+/* Word Section: Aligns word and speaker icon */
 .word-section {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   margin-top: 20px; 
-  margin-bottom: 20px; 
+  margin-bottom: 10px;
 }
 
 /* Speaker button styling */
@@ -60,9 +62,9 @@
   background: linear-gradient(135deg, #007BFF, #00c6ff);
   border: none;
   cursor: pointer;
-  font-size: 18px; /* Reduced font size */
+  font-size: 18px;
   color: white;
-  padding: 8px; /* Reduced padding */
+  padding: 8px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -75,6 +77,7 @@
   margin-left: 0;
 }
 
+/* Hover effect for speaker button */
 .speak-button:hover {
   transform: scale(1.1);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
@@ -83,6 +86,23 @@
 
 .speak-button:active {
   transform: scale(0.9);
+}
+
+/* Styling for buttons (View in Vietnamese / Close) */
+.modal-content-dm button {
+  padding: 12px 24px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: normal;
+  margin-top: 20px;
+}
+
+.modal-content-dm button:hover {
+  background-color: #0056b3;
 }
 
 .modal-content-dm .language-toggle {
@@ -101,22 +121,6 @@
 }
 
 .modal-content-dm .toggle-button:hover {
-  background-color: #0056b3;
-}
-
-.modal-content-dm button {
-  padding: 12px 24px;
-  background-color: #007BFF;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 18px;
-  font-weight: normal;
-  margin-top: 20px;
-}
-
-.modal-content-dm button:hover {
   background-color: #0056b3;
 }
 

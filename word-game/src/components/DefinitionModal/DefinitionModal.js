@@ -1,13 +1,47 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './DefinitionModal.css';
 
-const DefinitionModal = ({ show, onClose, definition, selectedWord, language, toggleLanguage }) => {
+const DefinitionModal = ({ show, onClose, selectedWord, language, toggleLanguage }) => {
+  const [definition, setDefinition] = useState('');
+  const [vietnameseTranslation, setVietnameseTranslation] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchDefinitionAndTranslation = async () => {
+      if (selectedWord && show) {
+        setLoading(true);
+
+        try {
+          // Fetch English definition
+          const definitionResponse = await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${selectedWord}`);
+          const englishDefinition = definitionResponse.data[0].meanings[0].definitions[0].definition;
+          setDefinition(englishDefinition);
+
+          // Fetch Vietnamese translation if language is 'vi'
+          if (language === 'vi') {
+            const translationResponse = await axios.post('http://localhost:5000/translate-word', { word: selectedWord });
+            setVietnameseTranslation(translationResponse.data.vietnameseTranslation);
+          }
+        } catch (error) {
+          console.error('Error fetching definition or translation:', error);
+          setDefinition('No definition found.');
+          setVietnameseTranslation('No Vietnamese translation found.');
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchDefinitionAndTranslation();
+  }, [selectedWord, show, language]);
+
   if (!show) return null;
 
   const handleSpeak = () => {
     if (selectedWord) {
       const utterance = new SpeechSynthesisUtterance(selectedWord);
-      utterance.lang = 'en-US'; // Set language to English
+      utterance.lang = language === 'en' ? 'en-US' : 'vi-VN';
       window.speechSynthesis.speak(utterance);
     }
   };
@@ -20,11 +54,19 @@ const DefinitionModal = ({ show, onClose, definition, selectedWord, language, to
           <h3>{selectedWord || 'No word selected'}</h3>
           {selectedWord && (
             <button className="speak-button" onClick={handleSpeak}>
-              <i className="fas fa-volume-up"></i> {/* Font Awesome speaker icon */}
+              <i className="fas fa-volume-up"></i>
             </button>
           )}
         </div>
-        <h4>{definition || 'No definition found.'}</h4>
+
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <>
+            <h4>{language === 'en' ? definition : vietnameseTranslation}</h4>
+          </>
+        )}
+
         <button onClick={toggleLanguage}>
           {language === 'en' ? 'View in Vietnamese' : 'View in English'}
         </button>
