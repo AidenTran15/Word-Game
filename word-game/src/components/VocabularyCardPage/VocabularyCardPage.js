@@ -19,6 +19,7 @@ const VocabularyCardPage = () => {
   const [language, setLanguage] = useState('en');
   const [englishDefinition, setEnglishDefinition] = useState('');
   const [vietnameseDefinition, setVietnameseDefinition] = useState('');
+  const [vietnameseWord, setVietnameseWord] = useState(''); // Add this to hold the Vietnamese translation of the word
   const [isFavorited, setIsFavorited] = useState(false);
   const [translatedWords, setTranslatedWords] = useState([]);
 
@@ -35,11 +36,12 @@ const VocabularyCardPage = () => {
   const fetchVocabularyWord = async (topic) => {
     setLoading(true);
     try {
-      const response = await axios.post('https://apiwordgame.aidenkiettran.com/generate-vocabulary-word', { topic });
+      const response = await axios.post('http://localhost:5000/generate-vocabulary-word', { topic });
       setWord(response.data.word);
       setDefinition(response.data.englishDefinition);
       setEnglishDefinition(response.data.englishDefinition);
       setVietnameseDefinition(response.data.vietnameseDefinition || 'No Vietnamese definition available');
+      setVietnameseWord(response.data.vietnameseWord || 'No Vietnamese word available'); // Store the Vietnamese word
       setIsFlipped(false);
       setUsedWords((prevWords) => [...prevWords, response.data.word]);
       setTranslatedWords((prevWords) => [...prevWords, response.data.vietnameseWord || response.data.word]);
@@ -108,12 +110,42 @@ const VocabularyCardPage = () => {
     setIsFavorited(!isFavorited);
   };
 
-  const toggleLanguage = (e) => {
+  const toggleLanguage = async (e) => {
     e.stopPropagation(); // Prevent the card from flipping when clicking the language toggle
+  
     const newLanguage = language === 'en' ? 'vi' : 'en';
     setLanguage(newLanguage);
-    setDefinition(newLanguage === 'vi' ? vietnameseDefinition : englishDefinition);
+  
+    if (newLanguage === 'vi') {
+      // If switching to Vietnamese, fetch the Vietnamese word
+      if (!vietnameseWord || vietnameseWord === 'No Vietnamese word available') {
+        try {
+          const response = await axios.post('http://localhost:5000/translate-word', { word });
+          console.log('Translation API response:', response.data); // Debugging the API response
+  
+          if (response.data && response.data.vietnameseTranslation) {
+            setVietnameseWord(response.data.vietnameseTranslation);
+            setDefinition(response.data.vietnameseTranslation);
+          } else {
+            setVietnameseWord('No Vietnamese word available');
+            setDefinition('No Vietnamese word available');
+          }
+        } catch (error) {
+          console.error('Error fetching Vietnamese word:', error);
+          setVietnameseWord('No Vietnamese word available');
+          setDefinition('No Vietnamese word available');
+        }
+      } else {
+        // If Vietnamese word is already fetched, just set it
+        setDefinition(vietnameseWord);
+      }
+    } else {
+      // If switching back to English, display the English word
+      setDefinition(englishDefinition);
+    }
   };
+  
+  
 
   const handleSpeak = (e) => {
     e.stopPropagation(); // Prevent card flip
@@ -126,7 +158,7 @@ const VocabularyCardPage = () => {
 
   const handleWordClick = async (word) => {
     try {
-      const response = await axios.post('https://apiwordgame.aidenkiettran.com/validate-word', { word });
+      const response = await axios.post('http://localhost:5000/validate-word', { word });
       const { englishDefinition, vietnameseDefinition } = response.data;
 
       setEnglishDefinition(englishDefinition);
