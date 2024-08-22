@@ -15,7 +15,6 @@ import emotionImage from '../../assets/emotion.png';
 import healthImage from '../../assets/health.png';  
 import hospitalityImage from '../../assets/hospitality.png';  
 
-
 const topics = [
   { name: 'Travel', image: travelImage },
   { name: 'School', image: schoolImage },
@@ -36,14 +35,7 @@ const VCIntroductionModal = ({ onClose, isInitialModal }) => {
 
   const handleTopicSelect = (topic) => {
     setSelectedTopic(topic);
-  };
-
-  const handleStartGame = () => {
-    if (selectedTopic) {
-      onClose(selectedTopic);
-    } else {
-      alert("Please select a topic to start the game.");
-    }
+    onClose(topic); // Immediately start the game when a topic is selected
   };
 
   return (
@@ -74,9 +66,6 @@ const VCIntroductionModal = ({ onClose, isInitialModal }) => {
             ))}
           </div>
         </div>
-        <button onClick={handleStartGame} className="modal-button">
-          {isInitialModal ? 'Start Game' : 'Select Topic'}
-        </button>
       </div>
     </div>
   );
