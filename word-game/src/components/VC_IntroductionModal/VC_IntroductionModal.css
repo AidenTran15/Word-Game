@@ -11,6 +11,16 @@
   z-index: 9999;
 }
 
+.topic-selection-vc h2 {
+  font-size: 2.4em;
+  font-family: 'Playfair Display', serif;
+  color: #3B71CA;
+  text-align: center;
+  text-decoration: underline; 
+  margin-top: 0px;
+  padding-bottom: 15px;
+}
+
 .modal-content-expanded {
   background-color: white;
   padding: 30px;

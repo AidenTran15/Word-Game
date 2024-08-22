@@ -51,7 +51,7 @@ const VCIntroductionModal = ({ onClose, isInitialModal }) => {
             </p>
           </>
         )}
-        <div className="topic-selection">
+        <div className="topic-selection-vc">
           <h2>{isInitialModal ? 'Select your topic' : 'Select the topic'}</h2>
           <div className="topic-buttons">
             {topics.map((topic) => (
