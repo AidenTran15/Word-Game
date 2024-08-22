@@ -43,8 +43,8 @@
 }
 
 .topic-button {
-  width: 180px;
-  height: 180px;
+  width: 380px; /* Increased width */
+  height: 100px; /* Decreased height */
   background-size: cover;
   background-position: center;
   border: 2px solid #3B71CA;
@@ -63,6 +63,7 @@
 .topic-button:hover {
   transform: scale(1.05);
 }
+
 
 .topic-button.selected {
   border-color: #FF5733;
