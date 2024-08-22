@@ -1,22 +1,34 @@
 import React, { useState } from 'react';
-import './VC_IntroductionModal.css';  // Assuming the path is correct
+import './VC_IntroductionModal.css';
+
+// Import your local images
+import travelImage from '../../assets/travel.png';
+import schoolImage from '../../assets/school.png';  
+import occupationImage from '../../assets/occupation.png';  
+import airportImage from '../../assets/airport.png'; 
+import animalsImage from '../../assets/animals.png';  
+import weatherImage from '../../assets/weather.png';  
+import transportationImage from '../../assets/transportation.png';  
+import sportsImage from '../../assets/sports.png';  
+import hobbiesImage from '../../assets/hobbies.png';  
+import emotionImage from '../../assets/emotion.png'; 
+import healthImage from '../../assets/health.png';  
+import hospitalityImage from '../../assets/hospitality.png';  
+
 
 const topics = [
-  { name: 'Travel', image: 'travel.jpg' },
-  { name: 'School', image: 'school.jpg' },
-  { name: 'Supermarket', image: 'supermarket.jpg' },
-  { name: 'Occupation', image: 'occupation.jpg' },
-  { name: 'Airport', image: 'airport.jpg' },
-  { name: 'Animals', image: 'animals.jpg' },
-  { name: 'Weather', image: 'weather.jpg' },
-  { name: 'Transportation', image: 'transportation.jpg' },
-  { name: 'Sports', image: 'sports.jpg' },
-  { name: 'Hobbies', image: 'hobbies.jpg' },
-  { name: 'Emotion', image: 'emotion.jpg' },
-  { name: 'Shopping', image: 'shopping.jpg' },
-  { name: 'Health', image: 'health.jpg' },
-  { name: 'Hospitality', image: 'hospitality.jpg' },
-  { name: 'Restaurant', image: 'restaurant.jpg' }
+  { name: 'Travel', image: travelImage },
+  { name: 'School', image: schoolImage },
+  { name: 'Occupation', image: occupationImage },
+  { name: 'Airport', image: airportImage },
+  { name: 'Animals', image: animalsImage },
+  { name: 'Weather', image: weatherImage },
+  { name: 'Transportation', image: transportationImage },
+  { name: 'Sports', image: sportsImage },
+  { name: 'Hobbies', image: hobbiesImage },
+  { name: 'Emotion', image: emotionImage },
+  { name: 'Health', image: healthImage },
+  { name: 'Hospitality', image: hospitalityImage },
 ];
 
 const VCIntroductionModal = ({ onClose, isInitialModal }) => {
@@ -63,7 +75,7 @@ const VCIntroductionModal = ({ onClose, isInitialModal }) => {
           </div>
         </div>
         <button onClick={handleStartGame} className="modal-button">
-          {isInitialModal ? 'Start Game' : 'Change Topic'}
+          {isInitialModal ? 'Start Game' : 'Select Topic'}
         </button>
       </div>
     </div>
