@@ -1,3 +1,4 @@
+/* Global body styling */
 body {
   font-family: 'Playfair Display', serif;
   margin: 0;
@@ -5,33 +6,41 @@ body {
   box-sizing: border-box;
 }
 
+/* Main container for the page */
 .game-page {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   background: linear-gradient(90deg, rgba(255,0,150,0.3), rgba(0,204,255,0.3));
+  padding-bottom: 60px; /* Height of the footer to avoid content overlap */
 }
 
+/* Game content styling */
 .game-content {
   flex: 1;
   padding: 20px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Align to the left */
-  margin-left: 40px; /* Add some left margin */
+  align-items: flex-start;
+  margin-left: 40px;
 }
 
-nav, footer {
+/* Navbar styling */
+nav {
   background-color: #333;
   color: white;
   padding: 1rem;
   text-align: center;
 }
 
+/* Footer that is fixed at the bottom */
 footer {
-  margin-top: auto;
-}
-
-nav h1, footer p {
-  margin: 0;
+  background-color: #333;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
 }

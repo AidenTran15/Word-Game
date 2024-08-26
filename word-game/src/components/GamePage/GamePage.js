@@ -9,6 +9,7 @@ import DefinitionModal from '../DefinitionModal/DefinitionModal';
 import NW_IntroductionModal from '../NW_IntroductionModal/NW_IntroductionModal'; 
 import { FaVolumeUp, FaMicrophone } from 'react-icons/fa';
 import './GamePage.css';
+import '../../App.css';
 
 const GamePage = () => {
   const location = useLocation();
