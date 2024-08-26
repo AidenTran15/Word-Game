@@ -196,7 +196,7 @@ const SynonymFinderPage = () => {
               </div>
             )}
           </div>
-          <div className="used-words-section">
+          <div className="used-words-section-sf">
             <h2>Vocabulary</h2>
             <p className="tip-text">
                   <em>Tip: Click on the word to see the definition.</em>

@@ -51,8 +51,7 @@
 /* Media query for smaller screens */
 @media (max-width: 600px) {
     .modal-content-nw {
-        max-width: 86%; /* Decreased max-width for smaller screens */
-        width: 90%; /* Ensure it takes 90% of the screen width */
+        max-width: 80%; /* Decreased the max-width to 80% */
         padding: 20px; /* Adjusted padding for smaller screens */
     }
     

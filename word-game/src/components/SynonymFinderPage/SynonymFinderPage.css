@@ -16,7 +16,7 @@
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  margin-top: 20px;
+  margin-top: 180px; /* Increased margin-top to move the container down */
 }
 
 .synonym-finder-container:hover {
@@ -93,9 +93,9 @@
 
 .synonym-options button {
   flex: 1;
-  font-size: 1.1em; /* Reduced font size */
-  padding: 10px 0; /* Reduced padding */
-  border-radius: 20px; /* Increased border-radius */
+  font-size: 1.1em;
+  padding: 10px 0;
+  border-radius: 20px;
   border: 2px solid #3B71CA;
   background-color: #fff;
   color: #3B71CA;
@@ -105,8 +105,8 @@
 }
 
 .synonym-options button:hover {
-  background-color: #3356A8; /* Same as next question button hover */
-  color: white; /* Change text color to white */
+  background-color: #3356A8;
+  color: white;
 }
 
 .synonym-options button.selected {
@@ -127,9 +127,9 @@
 
 /* Next Question button styling */
 .next-question-button {
-  font-size: 1.1em; /* Reduced font size */
-  padding: 10px 10; /* Reduced padding */
-  border-radius: 20px; /* Increased border-radius */
+  font-size: 1.1em;
+  padding: 10px 10;
+  border-radius: 20px;
   background-color: #3B71CA;
   color: white;
   border: none;
@@ -168,9 +168,9 @@
 }
 
 .play-again-button {
-  font-size: 1.1em; /* Reduced font size */
-  padding: 10px 10; /* Reduced padding */
-  border-radius: 20px; /* Increased border-radius */
+  font-size: 1.1em;
+  padding: 10px 10;
+  border-radius: 20px;
   background-color: #3B71CA;
   color: white;
   border: none;
@@ -183,7 +183,7 @@
 }
 
 /* Used words section styling */
-.used-words-section {
+.used-words-section-sf {
   width: 90%;
   max-width: 730px;
   padding: 30px;
@@ -197,12 +197,12 @@
   overflow-y: auto;
 }
 
-.used-words-section:hover {
+.used-words-section-sf:hover {
   transform: translateY(-5px);
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
 }
 
-.used-words-section h2 {
+.used-words-section-sf h2 {
   font-family: 'Playfair Display', serif;
   font-size: 2em;
   margin-bottom: 10px;
@@ -211,7 +211,7 @@
   font-weight: normal;
 }
 
-.used-words-section h2::after {
+.used-words-section-sf h2::after {
   content: '';
   display: block;
   width: 50%;
@@ -303,7 +303,7 @@
   .synonym-finder-container {
     width: 90%;
     padding: 20px;
-    margin-top: 10px;
+    margin-top: 20px;
   }
 
   .word-title {
@@ -327,8 +327,9 @@
     margin-bottom: 30px;
   }
 
-  .used-words-section {
+  .used-words-section-sf {
+    width: 90%; 
     padding: 20px;
-    max-height: 300px;
+    max-height: 400px;
   }
 }
