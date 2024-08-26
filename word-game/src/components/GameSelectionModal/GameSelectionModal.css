@@ -117,6 +117,17 @@
     background-color: #999;
     transform: translateY(-2px); /* Slight lift on hover */
 }
+/* Daily Talk button styles */
+.daily-talk-button {
+    background-color: #9C27B0; /* A vibrant purple color */
+}
+
+.daily-talk-button:hover {
+    background-color: #7B1FA2; /* A darker shade of purple on hover */
+    box-shadow: 0 8px 20px rgba(156, 39, 176, 0.5); /* Subtle glow on hover */
+    transform: translateY(-3px); /* Slight lift on hover */
+}
+
 
 /* Responsive adjustments */
 @media (max-width: 600px) {
