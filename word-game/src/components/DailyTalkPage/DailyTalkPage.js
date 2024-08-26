@@ -8,12 +8,22 @@ const DailyTalkPage = () => {
   const [conversation, setConversation] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  // Define the names for Person 1 and Person 2
+  const person1 = "Alex";
+  const person2 = "Jamie";
+
   const generateConversation = async () => {
     setLoading(true);
     try {
       const response = await axios.post('http://localhost:5000/generate-daily-talk');
       
-      const lines = response.data.conversation.split('\n').filter(line => line.trim() !== '');
+      // Replace "Person 1" and "Person 2" with the actual names
+      let conversationText = response.data.conversation;
+      conversationText = conversationText.replace(/Person 1:/g, `${person1}:`);
+      conversationText = conversationText.replace(/Person 2:/g, `${person2}:`);
+
+      // Split the conversation into lines
+      const lines = conversationText.split('\n').filter(line => line.trim() !== '');
       setConversation(lines);
     } catch (error) {
       console.error('Error generating conversation:', error);
@@ -46,7 +56,7 @@ const DailyTalkPage = () => {
         
         <div className="conversation-container">
           {conversation.map((line, index) => (
-            <p key={index} className={line.startsWith('Alex:') ? 'alex' : 'jamie'}>
+            <p key={index} className={line.startsWith(`${person1}:`) ? 'alex' : 'jamie'}>
               {line}
             </p>
           ))}
