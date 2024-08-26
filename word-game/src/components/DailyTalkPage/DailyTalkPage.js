@@ -34,9 +34,15 @@ const DailyTalkPage = () => {
 
   const handlePlayConversation = () => {
     const synth = window.speechSynthesis;
-    const fullConversation = conversation.join(' ');
-    const utterance = new SpeechSynthesisUtterance(fullConversation);
+    
+    // Join the conversation lines, but remove the names ("Alex:" and "Jamie:") for speech
+    const fullConversationWithoutNames = conversation
+      .map(line => line.replace(`${person1}:`, '').replace(`${person2}:`, ''))
+      .join(' ');
 
+    const utterance = new SpeechSynthesisUtterance(fullConversationWithoutNames);
+
+    // Set speech parameters (optional)
     utterance.lang = 'en-US';
     utterance.rate = 1;
     utterance.pitch = 1;
