@@ -88,32 +88,36 @@ const DailyTalkPage = () => {
       <Navbar />
 
       <div className="main-content">
-        <h1>Daily Talk</h1>
-        <button onClick={generateConversation} disabled={loading}>
-          {loading ? 'Generating...' : 'Generate Daily Talk'}
-        </button>
-        
-        <div className="conversation-container">
-          {conversation.map((line, index) => (
-            <p key={index} className={line.startsWith(`${person1}:`) ? 'alex' : 'jamie'}>
-              {line}
-            </p>
-          ))}
-        </div>
-
-        {conversation.length > 0 && (
-          <button className="play-button" onClick={handlePlayConversation}>
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              viewBox="0 0 24 24" 
-              fill="white" 
-              width="24px" 
-              height="24px"
-            >
-              <path d="M8 5v14l11-7z"/>
-            </svg>
+        <div className="left-column">
+          <h1 className="daily-talk-title">Daily Talk</h1>
+          <button onClick={generateConversation} disabled={loading} className="generate-button">
+            {loading ? 'Generating...' : 'Generate Daily Talk'}
           </button>
-        )}
+          {conversation.length > 0 && (
+            <button className="play-button" onClick={handlePlayConversation}>
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                viewBox="0 0 24 24" 
+                fill="white" 
+                width="24px" 
+                height="24px"
+              >
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+              Play Conversation
+            </button>
+          )}
+        </div>
+        
+        <div className="right-column">
+          <div className="conversation-container">
+            {conversation.map((line, index) => (
+              <div key={index} className={line.startsWith(`${person1}:`) ? 'chat-bubble aiden-bubble' : 'chat-bubble kaylee-bubble'}>
+                <p className="bubble-text">{line}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       <Footer />

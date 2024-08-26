@@ -1,38 +1,108 @@
-.conversation-container {
-    margin-top: 20px;
-    font-family: Arial, sans-serif;
-  }
-  
-  .alex {
-    color: blue;
-    font-weight: bold;
-  }
-  
-  .jamie {
-    color: green;
-    font-weight: bold;
-  }
-  
-  .play-button {
-    background-color: #3B71CA;
-    border: none;
-    border-radius: 50%;
-    padding: 15px;
-    font-size: 20px;
-    cursor: pointer;
-    margin-top: 20px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2); /* Enhanced background with a subtle gradient */
+    background-size: cover;
+    background-attachment: fixed; /* Fixes the background image when scrolling */
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  
-  .play-button:hover {
-    background-color: #2d57a6;
-    transform: scale(1.1); /* Slightly increase the size on hover */
-  }
-  
-  .play-button svg {
-    fill: white;
-  }
-  
+    padding: 40px;
+    margin-top: 40px;
+}
+
+.left-column {
+    text-align: center;
+    max-width: 600px;
+}
+
+.daily-talk-title {
+    font-family: 'Pacifico', cursive;
+    font-size: 3rem;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.generate-button,
+.play-button {
+    background-color: #ff5e78;
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.generate-button:hover,
+.play-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.play-button svg {
+    margin-right: 8px;
+}
+
+.right-column {
+    display: flex;
+    justify-content: center;
+}
+
+.conversation-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    max-width: 600px;
+}
+
+.chat-bubble {
+    padding: 15px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    position: relative;
+    max-width: 80%;
+    font-size: 1.1rem;
+    word-wrap: break-word;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.aiden-bubble {
+    background-color: #3B71CA;
+    color: white;
+    align-self: flex-start;
+}
+
+.kaylee-bubble {
+    background-color: #ff6b6b;
+    color: white;
+    align-self: flex-end;
+}
+
+.bubble-text {
+    margin: 0;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    margin-top: auto;
+}
