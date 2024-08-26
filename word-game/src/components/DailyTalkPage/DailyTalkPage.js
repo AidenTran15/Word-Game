@@ -11,8 +11,8 @@ const DailyTalkPage = () => {
   const [alexVoice, setAlexVoice] = useState(null);
   const [jamieVoice, setJamieVoice] = useState(null);
 
-  const person1 = "Alex";
-  const person2 = "Jamie";
+  const person1 = "Aiden";
+  const person2 = "Kaylee";
 
   // Load the available voices
   useEffect(() => {
