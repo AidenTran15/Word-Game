@@ -6,37 +6,39 @@ body {
     background: linear-gradient(135deg, #f5f7fa, #c3cfe2); /* Enhanced background with a subtle gradient */
     background-size: cover;
     background-attachment: fixed; /* Fixes the background image when scrolling */
-}
-
-.wrapper {
+  }
+  
+  .wrapper {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-}
-
-.main-content {
+  }
+  
+  .main-content {
     flex: 1;
     display: flex;
+    flex-direction: column; /* Stack elements vertically */
     justify-content: center;
     align-items: center;
     padding: 40px;
     margin-top: 40px;
-}
-
-.left-column {
+  }
+  
+  .left-column {
     text-align: center;
     max-width: 600px;
-}
-
-.daily-talk-title {
+    margin-bottom: 30px; /* Add space between the title/buttons and conversation container */
+  }
+  
+  .daily-talk-title {
     font-family: 'Pacifico', cursive;
     font-size: 3rem;
     color: #333;
     margin-bottom: 30px;
-}
-
-.generate-button,
-.play-button {
+  }
+  
+  .generate-button,
+  .play-button {
     background-color: #ff5e78;
     color: white;
     border: none;
@@ -46,63 +48,64 @@ body {
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     margin-bottom: 20px;
-}
-
-.generate-button:hover,
-.play-button:hover {
+  }
+  
+  .generate-button:hover,
+  .play-button:hover {
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.play-button svg {
+  }
+  
+  .play-button svg {
     margin-right: 8px;
-}
-
-.right-column {
-    display: flex;
-    justify-content: center;
-}
-
-.conversation-container {
+  }
+  
+  .conversation-container {
     background-color: #ffffff;
-    padding: 20px;
+    padding: 40px; /* Increase padding for a larger background */
     border-radius: 20px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
-    max-width: 600px;
-}
-
-.chat-bubble {
+    max-width: 800px; /* Increase the width for a larger container */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .chat-bubble {
     padding: 15px;
     border-radius: 20px;
     margin-bottom: 10px;
     position: relative;
-    max-width: 80%;
     font-size: 1.1rem;
     word-wrap: break-word;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-}
-
-.aiden-bubble {
+    width: 100%;
+    text-align: left;
+  }
+  
+  .aiden-bubble {
     background-color: #3B71CA;
     color: white;
     align-self: flex-start;
-}
-
-.kaylee-bubble {
+  }
+  
+  .kaylee-bubble {
     background-color: #ff6b6b;
     color: white;
     align-self: flex-end;
-}
-
-.bubble-text {
+  }
+  
+  .bubble-text {
     margin: 0;
-}
-
-footer {
+  }
+  
+  footer {
     background-color: #333;
     color: white;
     padding: 1rem;
     text-align: center;
     margin-top: auto;
-}
+  }
+  
