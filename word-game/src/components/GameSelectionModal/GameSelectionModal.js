@@ -14,7 +14,8 @@ const GameSelectionModal = ({ onCancel, onSave }) => {
                 <div className="modal-buttons">
                     <Link to="/game" className="game-button" onClick={handleGameSelection}>Next Word</Link>
                     <Link to="/synonym-finder" className="game-button synonym-finder-button" onClick={handleGameSelection}>Synonym Finder</Link>
-                    <Link to="/vocabulary-card" className="game-button vocabulary-card-button" onClick={handleGameSelection}>Vocabulary Card</Link> {/* New link added */}
+                    <Link to="/vocabulary-card" className="game-button vocabulary-card-button" onClick={handleGameSelection}>Vocabulary Card</Link>
+                    <Link to="/daily-talk" className="game-button daily-talk-button" onClick={handleGameSelection}>Daily Talk</Link> {/* New Daily Talk link */}
                 </div>
                 <button className="cancel-button" onClick={onCancel}>Cancel</button>
             </div>

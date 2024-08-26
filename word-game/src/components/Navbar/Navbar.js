@@ -30,6 +30,9 @@ const Navbar = () => {
                             {location.pathname !== '/vocabulary-card' && (
                                 <Link to="/vocabulary-card" className="dropdown-item">Vocabulary Card</Link>
                             )}
+                            {location.pathname !== '/daily-talk' && (
+                                <Link to="/daily-talk" className="dropdown-item">Daily Talk</Link> 
+                            )}
                         </div>
                     )}
                 </div>
