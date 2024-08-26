@@ -4,7 +4,6 @@ import axios from 'axios';
 const DailyTalkPage = () => {
   const [conversation, setConversation] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [audio, setAudio] = useState(null);
 
   const generateConversation = async () => {
     setLoading(true);
@@ -14,14 +13,6 @@ const DailyTalkPage = () => {
       // Assuming the conversation is returned as a single string, split it into lines
       const lines = response.data.conversation.split('\n').filter(line => line.trim() !== '');
       setConversation(lines);
-
-      // Fetch audio using a text-to-speech API like Google Cloud Text-to-Speech
-      const audioResponse = await axios.post('https://text-to-speech-api-url', {
-        text: response.data.conversation,
-        voice: 'en-US-Standard-C'
-      });
-
-      setAudio(audioResponse.data.audioUrl);
     } catch (error) {
       console.error('Error generating conversation:', error);
     } finally {
@@ -29,11 +20,23 @@ const DailyTalkPage = () => {
     }
   };
 
-  const handlePlayAudio = () => {
-    if (audio) {
-      const audioElement = new Audio(audio);
-      audioElement.play();
-    }
+  const handlePlayConversation = () => {
+    const synth = window.speechSynthesis;
+    let utterance;
+
+    // Combine conversation into a single string
+    const fullConversation = conversation.join(' ');
+
+    // Create a speech utterance
+    utterance = new SpeechSynthesisUtterance(fullConversation);
+    
+    // Set voice parameters (optional)
+    utterance.lang = 'en-US';
+    utterance.rate = 1; // Speed
+    utterance.pitch = 1; // Pitch
+
+    // Speak the conversation
+    synth.speak(utterance);
   };
 
   return (
@@ -52,7 +55,7 @@ const DailyTalkPage = () => {
       </div>
 
       {conversation.length > 0 && (
-        <button className="play-button" onClick={handlePlayAudio}>
+        <button className="play-button" onClick={handlePlayConversation}>
           <svg 
             xmlns="http://www.w3.org/2000/svg" 
             viewBox="0 0 24 24" 
