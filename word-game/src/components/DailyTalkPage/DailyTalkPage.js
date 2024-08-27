@@ -97,20 +97,6 @@ const DailyTalkPage = () => {
       <div className="main-content">
         <div className="left-column">
           <h1 className="daily-talk-title">Daily Talk</h1>
-          {conversation.length > 0 && (
-            <button className="play-button" onClick={handlePlayConversation}>
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                viewBox="0 0 24 24" 
-                fill="white" 
-                width="24px" 
-                height="24px"
-              >
-                <path d="M8 5v14l11-7z"/>
-              </svg>
-              Play Conversation
-            </button>
-          )}
         </div>
         
         <div className="right-column">
@@ -122,6 +108,22 @@ const DailyTalkPage = () => {
             ))}
           </div>
         </div>
+
+        {/* Move Play Button below the conversation */}
+        {conversation.length > 0 && (
+          <button className="play-button" onClick={handlePlayConversation}>
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              viewBox="0 0 24 24" 
+              fill="white" 
+              width="24px" 
+              height="24px"
+            >
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+            Play Conversation
+          </button>
+        )}
       </div>
 
       <Footer />
