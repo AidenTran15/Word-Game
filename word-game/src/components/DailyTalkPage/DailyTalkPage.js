@@ -9,8 +9,8 @@ const DailyTalkPage = () => {
   const [conversation, setConversation] = useState([]);
   const [loading, setLoading] = useState(false);
   const [voices, setVoices] = useState([]);
-  const [aidenVoice, setAidenVoice] = useState(null);
-  const [kayleeVoice, setKayleeVoice] = useState(null);
+  const [alexVoice, setAlexVoice] = useState(null);
+  const [jamieVoice, setJamieVoice] = useState(null);
   const [showModal, setShowModal] = useState(true); // Modal visibility state
 
   const person1 = "Aiden";
@@ -25,15 +25,13 @@ const DailyTalkPage = () => {
       // Log the available voices for debugging
       console.log(availableVoices);
 
-      // Select a voice for Aiden
-      const aidenSelectedVoice = availableVoices.find(voice => voice.name.includes('Alex') || voice.name.includes('David') || voice.gender === 'male') || availableVoices[0];
-
-      // Select a female voice for Kaylee, prioritizing common female voices
-      const kayleeSelectedVoice = availableVoices.find(voice => voice.name.includes('Samantha') || voice.name.includes('Google UK English Female') || voice.gender === 'female') || availableVoices[1];
+      // Select specific voices based on the system's available voices
+      const alexSelectedVoice = availableVoices.find(voice => voice.name.includes('Alex') || voice.name.includes('Male')) || availableVoices[0];
+      const jamieSelectedVoice = availableVoices.find(voice => voice.name.includes('Female') || voice.name.includes('Samantha') || voice.name.includes('Google UK English Female')) || availableVoices[1];
 
       setVoices(availableVoices);
-      setAidenVoice(aidenSelectedVoice); // Assign male voice for Aiden
-      setKayleeVoice(kayleeSelectedVoice); // Assign female voice for Kaylee
+      setAlexVoice(alexSelectedVoice); // Assign voice for Alex
+      setJamieVoice(jamieSelectedVoice); // Assign voice for Jamie
     };
 
     // Load voices and set event listener for voice changes
@@ -72,10 +70,10 @@ const DailyTalkPage = () => {
 
       if (line.startsWith(`${person1}:`)) {
         utterance = new SpeechSynthesisUtterance(line.replace(`${person1}:`, ''));
-        utterance.voice = aidenVoice; // Assign male voice for Aiden
+        utterance.voice = alexVoice; // Assign specific voice to Alex
       } else if (line.startsWith(`${person2}:`)) {
         utterance = new SpeechSynthesisUtterance(line.replace(`${person2}:`, ''));
-        utterance.voice = kayleeVoice; // Assign female voice for Kaylee
+        utterance.voice = jamieVoice; // Assign specific voice to Jamie
       }
 
       // Set language and other properties for the voice
@@ -112,17 +110,30 @@ const DailyTalkPage = () => {
         </div>
 
         {conversation.length > 0 && (
-          <button className="circle-play-button" onClick={handlePlayConversation}>
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              viewBox="0 0 24 24" 
-              fill="white" 
-              width="40px" 
-              height="40px"
-            >
-              <path d="M8 5v14l11-7z"/>
-            </svg>
-          </button>
+          <div className="icon-buttons">
+            <button className="circle-play-button" onClick={handlePlayConversation}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="white"
+                width="40px"
+                height="40px"
+              >
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </button>
+            <button className="circle-next-button" onClick={generateConversation}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="white"
+                width="40px"
+                height="40px"
+              >
+                <path d="M10 6l6 6-6 6-1.42-1.42L13.16 12 8.58 7.42z" />
+              </svg>
+            </button>
+          </div>
         )}
       </div>
 
