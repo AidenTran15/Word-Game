@@ -35,7 +35,9 @@ body {
     font-size: 3rem;
     color: #333;
     margin-bottom: 0px;
+    margin-top: -80px; /* Add this line to move the header up */
   }
+  
   
   .conversation-container {
     background-color: #ffffff;
