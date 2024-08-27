@@ -37,6 +37,10 @@ const DailyTalkPage = () => {
     }
   }, []);
 
+  const sanitizeText = (text) => {
+    return text.replace(/[.,/#!$%^&*;:{}=\-_`~()?"']/g, "").replace(/\s{2,}/g, " ");
+  };
+
   const generateConversation = async () => {
     setLoading(true);
     try {
@@ -58,27 +62,30 @@ const DailyTalkPage = () => {
 
   const handlePlayConversation = () => {
     const synth = window.speechSynthesis;
-    synth.cancel();
+    synth.cancel(); // Cancel any previous speech synthesis in progress
 
     conversation.forEach((line, lineIndex) => {
       const speaker = line.startsWith(`${person1}:`) ? person1 : person2;
-      const words = line.replace(`${speaker}:`, '').trim().split(' ');
+      const cleanText = sanitizeText(line.replace(`${speaker}:`, '').trim());
+      const words = cleanText.split(/\s+/); // Split words by spaces
 
-      let utterance = new SpeechSynthesisUtterance(line.replace(`${speaker}:`, ''));
-
+      let utterance = new SpeechSynthesisUtterance(cleanText);
       utterance.voice = speaker === person1 ? alexVoice : jamieVoice;
 
-      utterance.onboundary = (event) => {
-        const charIndex = event.charIndex;
-        let currentIndex = 0;
+      // Manually iterate through words and update active word based on timing
+      let wordIndex = 0;
+      const wordDurations = 300; // Estimated duration per word in ms (adjust as necessary)
 
-        for (let i = 0; i < words.length; i++) {
-          currentIndex += words[i].length + 1;
-          if (charIndex < currentIndex) {
-            setActiveWord({ lineIndex, wordIndex: i });
-            break;
+      utterance.onstart = () => {
+        // Loop through words and highlight them at intervals
+        const interval = setInterval(() => {
+          if (wordIndex < words.length) {
+            setActiveWord({ lineIndex, wordIndex });
+            wordIndex++;
+          } else {
+            clearInterval(interval); // Clear interval when all words are highlighted
           }
-        }
+        }, wordDurations);
       };
 
       utterance.onend = () => {
@@ -112,7 +119,7 @@ const DailyTalkPage = () => {
                   : 'chat-bubble kaylee-bubble'}
               >
                 <p className="bubble-text">
-                  {line.split(' ').map((word, wordIndex) => (
+                  {line.replace(`${line.startsWith(`${person1}:`) ? person1 : person2}:`, '').trim().split(/\s+/).map((word, wordIndex) => (
                     <span
                       key={wordIndex}
                       className={
