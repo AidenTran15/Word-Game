@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background: linear-gradient(135deg, #f7f7f7, #e3e3e3);
 }
 
 .main-content {
@@ -30,13 +31,34 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   margin-top: 10px;
   max-width: 600px;
+  width: 100%;
+}
+
+.message-block-left,
+.message-block-right {
   display: flex;
-  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.message-block-left {
+  flex-direction: row;
+}
+
+.message-block-right {
+  flex-direction: row-reverse;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin: 0 10px;
 }
 
 .chat-bubble {
   padding: 10px 15px;
-  border-radius: 15px;
+  border-radius: 20px;
   margin-bottom: 10px;
   font-size: 1.1rem;
   word-wrap: break-word;
@@ -44,21 +66,15 @@
 }
 
 .aiden-bubble {
-  background-color: #3B71CA;
+  background: linear-gradient(135deg, #3B71CA, #6a94e0);
   color: white;
-  align-self: flex-start;
-  border-top-left-radius: 0;
-  border-top-right-radius: 15px;
-  margin-right: auto;
+  box-shadow: 0 4px 10px rgba(59, 113, 202, 0.4);
 }
 
 .kaylee-bubble {
-  background-color: #ff6b6b;
+  background: linear-gradient(135deg, #ff6b6b, #ff9494);
   color: white;
-  align-self: flex-end;
-  border-top-right-radius: 0;
-  border-top-left-radius: 15px;
-  margin-left: auto;
+  box-shadow: 0 4px 10px rgba(255, 107, 107, 0.4);
 }
 
 .bubble-text {
@@ -66,29 +82,11 @@
 }
 
 .active-word {
-  background-color: #004D40;
+  background-color: #ffeaa7;
   padding: 2px 4px;
   border-radius: 4px;
-  
+  transition: background-color 0.3s ease, padding 0.3s ease;
 }
-
-.speaker-name-left {
-  text-align: left;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.speaker-name-right {
-  text-align: right;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.conversation-block {
-  margin-bottom: 15px;
-}
-
-
 
 .icon-buttons {
   display: flex;

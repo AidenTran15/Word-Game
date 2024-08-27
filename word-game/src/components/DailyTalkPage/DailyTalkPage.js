@@ -3,6 +3,8 @@ import axios from 'axios';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import DailyTalkIntroductionModal from '../DailyTalkIntroductionModal/DailyTalkIntroductionModal';
+import boyAvatar from '../../assets/boy-avatar.png'; // Importing the avatars
+import girlAvatar from '../../assets/girl-avatar.png';
 import './DailyTalkPage.css';
 
 const DailyTalkPage = () => {
@@ -44,7 +46,7 @@ const DailyTalkPage = () => {
   const generateConversation = async () => {
     setLoading(true);
     try {
-      const response = await axios.post('https://apiwordgame.aidenkiettran.com/generate-daily-talk');
+      const response = await axios.post('http://localhost:5000/generate-daily-talk');
       let conversationText = response.data.conversation;
 
       conversationText = conversationText.replace(/Person 1:/g, `${person1}:`);
@@ -111,29 +113,34 @@ const DailyTalkPage = () => {
 
         <div className="right-column">
           <div className="conversation-container">
-            {conversation.map((line, lineIndex) => (
-              <div
-                key={lineIndex}
-                className={line.startsWith(`${person1}:`)
-                  ? 'chat-bubble aiden-bubble'
-                  : 'chat-bubble kaylee-bubble'}
-              >
-                <p className="bubble-text">
-                  {line.replace(`${line.startsWith(`${person1}:`) ? person1 : person2}:`, '').trim().split(/\s+/).map((word, wordIndex) => (
-                    <span
-                      key={wordIndex}
-                      className={
-                        activeWord.lineIndex === lineIndex && activeWord.wordIndex === wordIndex
-                          ? 'active-word'
-                          : ''
-                      }
-                    >
-                      {word}{' '}
-                    </span>
-                  ))}
-                </p>
-              </div>
-            ))}
+            {conversation.map((line, lineIndex) => {
+              const speaker = line.startsWith(`${person1}:`) ? person1 : person2;
+              return (
+                <div key={lineIndex} className={speaker === person1 ? 'message-block-left' : 'message-block-right'}>
+                  <img
+                    src={speaker === person1 ? boyAvatar : girlAvatar}
+                    alt={`${speaker} avatar`}
+                    className="avatar"
+                  />
+                  <div className={speaker === person1 ? 'chat-bubble aiden-bubble' : 'chat-bubble kaylee-bubble'}>
+                    <p className="bubble-text">
+                      {line.replace(`${speaker}:`, '').trim().split(/\s+/).map((word, wordIndex) => (
+                        <span
+                          key={wordIndex}
+                          className={
+                            activeWord.lineIndex === lineIndex && activeWord.wordIndex === wordIndex
+                              ? 'active-word'
+                              : ''
+                          }
+                        >
+                          {word}{' '}
+                        </span>
+                      ))}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
 
