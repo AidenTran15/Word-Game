@@ -143,32 +143,33 @@ footer {
     justify-content: center;
     padding-top: 0;
     padding-bottom: 40px;
-    width: 120%; /* Set width to 120% */
-    transform: translateX(-4%); /* Shift content to the left to center it */
+    width: 120%; 
+    transform: translateX(-4%); 
   }
 
   .conversation-container {
     margin-top: 0;
-    width: 100%; /* Ensure container width takes up 100% of the main-content */
-    max-width: 100%; /* Remove max-width constraint */
+    width: 100%; 
+    max-width: 100%; 
   }
 
   .icon-buttons {
-    flex-direction: row; /* Ensure buttons remain in a row */
-    justify-content: space-evenly; /* Evenly distribute buttons on mobile */
+    flex-direction: row; 
+    justify-content: space-evenly; 
+    transform: translateX(-4%); 
   }
 
   .circle-play-button,
   .circle-next-button {
-    width: 68px; /* Adjust button size for mobile */
-    height: 68px; /* Adjust button size for mobile */
-    
+    width: 68px; 
+    height: 68px; 
   }
 
   .daily-talk-title {
     margin-right: 80px;
   }
 }
+
 
 
 @media (min-width: 1024px) {
