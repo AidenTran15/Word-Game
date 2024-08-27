@@ -9,12 +9,11 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; 
+  justify-content: center; /* Center content vertically */
   align-items: center;
   padding: 40px;
-  padding-top: 80px; 
-  padding-bottom: 80px; 
 }
+
 .left-column {
   text-align: center;
 }
@@ -23,6 +22,7 @@
   font-family: 'Pacifico', cursive;
   font-size: 3rem;
   color: #333;
+  margin-bottom: 20px; /* Add margin to separate title from conversation */
 }
 
 .conversation-container {
@@ -128,8 +128,21 @@ footer {
   margin-top: auto;
 }
 
+@media (max-width: 768px) {
+  .main-content {
+    justify-content: center; 
+    padding-top: 0; 
+    padding-bottom: 40px; 
+  }
+
+  .conversation-container {
+    margin-top: 0; 
+    width: 90%; 
+  }
+}
+
 @media (min-width: 1024px) {
   .main-content {
-    padding-top: 180px; /* Increase top padding specifically for larger screens */
+    padding-top: 180px; 
   }
 }
