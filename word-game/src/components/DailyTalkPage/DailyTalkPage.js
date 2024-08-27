@@ -109,19 +109,17 @@ const DailyTalkPage = () => {
           </div>
         </div>
 
-        {/* Move Play Button below the conversation */}
         {conversation.length > 0 && (
-          <button className="play-button" onClick={handlePlayConversation}>
+          <button className="circle-play-button" onClick={handlePlayConversation}>
             <svg 
               xmlns="http://www.w3.org/2000/svg" 
               viewBox="0 0 24 24" 
               fill="white" 
-              width="24px" 
-              height="24px"
+              width="40px" 
+              height="40px"
             >
               <path d="M8 5v14l11-7z"/>
             </svg>
-            Play Conversation
           </button>
         )}
       </div>
