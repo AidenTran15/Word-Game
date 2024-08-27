@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from '../Navbar/Navbar'; // Import Navbar component
 import Footer from '../Footer/Footer'; // Import Footer component
+import DailyTalkIntroductionModal from '../DailyTalkIntroductionModal/DailyTalkIntroductionModal'; // Import the modal
 import './DailyTalkPage.css'; // Import the CSS
 
 const DailyTalkPage = () => {
@@ -10,6 +11,7 @@ const DailyTalkPage = () => {
   const [voices, setVoices] = useState([]);
   const [alexVoice, setAlexVoice] = useState(null);
   const [jamieVoice, setJamieVoice] = useState(null);
+  const [showModal, setShowModal] = useState(true); // Modal visibility state
 
   const person1 = "Aiden";
   const person2 = "Kaylee";
@@ -51,6 +53,7 @@ const DailyTalkPage = () => {
 
       const lines = conversationText.split('\n').filter(line => line.trim() !== '');
       setConversation(lines);
+      setShowModal(false); // Close the modal after generating the conversation
     } catch (error) {
       console.error('Error generating conversation:', error);
     } finally {
@@ -87,12 +90,13 @@ const DailyTalkPage = () => {
     <div className="wrapper">
       <Navbar />
 
+      {showModal && (
+        <DailyTalkIntroductionModal onClose={generateConversation} />
+      )}
+
       <div className="main-content">
         <div className="left-column">
           <h1 className="daily-talk-title">Daily Talk</h1>
-          <button onClick={generateConversation} disabled={loading} className="generate-button">
-            {loading ? 'Generating...' : 'Generate Daily Talk'}
-          </button>
           {conversation.length > 0 && (
             <button className="play-button" onClick={handlePlayConversation}>
               <svg 
