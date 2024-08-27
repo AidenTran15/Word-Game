@@ -1,10 +1,3 @@
-/* Ensure the whole page scales well */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -22,6 +15,7 @@
   align-items: center;
   padding: 40px;
   width: 100%; /* Ensure main-content takes full width */
+  margin-top: 60px; /* Add margin to prevent content from being cut off by the header */
 }
 
 .left-column {
@@ -143,8 +137,9 @@ footer {
     justify-content: center;
     padding-top: 0;
     padding-bottom: 40px;
-    width: 120%; 
-    transform: translateX(-4%); 
+    width: 90%;
+    margin-top: 80px; 
+    transform: translateX(-4%);    
   }
 
   .conversation-container {
@@ -156,7 +151,6 @@ footer {
   .icon-buttons {
     flex-direction: row; 
     justify-content: space-evenly; 
-    transform: translateX(-4%); 
   }
 
   .circle-play-button,
@@ -164,12 +158,7 @@ footer {
     width: 68px; 
     height: 68px; 
   }
-
-  .daily-talk-title {
-    margin-right: 80px;
-  }
 }
-
 
 
 @media (min-width: 1024px) {
