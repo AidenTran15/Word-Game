@@ -23,21 +23,38 @@ const DailyTalkPage = () => {
     const loadVoices = () => {
       const synth = window.speechSynthesis;
       const availableVoices = synth.getVoices();
-
+  
+      // Log available voices to check them
+      console.log(availableVoices);
+  
+      // Select specific voices for Aiden and Kaylee
       const alexSelectedVoice = availableVoices.find(voice => voice.name.includes('Alex')) || availableVoices[0];
-      const jamieSelectedVoice = availableVoices.find(voice => voice.name.includes('Female') || availableVoices[1]);
-
+  
+      // Prioritize friendlier female voices
+      const friendlyFemaleVoice = availableVoices.find(voice => 
+        voice.name.includes('Google UK English Female') ||  // Friendly British tone
+        voice.name.includes('Google US English Female') ||  // Friendly neutral tone
+        voice.name.includes('Microsoft Zira') ||  // Friendly soft tone
+        voice.name.includes('Google español de Estados Unidos')  // Warm and friendly Spanish tone
+      ) || availableVoices[1];
+  
       setVoices(availableVoices);
       setAlexVoice(alexSelectedVoice);
-      setJamieVoice(jamieSelectedVoice);
+      setJamieVoice(friendlyFemaleVoice); // Using a more friendly voice for Kaylee
+  
+      // Log the selected friendly female voice for verification
+      console.log(friendlyFemaleVoice);
     };
-
+  
     if (window.speechSynthesis.onvoiceschanged !== undefined) {
       window.speechSynthesis.onvoiceschanged = loadVoices;
     } else {
       loadVoices();
     }
   }, []);
+  
+  
+  
 
   const sanitizeText = (text) => {
     return text.replace(/[.,/#!$%^&*;:{}=\-_`~()?"']/g, "").replace(/\s{2,}/g, " ");

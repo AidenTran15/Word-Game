@@ -1,3 +1,5 @@
+/* Existing styles */
+
 .modal-overlay-dt {
     position: fixed;
     top: 0;
@@ -61,4 +63,25 @@
 .modal-button:hover {
     background-color: #2d57a6;
     transform: translateY(-2px);
+}
+
+/* Media query for mobile screens */
+@media (max-width: 768px) {
+    .modal-content-dt {
+        width: 85%; /* Set the modal width to 90% on mobile */
+        padding: 15px; /* Adjust padding for better fit */
+    }
+
+    .modal-content-dt h2 {
+        font-size: 2em; /* Adjust font size for smaller screens */
+    }
+
+    .modal-content-dt p {
+        font-size: 1.4em; /* Adjust font size for readability */
+    }
+
+    .modal-button {
+        font-size: 18px; /* Slightly adjust button font size */
+        padding: 10px 20px; /* Adjust button padding */
+    }
 }
