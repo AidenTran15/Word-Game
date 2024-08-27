@@ -72,6 +72,24 @@
   
 }
 
+.speaker-name-left {
+  text-align: left;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.speaker-name-right {
+  text-align: right;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.conversation-block {
+  margin-bottom: 15px;
+}
+
+
+
 .icon-buttons {
   display: flex;
   justify-content: center;

@@ -44,7 +44,7 @@ const DailyTalkPage = () => {
   const generateConversation = async () => {
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/generate-daily-talk');
+      const response = await axios.post('https://apiwordgame.aidenkiettran.com/generate-daily-talk');
       let conversationText = response.data.conversation;
 
       conversationText = conversationText.replace(/Person 1:/g, `${person1}:`);
