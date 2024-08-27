@@ -87,7 +87,10 @@
   background-color: #004D40;
   padding: 2px 4px;
   border-radius: 4px;
-  transition: background-color 0.3s ease, padding 0.3s ease;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+  min-width: fit-content;
+  font-size: inherit; /* Ensure the font size remains consistent */
 }
 
 .icon-buttons {
