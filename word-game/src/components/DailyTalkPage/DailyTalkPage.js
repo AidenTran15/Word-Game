@@ -9,8 +9,8 @@ const DailyTalkPage = () => {
   const [conversation, setConversation] = useState([]);
   const [loading, setLoading] = useState(false);
   const [voices, setVoices] = useState([]);
-  const [alexVoice, setAlexVoice] = useState(null);
-  const [jamieVoice, setJamieVoice] = useState(null);
+  const [aidenVoice, setAidenVoice] = useState(null);
+  const [kayleeVoice, setKayleeVoice] = useState(null);
   const [showModal, setShowModal] = useState(true); // Modal visibility state
 
   const person1 = "Aiden";
@@ -25,13 +25,15 @@ const DailyTalkPage = () => {
       // Log the available voices for debugging
       console.log(availableVoices);
 
-      // Select specific voices based on the system's available voices
-      const alexSelectedVoice = availableVoices.find(voice => voice.name.includes('Alex') || voice.name.includes('Male')) || availableVoices[0];
-      const jamieSelectedVoice = availableVoices.find(voice => voice.name.includes('Female') || voice.name.includes('Samantha') || voice.name.includes('Google UK English Female')) || availableVoices[1];
+      // Select a voice for Aiden
+      const aidenSelectedVoice = availableVoices.find(voice => voice.name.includes('Alex') || voice.name.includes('David') || voice.gender === 'male') || availableVoices[0];
+
+      // Select a female voice for Kaylee, prioritizing common female voices
+      const kayleeSelectedVoice = availableVoices.find(voice => voice.name.includes('Samantha') || voice.name.includes('Google UK English Female') || voice.gender === 'female') || availableVoices[1];
 
       setVoices(availableVoices);
-      setAlexVoice(alexSelectedVoice); // Assign voice for Alex
-      setJamieVoice(jamieSelectedVoice); // Assign voice for Jamie
+      setAidenVoice(aidenSelectedVoice); // Assign male voice for Aiden
+      setKayleeVoice(kayleeSelectedVoice); // Assign female voice for Kaylee
     };
 
     // Load voices and set event listener for voice changes
@@ -70,10 +72,10 @@ const DailyTalkPage = () => {
 
       if (line.startsWith(`${person1}:`)) {
         utterance = new SpeechSynthesisUtterance(line.replace(`${person1}:`, ''));
-        utterance.voice = alexVoice; // Assign specific voice to Alex
+        utterance.voice = aidenVoice; // Assign male voice for Aiden
       } else if (line.startsWith(`${person2}:`)) {
         utterance = new SpeechSynthesisUtterance(line.replace(`${person2}:`, ''));
-        utterance.voice = jamieVoice; // Assign specific voice to Jamie
+        utterance.voice = kayleeVoice; // Assign female voice for Kaylee
       }
 
       // Set language and other properties for the voice
