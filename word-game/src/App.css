@@ -162,6 +162,7 @@ footer {
   .circle-next-button {
     width: 68px; /* Adjust button size for mobile */
     height: 68px; /* Adjust button size for mobile */
+    
   }
 
   .daily-talk-title {
@@ -175,5 +176,6 @@ footer {
     justify-content: center; /* Ensure centering on larger screens */
     padding-top: 40px;
     padding-bottom: 40px;
+    margin-top: -180px;
   }
 }
