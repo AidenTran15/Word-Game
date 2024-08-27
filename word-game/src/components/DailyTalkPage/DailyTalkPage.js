@@ -25,7 +25,7 @@ const DailyTalkPage = () => {
       const availableVoices = synth.getVoices();
 
       const alexSelectedVoice = availableVoices.find(voice => voice.name.includes('Alex')) || availableVoices[0];
-      const jamieSelectedVoice = availableVoices.find(voice => voice.name.includes('Female') || voice.name.includes('Samantha')) || availableVoices[1];
+      const jamieSelectedVoice = availableVoices.find(voice => voice.name.includes('Female') || availableVoices[1]);
 
       setVoices(availableVoices);
       setAlexVoice(alexSelectedVoice);

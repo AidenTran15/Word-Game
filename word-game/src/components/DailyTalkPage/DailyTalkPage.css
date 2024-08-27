@@ -3,22 +3,16 @@
   flex-direction: column;
   min-height: 100vh;
   background: linear-gradient(135deg, #fdd4b7, #fceabb);
-
-
-
-
-
 }
-
-
 
 .main-content {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start; /* Ensure content starts from the top */
   align-items: center;
   padding: 40px;
+  padding-bottom: 80px; /* Add padding at the bottom to prevent buttons from being cut off */
 }
 
 .left-column {
@@ -39,6 +33,7 @@
   margin-top: 10px;
   max-width: 600px;
   width: 100%;
+  overflow-y: auto; /* Ensure the conversation is scrollable */
 }
 
 .message-block-left,
@@ -100,6 +95,8 @@
   justify-content: center;
   align-items: center;
   margin-top: 30px;
+  position: relative;
+  z-index: 10;
 }
 
 .circle-play-button,
@@ -118,4 +115,15 @@
 
 .circle-next-button {
   background-color: #ffab40;
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  position: relative;
+  bottom: 0;
+  margin-top: auto;
 }
