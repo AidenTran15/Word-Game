@@ -22,7 +22,7 @@ const DailyTalkPage = () => {
   AWS.config.update({
     region: process.env.REACT_APP_AWS_REGION,
     accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY
+    secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
   });
 
   const polly = new AWS.Polly();
@@ -48,20 +48,20 @@ const DailyTalkPage = () => {
         const params = {
           OutputFormat: 'mp3',
           Text: cleanText,
-          VoiceId: speaker === person1 ? 'Matthew' : 'Joanna', // 'Matthew' for Aiden, 'Joanna' for Kaylee
+          VoiceId: speaker === person1 ? 'Matthew' : 'Joanna',
           SampleRate: '16000',
         };
 
         // Use Polly to synthesize speech for each line
         return polly.synthesizeSpeech(params).promise().then(data => {
           const audioBlob = new Blob([data.AudioStream], { type: 'audio/mp3' });
-          return URL.createObjectURL(audioBlob); // Create an audio URL from the Blob
+          return URL.createObjectURL(audioBlob);
         });
       });
 
       // Wait for all audio URLs to be generated
       const generatedAudioUrls = await Promise.all(audioPromises);
-      setAudioUrls(generatedAudioUrls); // Save the audio URLs for later playback
+      setAudioUrls(generatedAudioUrls);
 
     } catch (error) {
       console.error('Error generating conversation:', error);
@@ -77,7 +77,7 @@ const DailyTalkPage = () => {
         const words = line.replace(`${line.startsWith(`${person1}:`) ? person1 : person2}:`, '').trim().split(/\s+/);
         await playAudio(audioUrls[i], i, words);
       }
-      setActiveWord({ lineIndex: null, wordIndex: null }); // Reset after playback
+      setActiveWord({ lineIndex: null, wordIndex: null });
     }
   };
 
@@ -86,13 +86,11 @@ const DailyTalkPage = () => {
       const audio = new Audio(url);
       audio.play();
 
-      // Track the time to highlight each word accurately
       let wordIndex = 0;
       const interval = setInterval(() => {
         const currentTime = audio.currentTime;
         const wordDuration = audio.duration / words.length;
 
-        // Update the highlighted word based on the current time
         if (currentTime >= wordDuration * wordIndex && wordIndex < words.length) {
           setActiveWord({ lineIndex, wordIndex });
           wordIndex++;
@@ -101,7 +99,7 @@ const DailyTalkPage = () => {
         if (wordIndex >= words.length) {
           clearInterval(interval);
         }
-      }, 50); // Check every 50ms for updates
+      }, 100); // Slightly increased interval for smoother transitions
 
       audio.onended = () => {
         clearInterval(interval);
