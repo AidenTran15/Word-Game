@@ -22,35 +22,29 @@ const DailyTalkPage = () => {
   useEffect(() => {
     const loadVoices = () => {
       const synth = window.speechSynthesis;
-      const availableVoices = synth.getVoices();
+      let availableVoices = synth.getVoices();
   
-      // Log available voices to check them
-      console.log(availableVoices);
-  
-      // Select specific voices for Aiden and Kaylee
-      const alexSelectedVoice = availableVoices.find(voice => voice.name.includes('Alex')) || availableVoices[0];
-  
-      // Prioritize friendlier female voices
-      const friendlyFemaleVoice = availableVoices.find(voice => 
-        voice.name.includes('Google UK English Female') ||  // Friendly British tone
-        voice.name.includes('Google US English Female') ||  // Friendly neutral tone
-        voice.name.includes('Microsoft Zira') ||  // Friendly soft tone
-        voice.name.includes('Google español de Estados Unidos')  // Warm and friendly Spanish tone
-      ) || availableVoices[1];
-  
-      setVoices(availableVoices);
-      setAlexVoice(alexSelectedVoice);
-      setJamieVoice(friendlyFemaleVoice); // Using a more friendly voice for Kaylee
-  
-      // Log the selected friendly female voice for verification
-      console.log(friendlyFemaleVoice);
+      // Fallback mechanism if voices are not loaded immediately
+      if (availableVoices.length === 0) {
+        synth.onvoiceschanged = () => {
+          availableVoices = synth.getVoices();
+          assignVoices(availableVoices);
+        };
+      } else {
+        assignVoices(availableVoices);
+      }
     };
   
-    if (window.speechSynthesis.onvoiceschanged !== undefined) {
-      window.speechSynthesis.onvoiceschanged = loadVoices;
-    } else {
-      loadVoices();
-    }
+    const assignVoices = (voices) => {
+      const alexVoice = voices.find(voice => voice.name === 'Alex') || voices[0];
+      const jamieVoice = voices.find(voice => voice.name.includes('Google UK English Female') || voice.name.includes('Microsoft Zira')) || voices[1];
+  
+      setVoices(voices);
+      setAlexVoice(alexVoice);
+      setJamieVoice(jamieVoice);
+    };
+  
+    loadVoices();
   }, []);
   
   
@@ -63,7 +57,7 @@ const DailyTalkPage = () => {
   const generateConversation = async () => {
     setLoading(true);
     try {
-      const response = await axios.post('https://apiwordgame.aidenkiettran.com/generate-daily-talk');
+      const response = await axios.post('http://localhost:5000/generate-daily-talk');
       let conversationText = response.data.conversation;
 
       conversationText = conversationText.replace(/Person 1:/g, `${person1}:`);
