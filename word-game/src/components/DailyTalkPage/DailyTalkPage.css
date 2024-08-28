@@ -22,7 +22,7 @@
   font-family: 'Pacifico', cursive;
   font-size: 4rem;
   color: #333;
-  margin-bottom: 20px; /* Add margin to separate title from conversation */
+  margin-bottom: 20px; 
 }
 
 .conversation-container {
@@ -150,6 +150,19 @@ footer {
   .conversation-container {
     margin-top: 0; 
     width: 90%; 
+  }
+
+  .bubble-text {
+    font-size: 1.4rem;
+  }
+
+  .avatar {
+    width: 45px;
+    height: 45px;
+  }
+  .daily-talk-title {
+    font-size: 3.2rem;
+    
   }
 }
 

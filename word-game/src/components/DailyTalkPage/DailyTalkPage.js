@@ -85,28 +85,33 @@ const DailyTalkPage = () => {
     return new Promise((resolve) => {
       const audio = new Audio(url);
       audio.play();
-
+  
       let wordIndex = 0;
       const interval = setInterval(() => {
         const currentTime = audio.currentTime;
         const wordDuration = audio.duration / words.length;
-
+  
+        // Update the highlighted word based on the current time
         if (currentTime >= wordDuration * wordIndex && wordIndex < words.length) {
           setActiveWord({ lineIndex, wordIndex });
           wordIndex++;
         }
-
+  
         if (wordIndex >= words.length) {
           clearInterval(interval);
         }
-      }, 100); // Slightly increased interval for smoother transitions
-
+      }, 100); // Fine-tuned for smoother transitions
+  
       audio.onended = () => {
         clearInterval(interval);
-        resolve();
+        // Hold for a moment after each sentence
+        setTimeout(() => {
+          resolve();
+        }, 1000); // 1-second pause between sentences
       };
     });
   };
+  
 
   return (
     <div className="wrapper">
