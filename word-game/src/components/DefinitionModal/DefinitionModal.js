@@ -20,7 +20,7 @@ const DefinitionModal = ({ show, onClose, selectedWord, language, toggleLanguage
 
           // Fetch Vietnamese translation if language is 'vi'
           if (language === 'vi') {
-            const translationResponse = await axios.post('http://localhost:5000/translate-word', { word: selectedWord });
+            const translationResponse = await axios.post('https://apiwordgame.aidenkiettran.com/translate-word', { word: selectedWord });
             setVietnameseTranslation(translationResponse.data.vietnameseTranslation);
           }
         } catch (error) {

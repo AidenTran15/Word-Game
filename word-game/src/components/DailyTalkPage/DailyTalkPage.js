@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import AWS from 'aws-sdk';
 import axios from 'axios';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
@@ -10,54 +11,26 @@ import './DailyTalkPage.css';
 const DailyTalkPage = () => {
   const [conversation, setConversation] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [voices, setVoices] = useState([]);
-  const [alexVoice, setAlexVoice] = useState(null);
-  const [jamieVoice, setJamieVoice] = useState(null);
   const [showModal, setShowModal] = useState(true);
+  const [audioUrls, setAudioUrls] = useState([]);
   const [activeWord, setActiveWord] = useState({ lineIndex: null, wordIndex: null });
 
   const person1 = "Aiden";
   const person2 = "Kaylee";
 
-  useEffect(() => {
-    const loadVoices = () => {
-      const synth = window.speechSynthesis;
-      let availableVoices = synth.getVoices();
-  
-      // Fallback mechanism if voices are not loaded immediately
-      if (availableVoices.length === 0) {
-        synth.onvoiceschanged = () => {
-          availableVoices = synth.getVoices();
-          assignVoices(availableVoices);
-        };
-      } else {
-        assignVoices(availableVoices);
-      }
-    };
-  
-    const assignVoices = (voices) => {
-      const alexVoice = voices.find(voice => voice.name === 'Alex') || voices[0];
-      const jamieVoice = voices.find(voice => voice.name.includes('Google UK English Female') || voice.name.includes('Microsoft Zira')) || voices[1];
-  
-      setVoices(voices);
-      setAlexVoice(alexVoice);
-      setJamieVoice(jamieVoice);
-    };
-  
-    loadVoices();
-  }, []);
-  
-  
-  
+  // Configure AWS Polly with environment variables
+  AWS.config.update({
+    region: process.env.REACT_APP_AWS_REGION,
+    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY
+  });
 
-  const sanitizeText = (text) => {
-    return text.replace(/[.,/#!$%^&*;:{}=\-_`~()?"']/g, "").replace(/\s{2,}/g, " ");
-  };
+  const polly = new AWS.Polly();
 
   const generateConversation = async () => {
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/generate-daily-talk');
+      const response = await axios.post('https://apiwordgame.aidenkiettran.com/generate-daily-talk');
       let conversationText = response.data.conversation;
 
       conversationText = conversationText.replace(/Person 1:/g, `${person1}:`);
@@ -66,6 +39,30 @@ const DailyTalkPage = () => {
       const lines = conversationText.split('\n').filter(line => line.trim() !== '');
       setConversation(lines);
       setShowModal(false);
+
+      // Generate speech for each line in the conversation
+      const audioPromises = lines.map((line, index) => {
+        const speaker = line.startsWith(`${person1}:`) ? person1 : person2;
+        const cleanText = line.replace(`${speaker}:`, '').trim();
+
+        const params = {
+          OutputFormat: 'mp3',
+          Text: cleanText,
+          VoiceId: speaker === person1 ? 'Matthew' : 'Joanna', // 'Matthew' for Aiden, 'Joanna' for Kaylee
+          SampleRate: '16000',
+        };
+
+        // Use Polly to synthesize speech for each line
+        return polly.synthesizeSpeech(params).promise().then(data => {
+          const audioBlob = new Blob([data.AudioStream], { type: 'audio/mp3' });
+          return URL.createObjectURL(audioBlob); // Create an audio URL from the Blob
+        });
+      });
+
+      // Wait for all audio URLs to be generated
+      const generatedAudioUrls = await Promise.all(audioPromises);
+      setAudioUrls(generatedAudioUrls); // Save the audio URLs for later playback
+
     } catch (error) {
       console.error('Error generating conversation:', error);
     } finally {
@@ -73,39 +70,43 @@ const DailyTalkPage = () => {
     }
   };
 
-  const handlePlayConversation = () => {
-    const synth = window.speechSynthesis;
-    synth.cancel(); // Cancel any previous speech synthesis in progress
+  const handlePlayConversation = async () => {
+    if (audioUrls.length > 0) {
+      for (let i = 0; i < audioUrls.length; i++) {
+        const line = conversation[i];
+        const words = line.replace(`${line.startsWith(`${person1}:`) ? person1 : person2}:`, '').trim().split(/\s+/);
+        await playAudio(audioUrls[i], i, words);
+      }
+      setActiveWord({ lineIndex: null, wordIndex: null }); // Reset after playback
+    }
+  };
 
-    conversation.forEach((line, lineIndex) => {
-      const speaker = line.startsWith(`${person1}:`) ? person1 : person2;
-      const cleanText = sanitizeText(line.replace(`${speaker}:`, '').trim());
-      const words = cleanText.split(/\s+/); // Split words by spaces
+  const playAudio = (url, lineIndex, words) => {
+    return new Promise((resolve) => {
+      const audio = new Audio(url);
+      audio.play();
 
-      let utterance = new SpeechSynthesisUtterance(cleanText);
-      utterance.voice = speaker === person1 ? alexVoice : jamieVoice;
-
-      // Manually iterate through words and update active word based on timing
+      // Track the time to highlight each word accurately
       let wordIndex = 0;
-      const wordDurations = 300; // Estimated duration per word in ms (adjust as necessary)
+      const interval = setInterval(() => {
+        const currentTime = audio.currentTime;
+        const wordDuration = audio.duration / words.length;
 
-      utterance.onstart = () => {
-        // Loop through words and highlight them at intervals
-        const interval = setInterval(() => {
-          if (wordIndex < words.length) {
-            setActiveWord({ lineIndex, wordIndex });
-            wordIndex++;
-          } else {
-            clearInterval(interval); // Clear interval when all words are highlighted
-          }
-        }, wordDurations);
+        // Update the highlighted word based on the current time
+        if (currentTime >= wordDuration * wordIndex && wordIndex < words.length) {
+          setActiveWord({ lineIndex, wordIndex });
+          wordIndex++;
+        }
+
+        if (wordIndex >= words.length) {
+          clearInterval(interval);
+        }
+      }, 50); // Check every 50ms for updates
+
+      audio.onended = () => {
+        clearInterval(interval);
+        resolve();
       };
-
-      utterance.onend = () => {
-        setActiveWord({ lineIndex: null, wordIndex: null });
-      };
-
-      synth.speak(utterance);
     });
   };
 
@@ -126,6 +127,7 @@ const DailyTalkPage = () => {
           <div className="conversation-container">
             {conversation.map((line, lineIndex) => {
               const speaker = line.startsWith(`${person1}:`) ? person1 : person2;
+              const words = line.replace(`${speaker}:`, '').trim().split(/\s+/);
               return (
                 <div key={lineIndex} className={speaker === person1 ? 'message-block-left' : 'message-block-right'}>
                   <img
@@ -135,7 +137,7 @@ const DailyTalkPage = () => {
                   />
                   <div className={speaker === person1 ? 'chat-bubble aiden-bubble' : 'chat-bubble kaylee-bubble'}>
                     <p className="bubble-text">
-                      {line.replace(`${speaker}:`, '').trim().split(/\s+/).map((word, wordIndex) => (
+                      {words.map((word, wordIndex) => (
                         <span
                           key={wordIndex}
                           className={
