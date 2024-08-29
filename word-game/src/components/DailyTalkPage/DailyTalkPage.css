@@ -56,11 +56,11 @@
 
 /* Icon button styling */
 .icon-button {
-  background: linear-gradient(135deg, #ff5e78, #ff4568);
+  background: linear-gradient(135deg, #4A86C5, #3A75B3);
   border: none;
   border-radius: 50%;
-  padding: 16px; /* Smaller padding for a smaller button */
-  margin: 0 15px; /* Smaller margin */
+  padding: 15px; 
+  margin: 0 23px; 
   cursor: pointer;
   transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
   box-shadow: 0 4px 15px rgba(255, 94, 120, 0.3);
@@ -73,7 +73,7 @@
 }
 
 .icon-button:hover {
-  background: linear-gradient(135deg, #ff4b7a, #ff3455);
+  background: linear-gradient(135deg, #3A75B3, #3168A7);
   transform: scale(1.1);
   box-shadow: 0 6px 20px rgba(255, 94, 120, 0.4);
 }
