@@ -170,53 +170,59 @@ const DailyTalkPage = () => {
 
         <div className="right-column">
           <div className="conversation-container">
-            {loadingNext ? (
-              <div className="spinner-container">
-                <div className="spinner"></div>
-              </div>
-            ) : (
-              conversation.map((line, lineIndex) => {
-                const speaker = line.startsWith(`${person1}:`) ? person1 : person2;
-                const words = line.replace(`${speaker}:`, '').trim().split(/\s+/);
-                return (
-                  <div key={lineIndex} className={speaker === person1 ? 'message-block-left' : 'message-block-right'}>
-                    <img
-                      src={speaker === person1 ? boyAvatar : girlAvatar}
-                      alt={`${speaker} avatar`}
-                      className="avatar"
-                    />
-                    <div className={speaker === person1 ? 'chat-bubble aiden-bubble' : 'chat-bubble kaylee-bubble'}>
-                      <p className="bubble-text">
-                        {words.map((word, wordIndex) => (
-                          <span
-                            key={wordIndex}
-                            className={
-                              activeWord.lineIndex === lineIndex && activeWord.wordIndex === wordIndex
-                                ? 'active-word'
-                                : ''
-                            }
-                          >
-                            {word}{' '}
-                          </span>
-                        ))}
-                      </p>
-                    </div>
+            {conversation.map((line, lineIndex) => {
+              const speaker = line.startsWith(`${person1}:`) ? person1 : person2;
+              const words = line.replace(`${speaker}:`, '').trim().split(/\s+/);
+              return (
+                <div key={lineIndex} className={speaker === person1 ? 'message-block-left' : 'message-block-right'}>
+                  <img
+                    src={speaker === person1 ? boyAvatar : girlAvatar}
+                    alt={`${speaker} avatar`}
+                    className="avatar"
+                  />
+                  <div className={speaker === person1 ? 'chat-bubble aiden-bubble' : 'chat-bubble kaylee-bubble'}>
+                    <p className="bubble-text">
+                      {words.map((word, wordIndex) => (
+                        <span
+                          key={wordIndex}
+                          className={
+                            activeWord.lineIndex === lineIndex && activeWord.wordIndex === wordIndex
+                              ? 'active-word'
+                              : ''
+                          }
+                        >
+                          {word}{' '}
+                        </span>
+                      ))}
+                    </p>
                   </div>
-                );
-              })
-            )}
+                </div>
+              );
+            })}
           </div>
         </div>
 
-        {showRepeatButton && (
-          <div className="repeat-next-conversation-container">
-            <button className="repeat-conversation-button" onClick={handlePlayConversation}>
-              Repeat Conversation
-            </button>
-            <button className="next-conversation-button" onClick={handleNextConversation}>
-              Next Conversation
-            </button>
+        {loadingNext ? (
+          <div className="spinner-container">
+            <div className="spinner"></div>
           </div>
+        ) : (
+          showRepeatButton && (
+            <div className="repeat-next-conversation-container">
+              <button className="icon-button" onClick={handlePlayConversation} title="Repeat Conversation">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="40px" height="40px">
+                  <path d="M12 5V1L7 6l5 5V7c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6H4c0 4.418 3.582 8 8 8s8-3.582 8-8-3.582-8-8-8z"/>
+                </svg>
+              </button>
+              <button className="icon-button" onClick={handleNextConversation} title="Next Conversation">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="40px" height="40px">
+                  <path d="M9 4l10 8-10 8z"/>
+
+
+                </svg>
+              </button>
+            </div>
+          )
         )}
       </div>
 

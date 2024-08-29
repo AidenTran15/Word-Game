@@ -35,29 +35,77 @@
   margin: 20px 0;
 }
 
-.start-conversation-button,
-.repeat-conversation-button,
-.next-conversation-button {
-  background-color: #ff5e78;
+.start-conversation-button {
+  background: linear-gradient(135deg, #ff5e78, #ff4568);
   border: none;
   border-radius: 20px;
-  padding: 10px 20px;
-  font-size: 1.2rem;
+  padding: 12px 24px;
+  font-size: 1.3rem;
   color: white;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin: 0 10px; /* Add margin to space buttons */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin: 0 10px;
+  box-shadow: 0 4px 15px rgba(255, 94, 120, 0.3);
 }
 
-.start-conversation-button:hover,
-.repeat-conversation-button:hover,
-.next-conversation-button:hover {
-  background-color: #ff4568;
+.start-conversation-button:hover {
+  background: linear-gradient(135deg, #ff4b7a, #ff3455);
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(255, 94, 120, 0.4);
+}
+
+/* Icon button styling */
+.icon-button {
+  background: linear-gradient(135deg, #ff5e78, #ff4568);
+  border: none;
+  border-radius: 50%;
+  padding: 16px; /* Smaller padding for a smaller button */
+  margin: 0 15px; /* Smaller margin */
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 15px rgba(255, 94, 120, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.icon-button svg {
+  transition: fill 0.3s ease;
+}
+
+.icon-button:hover {
+  background: linear-gradient(135deg, #ff4b7a, #ff3455);
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(255, 94, 120, 0.4);
+}
+
+.icon-button:hover svg {
+  fill: #ffffff;
+}
+
+.icon-button::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.5);
+  top: 50%;
+  left: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.icon-button:active::after {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  transition: 0s;
 }
 
 .next-conversation-button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 /* Spinner container */
