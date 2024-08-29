@@ -208,52 +208,29 @@
   font-size: 1.6rem;
 }
 
-/* Active word effect without underline */
+/* Active word effect */
 .bubble-text span {
   display: inline-block;
   position: relative;
   overflow: hidden;
   color: inherit;
   transition: color 0.3s ease;
-  margin-right: 0.3rem; /* Increase the space between words */
+  margin-right: 0.5rem; /* Space between words */
 }
-
 
 .bubble-text span.active-word {
-  background-color: #262626;
-  color: #ffffff;
-  transition: background-color 1.5s ease, color 1.5s ease; /* Adjust the timing if needed */
-  border-radius: 5px;
-  padding: 0 4px;
+  background-color: #004D40;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border-radius: 5px; /* Rounded corners */
+  
 }
-
 
 .bubble-text span:hover {
-  background-color: #FFFF00; 
-  color: #000000; 
+  background-color: #262626; /* Dark background color on hover */
+  color: #ffffff; /* White text color on hover */
   transition: background-color 0.3s ease, color 0.3s ease;
-  border-radius: 3px; 
-  cursor: pointer; 
-}
-
-
-
-
-
-
-@keyframes activeWordAnimation {
-  0% {
-    transform: scale(1);
-    opacity: 0.8;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
+  border-radius: 3px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
 }
 
 /* Icon buttons container */
