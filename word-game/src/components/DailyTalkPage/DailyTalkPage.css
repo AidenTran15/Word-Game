@@ -25,6 +25,30 @@
   margin-bottom: 20px; 
 }
 
+.start-conversation-container,
+.repeat-conversation-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.start-conversation-button,
+.repeat-conversation-button {
+  background-color: #ff5e78;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.start-conversation-button:hover,
+.repeat-conversation-button:hover {
+  background-color: #ff4568;
+}
+
 .conversation-container {
   background-color: #ffffff;
   padding: 20px;
@@ -87,7 +111,6 @@
 .active-word {
   background-color: #FFEB3B;
   color: #000;
-  
   border-radius: 4px;
   display: inline-block;
   font-size: inherit;
@@ -99,8 +122,6 @@
 .message-block-right .active-word {
   visibility: visible; /* Keep visibility consistent */
 }
-
-
 
 .icon-buttons {
   display: flex;
@@ -160,9 +181,9 @@ footer {
     width: 45px;
     height: 45px;
   }
+
   .daily-talk-title {
     font-size: 3.2rem;
-    
   }
 }
 
@@ -170,11 +191,11 @@ footer {
   .main-content {
     padding-top: 180px; 
   }
+
   .circle-play-button,
   .circle-next-button {
     width: 72px; 
     height: 72px; 
     padding: 20px; 
   }
-  
 }

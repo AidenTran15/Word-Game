@@ -14,6 +14,7 @@ const DailyTalkPage = () => {
   const [showModal, setShowModal] = useState(true);
   const [audioUrls, setAudioUrls] = useState([]);
   const [activeWord, setActiveWord] = useState({ lineIndex: null, wordIndex: null });
+  const [showRepeatButton, setShowRepeatButton] = useState(false); // State to manage repeat button visibility
 
   const person1 = "Aiden";
   const person2 = "Kaylee";
@@ -71,6 +72,7 @@ const DailyTalkPage = () => {
   };
 
   const handlePlayConversation = async () => {
+    setShowRepeatButton(false); // Hide repeat button initially
     if (audioUrls.length > 0) {
       let currentIndex = 0;
   
@@ -90,6 +92,7 @@ const DailyTalkPage = () => {
         } else {
           // Reset active word once all audios are played
           setActiveWord({ lineIndex: null, wordIndex: null });
+          setShowRepeatButton(true); // Show the repeat button after the conversation is finished
         }
       };
   
@@ -119,7 +122,7 @@ const DailyTalkPage = () => {
               if (wordIndex >= words.length) {
                 clearInterval(interval);
               }
-            }, 200);
+            }, 100);
   
             audio.onended = () => {
               clearInterval(interval);
@@ -136,7 +139,6 @@ const DailyTalkPage = () => {
       }
     });
   };
-  
 
   return (
     <div className="wrapper">
@@ -149,6 +151,13 @@ const DailyTalkPage = () => {
       <div className="main-content">
         <div className="left-column">
           <h1 className="daily-talk-title">Daily Talk</h1>
+        </div>
+
+        {/* Start Conversation Button */}
+        <div className="start-conversation-container">
+          <button className="start-conversation-button" onClick={handlePlayConversation}>
+            Start Conversation
+          </button>
         </div>
 
         <div className="right-column">
@@ -185,17 +194,11 @@ const DailyTalkPage = () => {
           </div>
         </div>
 
-        {conversation.length > 0 && (
-          <div className="icon-buttons">
-            <button className="circle-play-button" onClick={handlePlayConversation}>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="40px" height="40px">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </button>
-            <button className="circle-next-button" onClick={generateConversation}>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="40px" height="40px">
-                <path d="M10 6l6 6-6 6-1.42-1.42L13.16 12 8.58 7.42z" />
-              </svg>
+        {/* Repeat Conversation Button */}
+        {showRepeatButton && (
+          <div className="repeat-conversation-container">
+            <button className="repeat-conversation-button" onClick={handlePlayConversation}>
+              Repeat Conversation
             </button>
           </div>
         )}
