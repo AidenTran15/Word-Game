@@ -208,7 +208,7 @@
   font-size: 1.6rem;
 }
 
-/* Active word effect */
+/* General word styling */
 .bubble-text span {
   display: inline-block;
   position: relative;
@@ -220,6 +220,7 @@
   line-height: 1.6rem; /* Match line-height to ensure consistent height */
 }
 
+/* Active word effect (applies to both mobile and desktop) */
 .bubble-text span.active-word {
   background-color: #004D40; /* Dark teal background for active word */
   color: #ffffff; /* White text color for active word */
@@ -229,12 +230,25 @@
   line-height: 1.6rem; /* Ensure line-height matches non-active words */
 }
 
-.bubble-text span:hover {
-  background-color: #262626; /* Dark background color on hover */
-  color: #ffffff; /* White text color on hover */
-  transition: background-color 0.3s ease, color 0.3s ease;
-  border-radius: 3px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
+/* Hover effect for desktop */
+@media (min-width: 769px) {
+  .bubble-text span:hover {
+    background-color: #262626; /* Dark background color on hover */
+    color: #ffffff; /* White text color on hover */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 3px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+  }
+}
+
+/* Click effect for mobile */
+@media (max-width: 768px) {
+  .bubble-text span:active {
+    background-color: #262626; /* Dark background color on click */
+    color: #ffffff; /* White text color on click */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 3px; /* Rounded corners */
+  }
 }
 
 /* Icon buttons container */
