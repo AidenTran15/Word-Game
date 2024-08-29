@@ -85,21 +85,21 @@
 }
 
 .active-word {
-  opacity: 0;
   background-color: #FFEB3B;
   color: #000;
   padding: 2px 6px;
   border-radius: 4px;
   display: inline-block;
-  min-width: fit-content;
   font-size: inherit;
-  transition: opacity 2s ease-in, background-color 2s ease-in;
+  visibility: visible; /* Use visibility instead of opacity */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for color changes */
 }
 
 .message-block-left .active-word,
 .message-block-right .active-word {
-  opacity: 1; /* Fade in the active word gradually */
+  visibility: visible; /* Keep visibility consistent */
 }
+
 
 
 .icon-buttons {

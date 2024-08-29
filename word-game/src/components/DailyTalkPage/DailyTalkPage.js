@@ -4,7 +4,7 @@ import axios from 'axios';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import DailyTalkIntroductionModal from '../DailyTalkIntroductionModal/DailyTalkIntroductionModal';
-import boyAvatar from '../../assets/boy-avatar.png'; // Importing the avatars
+import boyAvatar from '../../assets/boy-avatar.png';
 import girlAvatar from '../../assets/girl-avatar.png';
 import './DailyTalkPage.css';
 
@@ -72,43 +72,68 @@ const DailyTalkPage = () => {
 
   const handlePlayConversation = async () => {
     if (audioUrls.length > 0) {
-      for (let i = 0; i < audioUrls.length; i++) {
-        const line = conversation[i];
-        const words = line.replace(`${line.startsWith(`${person1}:`) ? person1 : person2}:`, '').trim().split(/\s+/);
-        await playAudio(audioUrls[i], i, words);
-      }
-      setActiveWord({ lineIndex: null, wordIndex: null });
+      let currentIndex = 0;
+  
+      const playNextAudio = async () => {
+        if (currentIndex < audioUrls.length) {
+          const line = conversation[currentIndex];
+          const words = line.replace(`${line.startsWith(`${person1}:`) ? person1 : person2}:`, '').trim().split(/\s+/);
+  
+          try {
+            await playAudio(audioUrls[currentIndex], currentIndex, words); // Play current audio
+            currentIndex++; // Move to the next audio
+            playNextAudio(); // Immediately play the next audio
+          } catch (error) {
+            console.error('Error during audio playback:', error);
+            playNextAudio(); // Try to play the next audio even if there was an error
+          }
+        } else {
+          // Reset active word once all audios are played
+          setActiveWord({ lineIndex: null, wordIndex: null });
+        }
+      };
+  
+      playNextAudio(); // Start the playback chain
     }
   };
-
+  
   const playAudio = (url, lineIndex, words) => {
     return new Promise((resolve) => {
       const audio = new Audio(url);
-      audio.play();
   
-      let wordIndex = 0;
-      const interval = setInterval(() => {
-        const currentTime = audio.currentTime;
-        const wordDuration = audio.duration / words.length;
+      const playPromise = audio.play();
   
-        // Update the highlighted word based on the current time
-        if (currentTime >= wordDuration * wordIndex && wordIndex < words.length) {
-          setActiveWord({ lineIndex, wordIndex });
-          wordIndex++;
-        }
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            let wordIndex = 0;
+            const interval = setInterval(() => {
+              const currentTime = audio.currentTime;
+              const wordDuration = audio.duration / words.length;
   
-        if (wordIndex >= words.length) {
-          clearInterval(interval);
-        }
-      }, 100); // Fine-tuned for smoother transitions
+              if (currentTime >= wordDuration * wordIndex && wordIndex < words.length) {
+                setActiveWord({ lineIndex, wordIndex });
+                wordIndex++;
+              }
   
-      audio.onended = () => {
-        clearInterval(interval);
-        // Hold for a moment after each sentence
-        setTimeout(() => {
-          resolve();
-        }, 1000); // 1-second pause between sentences
-      };
+              if (wordIndex >= words.length) {
+                clearInterval(interval);
+              }
+            }, 100);
+  
+            audio.onended = () => {
+              clearInterval(interval);
+              resolve(); // Resolve the promise immediately after the audio ends
+            };
+          })
+          .catch((error) => {
+            console.error('Playback failed:', error);
+            resolve(); // Resolve the promise even if playback fails
+          });
+      } else {
+        console.error('Audio playback could not be initiated.');
+        resolve();
+      }
     });
   };
   
