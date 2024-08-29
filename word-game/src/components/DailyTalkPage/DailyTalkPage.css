@@ -43,7 +43,7 @@
   font-size: 1.3rem;
   color: white;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.5s ease, transform 0.5s ease, box-shadow 0.5s ease;
   margin: 0 10px;
   box-shadow: 0 4px 15px rgba(255, 94, 120, 0.3);
 }
@@ -62,19 +62,19 @@
   padding: 15px; 
   margin: 0 23px; 
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  transition: background 0.5s ease, transform 0.5s ease, box-shadow 0.5s ease;
   box-shadow: 0 4px 15px rgba(255, 94, 120, 0.3);
   position: relative;
   overflow: hidden;
 }
 
 .icon-button svg {
-  transition: fill 0.3s ease;
+  transition: fill 0.5s ease;
 }
 
 .icon-button:hover {
   background: linear-gradient(135deg, #3A75B3, #3168A7);
-  transform: scale(1.1);
+  transform: scale(1.05);
   box-shadow: 0 6px 20px rgba(255, 94, 120, 0.4);
 }
 
@@ -146,6 +146,11 @@
   max-width: 800px;
   width: 100%;
   overflow-y: auto;
+  transition: box-shadow 0.5s ease;
+}
+
+.conversation-container:hover {
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); /* Increase shadow on hover with a slower transition */
 }
 
 .message-block-left,
@@ -170,25 +175,32 @@
   margin: 0 10px;
 }
 
+/* Chat bubble styles */
 .chat-bubble {
-  padding: 10px 15px;
-  border-radius: 20px;
+  padding: 12px 18px; /* Increased padding for better readability */
+  border-radius: 25px; /* More rounded bubble shape */
   margin-bottom: 10px;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   word-wrap: break-word;
   max-width: 60%;
+  position: relative;
+  transition: background 0.5s ease, transform 0.5s ease;
+}
+
+.chat-bubble:hover {
+  transform: scale(1.02); /* Slightly enlarge the bubble on hover with a slower transition */
 }
 
 .aiden-bubble {
   background: linear-gradient(135deg, #3B71CA, #6a94e0);
   color: white;
-  box-shadow: 0 4px 10px rgba(59, 113, 202, 0.4);
+  box-shadow: 0 6px 15px rgba(59, 113, 202, 0.4); /* Slightly larger shadow for depth */
 }
 
 .kaylee-bubble {
   background: linear-gradient(135deg, #ff6b6b, #ff9494);
   color: white;
-  box-shadow: 0 4px 10px rgba(255, 107, 107, 0.4);
+  box-shadow: 0 6px 15px rgba(255, 107, 107, 0.4);
 }
 
 .bubble-text {
@@ -196,32 +208,44 @@
   font-size: 1.6rem;
 }
 
-/* Active word effect */
 .active-word {
-  background-color: #FFEB3B;
-  color: #000;
-  border-radius: 4px;
-  display: inline-block;
-  font-size: inherit;
-  visibility: visible;
-  transition: background-color 0.6s ease, color 0.6s ease;
+  background-color: #FFEB3B; /* Highlight color */
+  color: #000; /* Text color */
+  padding: 2px 6px; /* Padding to make the highlight visible */
+  border-radius: 4px; /* Rounded corners */
+  display: inline-block; /* Inline block to wrap the word */
+  font-size: inherit; /* Inherit font size from the parent */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for color changes */
+  box-sizing: border-box; /* Ensure padding and borders don't affect the element's size */
+  position: relative; /* Prevent layout shifts */
 }
 
 .message-block-left .active-word,
 .message-block-right .active-word {
-  visibility: visible;
+  visibility: visible; /* Ensure visibility remains consistent */
+  min-width: 0; /* Prevent size changes */
+  min-height: 0; /* Prevent size changes */
 }
+
+
+
+
+
+
+
+
+
 
 /* Hover effect for words */
-.bubble-text span {
-  transition: transform 0.3s ease, color 0.3s ease;
+/* .bubble-text span {
+  transition: background-color 0.4s ease;
   cursor: pointer;
-}
+} */
 
 .bubble-text span:hover {
-  transform: scale(1.1);
-  color: #3B71CA; /* Change color on hover */
+  background-color: #FFE082; /* Light yellow background on hover */
 }
+
 
 /* Icon buttons container */
 .icon-buttons {

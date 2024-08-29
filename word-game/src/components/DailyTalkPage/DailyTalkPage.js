@@ -39,7 +39,7 @@ const DailyTalkPage = () => {
   const generateConversation = async () => {
     setLoading(true);
     try {
-      const response = await axios.post('https://apiwordgame.aidenkiettran.com/generate-daily-talk');
+      const response = await axios.post('http://localhost:5000/generate-daily-talk');
       let conversationText = response.data.conversation;
 
       conversationText = conversationText.replace(/Person 1:/g, `${person1}:`);
@@ -221,19 +221,21 @@ const DailyTalkPage = () => {
                   />
                   <div className={speaker === person1 ? 'chat-bubble aiden-bubble' : 'chat-bubble kaylee-bubble'}>
                     <p className="bubble-text">
-                      {words.map((word, wordIndex) => (
-                        <span
-                          key={wordIndex}
-                          className={
-                            activeWord.lineIndex === lineIndex && activeWord.wordIndex === wordIndex
-                              ? 'active-word'
-                              : ''
-                          }
-                          onClick={() => handleWordClick(word.trim())} // Ensure no extra spaces are clicked
-                        >
-                          {word}
-                        </span>
-                      ))}
+                    {words.map((word, wordIndex) => (
+  <span
+    key={wordIndex}
+    className={
+      word.trim() && activeWord.lineIndex === lineIndex && activeWord.wordIndex === wordIndex
+        ? 'active-word'
+        : ''
+    }
+    onClick={() => handleWordClick(word.trim())} // Ensure no extra spaces are clicked
+  >
+    {word}
+  </span>
+))}
+
+
                     </p>
                   </div>
                 </div>
