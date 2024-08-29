@@ -14,13 +14,13 @@ const DailyTalkPage = () => {
   const [showModal, setShowModal] = useState(true);
   const [audioUrls, setAudioUrls] = useState([]);
   const [activeWord, setActiveWord] = useState({ lineIndex: null, wordIndex: null });
-  const [showRepeatButton, setShowRepeatButton] = useState(false); // State to manage repeat button visibility
-  const [showStartButton, setShowStartButton] = useState(true); // State to manage start button visibility
+  const [showRepeatButton, setShowRepeatButton] = useState(false);
+  const [showStartButton, setShowStartButton] = useState(true);
+  const [loadingNext, setLoadingNext] = useState(false);
 
   const person1 = "Aiden";
   const person2 = "Kaylee";
 
-  // Configure AWS Polly with environment variables
   AWS.config.update({
     region: process.env.REACT_APP_AWS_REGION,
     accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
@@ -42,7 +42,6 @@ const DailyTalkPage = () => {
       setConversation(lines);
       setShowModal(false);
 
-      // Generate speech for each line in the conversation
       const audioPromises = lines.map((line, index) => {
         const speaker = line.startsWith(`${person1}:`) ? person1 : person2;
         const cleanText = line.replace(`${speaker}:`, '').trim();
@@ -54,14 +53,12 @@ const DailyTalkPage = () => {
           SampleRate: '16000',
         };
 
-        // Use Polly to synthesize speech for each line
         return polly.synthesizeSpeech(params).promise().then(data => {
           const audioBlob = new Blob([data.AudioStream], { type: 'audio/mp3' });
           return URL.createObjectURL(audioBlob);
         });
       });
 
-      // Wait for all audio URLs to be generated
       const generatedAudioUrls = await Promise.all(audioPromises);
       setAudioUrls(generatedAudioUrls);
 
@@ -69,12 +66,13 @@ const DailyTalkPage = () => {
       console.error('Error generating conversation:', error);
     } finally {
       setLoading(false);
+      setLoadingNext(false);
     }
   };
 
   const handlePlayConversation = async () => {
-    setShowRepeatButton(false); // Hide repeat button initially
-    setShowStartButton(false); // Hide start button after clicking
+    setShowRepeatButton(false);
+    setShowStartButton(false);
 
     if (audioUrls.length > 0) {
       let currentIndex = 0;
@@ -85,21 +83,20 @@ const DailyTalkPage = () => {
           const words = line.replace(`${line.startsWith(`${person1}:`) ? person1 : person2}:`, '').trim().split(/\s+/);
   
           try {
-            await playAudio(audioUrls[currentIndex], currentIndex, words); // Play current audio
-            currentIndex++; // Move to the next audio
-            playNextAudio(); // Immediately play the next audio
+            await playAudio(audioUrls[currentIndex], currentIndex, words);
+            currentIndex++;
+            playNextAudio();
           } catch (error) {
             console.error('Error during audio playback:', error);
-            playNextAudio(); // Try to play the next audio even if there was an error
+            playNextAudio();
           }
         } else {
-          // Reset active word once all audios are played
           setActiveWord({ lineIndex: null, wordIndex: null });
-          setShowRepeatButton(true); // Show the repeat button after the conversation is finished
+          setShowRepeatButton(true);
         }
       };
   
-      playNextAudio(); // Start the playback chain
+      playNextAudio();
     }
   };
   
@@ -129,12 +126,12 @@ const DailyTalkPage = () => {
   
             audio.onended = () => {
               clearInterval(interval);
-              resolve(); // Resolve the promise immediately after the audio ends
+              resolve();
             };
           })
           .catch((error) => {
             console.error('Playback failed:', error);
-            resolve(); // Resolve the promise even if playback fails
+            resolve();
           });
       } else {
         console.error('Audio playback could not be initiated.');
@@ -144,9 +141,10 @@ const DailyTalkPage = () => {
   };
 
   const handleNextConversation = () => {
-    generateConversation(); // Generate a new conversation
-    setShowStartButton(true); // Show start button for the new conversation
-    setShowRepeatButton(false); // Hide repeat button until the new conversation is played
+    setLoadingNext(true);
+    generateConversation();
+    setShowStartButton(true);
+    setShowRepeatButton(false);
   };
 
   return (
@@ -162,7 +160,6 @@ const DailyTalkPage = () => {
           <h1 className="daily-talk-title">Daily Talk</h1>
         </div>
 
-        {/* Start Conversation Button */}
         {showStartButton && (
           <div className="start-conversation-container">
             <button className="start-conversation-button" onClick={handlePlayConversation}>
@@ -173,39 +170,44 @@ const DailyTalkPage = () => {
 
         <div className="right-column">
           <div className="conversation-container">
-            {conversation.map((line, lineIndex) => {
-              const speaker = line.startsWith(`${person1}:`) ? person1 : person2;
-              const words = line.replace(`${speaker}:`, '').trim().split(/\s+/);
-              return (
-                <div key={lineIndex} className={speaker === person1 ? 'message-block-left' : 'message-block-right'}>
-                  <img
-                    src={speaker === person1 ? boyAvatar : girlAvatar}
-                    alt={`${speaker} avatar`}
-                    className="avatar"
-                  />
-                  <div className={speaker === person1 ? 'chat-bubble aiden-bubble' : 'chat-bubble kaylee-bubble'}>
-                    <p className="bubble-text">
-                      {words.map((word, wordIndex) => (
-                        <span
-                          key={wordIndex}
-                          className={
-                            activeWord.lineIndex === lineIndex && activeWord.wordIndex === wordIndex
-                              ? 'active-word'
-                              : ''
-                          }
-                        >
-                          {word}{' '}
-                        </span>
-                      ))}
-                    </p>
+            {loadingNext ? (
+              <div className="spinner-container">
+                <div className="spinner"></div>
+              </div>
+            ) : (
+              conversation.map((line, lineIndex) => {
+                const speaker = line.startsWith(`${person1}:`) ? person1 : person2;
+                const words = line.replace(`${speaker}:`, '').trim().split(/\s+/);
+                return (
+                  <div key={lineIndex} className={speaker === person1 ? 'message-block-left' : 'message-block-right'}>
+                    <img
+                      src={speaker === person1 ? boyAvatar : girlAvatar}
+                      alt={`${speaker} avatar`}
+                      className="avatar"
+                    />
+                    <div className={speaker === person1 ? 'chat-bubble aiden-bubble' : 'chat-bubble kaylee-bubble'}>
+                      <p className="bubble-text">
+                        {words.map((word, wordIndex) => (
+                          <span
+                            key={wordIndex}
+                            className={
+                              activeWord.lineIndex === lineIndex && activeWord.wordIndex === wordIndex
+                                ? 'active-word'
+                                : ''
+                            }
+                          >
+                            {word}{' '}
+                          </span>
+                        ))}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })
+            )}
           </div>
         </div>
 
-        {/* Repeat and Next Conversation Buttons */}
         {showRepeatButton && (
           <div className="repeat-next-conversation-container">
             <button className="repeat-conversation-button" onClick={handlePlayConversation}>
