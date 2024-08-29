@@ -87,7 +87,11 @@ const DailyTalkPage = () => {
       const playNextAudio = async () => {
         if (currentIndex < audioUrls.length) {
           const line = conversation[currentIndex];
-          const words = line.replace(`${line.startsWith(`${person1}:`) ? person1 : person2}:`, '').trim().split(/\s+/);
+          const words = line
+            .replace(`${line.startsWith(`${person1}:`) ? person1 : person2}:`, '') // Remove speaker label
+            .trim() // Trim leading and trailing spaces
+            .split(/(\s+)/) // Split by spaces, keeping the spaces
+            .filter(Boolean); // Filter out empty strings
   
           try {
             await playAudio(audioUrls[currentIndex], currentIndex, words);
@@ -157,7 +161,7 @@ const DailyTalkPage = () => {
   const handleWordClick = async (word) => {
     try {
       const response = await axios.post('https://apiwordgame.aidenkiettran.com/validate-word', {
-        word,
+        word: word.trim(), // Remove any extra spaces before sending the word
       });
       const { englishDefinition, vietnameseDefinition } = response.data;
 
@@ -203,7 +207,11 @@ const DailyTalkPage = () => {
           <div className="conversation-container">
             {conversation.map((line, lineIndex) => {
               const speaker = line.startsWith(`${person1}:`) ? person1 : person2;
-              const words = line.replace(`${speaker}:`, '').trim().split(/\s+/);
+              const words = line
+                .replace(`${speaker}:`, '') // Remove the speaker's name
+                .trim() // Trim any leading/trailing whitespace
+                .split(/(\s+)/) // Split by spaces, keeping the spaces
+                .filter(Boolean); // Filter out any empty strings
               return (
                 <div key={lineIndex} className={speaker === person1 ? 'message-block-left' : 'message-block-right'}>
                   <img
@@ -221,9 +229,9 @@ const DailyTalkPage = () => {
                               ? 'active-word'
                               : ''
                           }
-                          onClick={() => handleWordClick(word)}
+                          onClick={() => handleWordClick(word.trim())} // Ensure no extra spaces are clicked
                         >
-                          {word}{' '}
+                          {word}
                         </span>
                       ))}
                     </p>
