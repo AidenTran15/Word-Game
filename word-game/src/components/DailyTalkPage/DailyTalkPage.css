@@ -208,44 +208,32 @@
   font-size: 1.6rem;
 }
 
-.active-word {
-  background-color: #FFEB3B; /* Highlight color */
-  color: #000; /* Text color */
-  padding: 2px 6px; /* Padding to make the highlight visible */
-  border-radius: 4px; /* Rounded corners */
-  display: inline-block; /* Inline block to wrap the word */
-  font-size: inherit; /* Inherit font size from the parent */
-  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for color changes */
-  box-sizing: border-box; /* Ensure padding and borders don't affect the element's size */
-  position: relative; /* Prevent layout shifts */
-}
-
-.message-block-left .active-word,
-.message-block-right .active-word {
-  visibility: visible; /* Ensure visibility remains consistent */
-  min-width: 0; /* Prevent size changes */
-  min-height: 0; /* Prevent size changes */
+/* Active word effect without underline */
+.bubble-text span {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  color: inherit;
+  transition: color 0.3s ease;
+  margin-right: 0.25rem; /* Ensure spacing between words */
 }
 
 
 
-
-
-
-
-
-
-
-/* Hover effect for words */
-/* .bubble-text span {
-  transition: background-color 0.4s ease;
-  cursor: pointer;
-} */
-
-.bubble-text span:hover {
-  background-color: #FFE082; /* Light yellow background on hover */
+@keyframes activeWordAnimation {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
-
 
 /* Icon buttons container */
 .icon-buttons {

@@ -90,7 +90,7 @@ const DailyTalkPage = () => {
           const words = line
             .replace(`${line.startsWith(`${person1}:`) ? person1 : person2}:`, '') // Remove speaker label
             .trim() // Trim leading and trailing spaces
-            .split(/(\s+)/) // Split by spaces, keeping the spaces
+            .split(' ') // Split by space to maintain spacing
             .filter(Boolean); // Filter out empty strings
   
           try {
@@ -210,7 +210,7 @@ const DailyTalkPage = () => {
               const words = line
                 .replace(`${speaker}:`, '') // Remove the speaker's name
                 .trim() // Trim any leading/trailing whitespace
-                .split(/(\s+)/) // Split by spaces, keeping the spaces
+                .split(' ') // Split by space to maintain spacing
                 .filter(Boolean); // Filter out any empty strings
               return (
                 <div key={lineIndex} className={speaker === person1 ? 'message-block-left' : 'message-block-right'}>
@@ -221,21 +221,19 @@ const DailyTalkPage = () => {
                   />
                   <div className={speaker === person1 ? 'chat-bubble aiden-bubble' : 'chat-bubble kaylee-bubble'}>
                     <p className="bubble-text">
-                    {words.map((word, wordIndex) => (
-  <span
-    key={wordIndex}
-    className={
-      word.trim() && activeWord.lineIndex === lineIndex && activeWord.wordIndex === wordIndex
-        ? 'active-word'
-        : ''
-    }
-    onClick={() => handleWordClick(word.trim())} // Ensure no extra spaces are clicked
-  >
-    {word}
-  </span>
-))}
-
-
+                      {words.map((word, wordIndex) => (
+                        <span
+                          key={wordIndex}
+                          className={
+                            word.trim() && activeWord.lineIndex === lineIndex && activeWord.wordIndex === wordIndex
+                              ? 'active-word'
+                              : ''
+                          }
+                          onClick={() => handleWordClick(word.trim())}
+                        >
+                          {word}{' '} {/* Ensure a space after each word */}
+                        </span>
+                      ))}
                     </p>
                   </div>
                 </div>
