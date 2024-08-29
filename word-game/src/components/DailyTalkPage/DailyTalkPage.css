@@ -216,13 +216,17 @@
   color: inherit;
   transition: color 0.3s ease;
   margin-right: 0.38rem; /* Space between words */
+  padding: 2px 0; /* Add consistent padding to maintain height */
+  line-height: 1.6rem; /* Match line-height to ensure consistent height */
 }
 
 .bubble-text span.active-word {
-  background-color: #004D40;
+  background-color: #004D40; /* Dark teal background for active word */
+  color: #ffffff; /* White text color for active word */
   transition: background-color 0.3s ease, color 0.3s ease;
   border-radius: 5px; /* Rounded corners */
-  
+  padding: 2px 0; /* Ensure padding is consistent with non-active words */
+  line-height: 1.6rem; /* Ensure line-height matches non-active words */
 }
 
 .bubble-text span:hover {
@@ -296,6 +300,7 @@ footer {
   .daily-talk-title {
     font-size: 3.2rem;
   }
+  
   .bubble-text span {
     margin-right: 0.24rem; 
   }
