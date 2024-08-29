@@ -115,8 +115,9 @@
   display: inline-block;
   font-size: inherit;
   visibility: visible; /* Use visibility instead of opacity */
-  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for color changes */
+  transition: background-color 0.8s ease, color 0.8s ease; /* Slower transition for a smoother effect */
 }
+
 
 .message-block-left .active-word,
 .message-block-right .active-word {
