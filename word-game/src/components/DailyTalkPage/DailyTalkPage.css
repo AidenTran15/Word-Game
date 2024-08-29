@@ -215,8 +215,9 @@
   overflow: hidden;
   color: inherit;
   transition: color 0.3s ease;
-  margin-right: 0.25rem; /* Ensure spacing between words */
+  margin-right: 0.3rem; /* Increase the space between words */
 }
+
 
 .bubble-text span.active-word {
   background-color: #262626; /* Change the background color of the active word to #262626 */
