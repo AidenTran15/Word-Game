@@ -119,7 +119,7 @@ const DailyTalkPage = () => {
               if (wordIndex >= words.length) {
                 clearInterval(interval);
               }
-            }, 100);
+            }, 200);
   
             audio.onended = () => {
               clearInterval(interval);
