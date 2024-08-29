@@ -220,12 +220,13 @@
 
 
 .bubble-text span.active-word {
-  background-color: #262626; /* Change the background color of the active word to #262626 */
-  color: #ffffff; /* Change the text color to white for better visibility */
-  transition: background-color 0.8s ease, color 0.8s ease;
-  border-radius: 5px; 
-  padding: 0 4px; 
+  background-color: #262626;
+  color: #ffffff;
+  transition: background-color 1.5s ease, color 1.5s ease; /* Adjust the timing if needed */
+  border-radius: 5px;
+  padding: 0 4px;
 }
+
 
 .bubble-text span:hover {
   background-color: #FFFF00; 

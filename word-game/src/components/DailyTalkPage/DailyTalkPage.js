@@ -39,7 +39,7 @@ const DailyTalkPage = () => {
   const generateConversation = async () => {
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/generate-daily-talk');
+      const response = await axios.post('https://apiwordgame.aidenkiettran.com/generate-daily-talk');
       let conversationText = response.data.conversation;
 
       conversationText = conversationText.replace(/Person 1:/g, `${person1}:`);
@@ -121,11 +121,13 @@ const DailyTalkPage = () => {
         playPromise
           .then(() => {
             let wordIndex = 0;
+            const wordDuration = audio.duration / words.length;
+            
             const interval = setInterval(() => {
               const currentTime = audio.currentTime;
-              const wordDuration = audio.duration / words.length;
+              const expectedTime = wordDuration * wordIndex;
   
-              if (currentTime >= wordDuration * wordIndex && wordIndex < words.length) {
+              if (currentTime >= expectedTime && wordIndex < words.length) {
                 setActiveWord({ lineIndex, wordIndex });
                 wordIndex++;
               }
@@ -133,7 +135,7 @@ const DailyTalkPage = () => {
               if (wordIndex >= words.length) {
                 clearInterval(interval);
               }
-            }, 100);
+            }, wordDuration * 1000); // Adjust the interval timing to match the word duration
   
             audio.onended = () => {
               clearInterval(interval);
@@ -150,6 +152,7 @@ const DailyTalkPage = () => {
       }
     });
   };
+  
 
   const handleNextConversation = () => {
     setLoadingNext(true);
