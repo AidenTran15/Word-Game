@@ -4,6 +4,7 @@ import axios from 'axios';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import DailyTalkIntroductionModal from '../DailyTalkIntroductionModal/DailyTalkIntroductionModal';
+import DefinitionModal from '../DefinitionModal/DefinitionModal'; // Import the DefinitionModal component
 import boyAvatar from '../../assets/boy-avatar.png';
 import girlAvatar from '../../assets/girl-avatar.png';
 import './DailyTalkPage.css';
@@ -17,6 +18,12 @@ const DailyTalkPage = () => {
   const [showRepeatButton, setShowRepeatButton] = useState(false);
   const [showStartButton, setShowStartButton] = useState(true);
   const [loadingNext, setLoadingNext] = useState(false);
+  const [selectedWord, setSelectedWord] = useState(''); // State to manage the selected word
+  const [showDefinitionModal, setShowDefinitionModal] = useState(false); // State to manage modal visibility
+  const [language, setLanguage] = useState('en'); // State to manage language toggle
+  const [definition, setDefinition] = useState(''); // State to manage the definition
+  const [englishDefinition, setEnglishDefinition] = useState(''); // State to store English definition
+  const [vietnameseDefinition, setVietnameseDefinition] = useState(''); // State to store Vietnamese definition
 
   const person1 = "Aiden";
   const person2 = "Kaylee";
@@ -147,6 +154,30 @@ const DailyTalkPage = () => {
     setShowRepeatButton(false);
   };
 
+  const handleWordClick = async (word) => {
+    try {
+      const response = await axios.post('https://apiwordgame.aidenkiettran.com/validate-word', {
+        word,
+      });
+      const { englishDefinition, vietnameseDefinition } = response.data;
+
+      setEnglishDefinition(englishDefinition);
+      setVietnameseDefinition(vietnameseDefinition);
+      setSelectedWord(word);
+      setDefinition(englishDefinition);
+      setShowDefinitionModal(true);
+    } catch (error) {
+      console.error('Error fetching definition:', error);
+      setDefinition('No definition found.');
+      setShowDefinitionModal(true);
+    }
+  };
+
+  const toggleLanguage = () => {
+    setLanguage((prevLanguage) => (prevLanguage === 'en' ? 'vi' : 'en'));
+    setDefinition(language === 'en' ? vietnameseDefinition : englishDefinition);
+  };
+
   return (
     <div className="wrapper">
       <Navbar />
@@ -190,6 +221,7 @@ const DailyTalkPage = () => {
                               ? 'active-word'
                               : ''
                           }
+                          onClick={() => handleWordClick(word)}
                         >
                           {word}{' '}
                         </span>
@@ -217,8 +249,6 @@ const DailyTalkPage = () => {
               <button className="icon-button" onClick={handleNextConversation} title="Next Conversation">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="40px" height="40px">
                   <path d="M9 4l10 8-10 8z"/>
-
-
                 </svg>
               </button>
             </div>
@@ -227,6 +257,16 @@ const DailyTalkPage = () => {
       </div>
 
       <Footer />
+
+      {/* Definition Modal */}
+      <DefinitionModal 
+        show={showDefinitionModal} 
+        onClose={() => setShowDefinitionModal(false)} 
+        selectedWord={selectedWord} 
+        language={language}
+        toggleLanguage={toggleLanguage}
+        definition={definition}  // Pass the definition state
+      />
     </div>
   );
 };
