@@ -215,7 +215,7 @@
   overflow: hidden;
   color: inherit;
   transition: color 0.3s ease;
-  margin-right: 0.5rem; /* Space between words */
+  margin-right: 0.38rem; /* Space between words */
 }
 
 .bubble-text span.active-word {
@@ -295,6 +295,9 @@ footer {
 
   .daily-talk-title {
     font-size: 3.2rem;
+  }
+  .bubble-text span {
+    margin-right: 0.24rem; 
   }
 }
 
