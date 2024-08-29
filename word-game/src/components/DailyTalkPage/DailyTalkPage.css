@@ -218,6 +218,16 @@
   margin-right: 0.25rem; /* Ensure spacing between words */
 }
 
+.bubble-text span.active-word {
+  background-color: #262626; /* Change the background color of the active word to #262626 */
+  color: #ffffff; /* Change the text color to white for better visibility */
+  transition: background-color 0.8s ease, color 0.8s ease;
+  border-radius: 5px; /* Optional: Add some rounding to the corners */
+  padding: 0 4px; /* Optional: Add some padding for better spacing */
+}
+
+
+
 
 
 @keyframes activeWordAnimation {
