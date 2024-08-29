@@ -163,7 +163,7 @@ const DailyTalkPage = () => {
         {showStartButton && (
           <div className="start-conversation-container">
             <button className="start-conversation-button" onClick={handlePlayConversation}>
-              Start Conversation
+              Start Reading
             </button>
           </div>
         )}

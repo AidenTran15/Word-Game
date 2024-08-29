@@ -1,87 +1,113 @@
-/* Existing styles */
-
-.modal-overlay-dt {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    backdrop-filter: blur(5px);
-    transition: opacity 0.3s ease;
-}
-
-.modal-content-dt {
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 12px;
-    max-width: 800px;
-    width: 95%;
-    text-align: center;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    transform: translateY(-20px);
-    animation: slide-down 0.3s ease forwards;
-}
-
-@keyframes slide-down {
-    to {
-        transform: translateY(0);
+/* Spinner for loading effect */
+.spinner-dt {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid #ffffff;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin-dt 1s linear infinite;
+    display: inline-block;
+  }
+  
+  @keyframes spin-dt {
+    0% {
+      transform: rotate(0deg);
     }
-}
-
-.modal-content-dt h2 {
-    font-size: 2em;
-    margin-bottom: 10px;
-    font-family: 'Playfair Display', serif;
-    color: #3B71CA;
-    text-decoration: underline;
-}
-
-.modal-content-dt p {
-    font-size: 1.3em;
-    margin-top: 20px;
-    line-height: 1.6;
-    color: #333;
-}
-
-.modal-button {
-    margin-top: 25px;
-    padding: 12px 25px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    background-color: #3B71CA;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.modal-button:hover {
-    background-color: #2d57a6;
-    transform: translateY(-2px);
-}
-
-/* Media query for mobile screens */
-@media (max-width: 768px) {
-    .modal-content-dt {
-        width: 85%; /* Set the modal width to 90% on mobile */
-        padding: 15px; /* Adjust padding for better fit */
+    100% {
+      transform: rotate(360deg);
     }
-
-    .modal-content-dt h2 {
-        font-size: 2em; /* Adjust font size for smaller screens */
-    }
-
-    .modal-content-dt p {
-        font-size: 1.4em; /* Adjust font size for readability */
-    }
-
-    .modal-button {
-        font-size: 18px; /* Slightly adjust button font size */
-        padding: 10px 20px; /* Adjust button padding */
-    }
-}
+  }
+  
+  /* Existing styles */
+  
+  .modal-overlay-dt {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      backdrop-filter: blur(5px);
+      transition: opacity 0.3s ease;
+  }
+  
+  .modal-content-dt {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 800px;
+      width: 95%;
+      text-align: center;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      transform: translateY(-20px);
+      animation: slide-down 0.3s ease forwards;
+  }
+  
+  @keyframes slide-down {
+      to {
+          transform: translateY(0);
+      }
+  }
+  
+  .modal-content-dt h2 {
+      font-size: 2em;
+      margin-bottom: 10px;
+      font-family: 'Playfair Display', serif;
+      color: #3B71CA;
+      text-decoration: underline;
+  }
+  
+  .modal-content-dt p {
+      font-size: 1.3em;
+      margin-top: 20px;
+      line-height: 1.6;
+      color: #333;
+  }
+  
+  .modal-button {
+      margin-top: 25px;
+      padding: 12px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      background-color: #3B71CA;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .modal-button:hover {
+      background-color: #2d57a6;
+      transform: translateY(-2px);
+  }
+  
+  .modal-button:disabled {
+      background-color: #2d57a6;
+      cursor: not-allowed;
+  }
+  
+  /* Media query for mobile screens */
+  @media (max-width: 768px) {
+      .modal-content-dt {
+          width: 85%; /* Set the modal width to 90% on mobile */
+          padding: 15px; /* Adjust padding for better fit */
+      }
+  
+      .modal-content-dt h2 {
+          font-size: 2.1em; /* Adjust font size for smaller screens */
+      }
+  
+      .modal-content-dt p {
+          font-size: 1.4em; /* Adjust font size for readability */
+      }
+  
+      .modal-button {
+          font-size: 18px; /* Slightly adjust button font size */
+          padding: 10px 20px; /* Adjust button padding */
+      }
+  }
+  
