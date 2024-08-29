@@ -26,14 +26,15 @@
 }
 
 .start-conversation-container,
-.repeat-conversation-container {
+.repeat-next-conversation-container {
   display: flex;
   justify-content: center;
   margin: 20px 0;
 }
 
 .start-conversation-button,
-.repeat-conversation-button {
+.repeat-conversation-button,
+.next-conversation-button {
   background-color: #ff5e78;
   border: none;
   border-radius: 20px;
@@ -42,10 +43,12 @@
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin: 0 10px; /* Add margin to space buttons */
 }
 
 .start-conversation-button:hover,
-.repeat-conversation-button:hover {
+.repeat-conversation-button:hover,
+.next-conversation-button:hover {
   background-color: #ff4568;
 }
 
@@ -115,9 +118,8 @@
   display: inline-block;
   font-size: inherit;
   visibility: visible; /* Use visibility instead of opacity */
-  transition: background-color 0.8s ease, color 0.8s ease; /* Slower transition for a smoother effect */
+  transition: background-color 0.6s ease, color 0.6s ease; /* Slower transition for a smoother effect */
 }
-
 
 .message-block-left .active-word,
 .message-block-right .active-word {

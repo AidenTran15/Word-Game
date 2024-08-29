@@ -15,6 +15,7 @@ const DailyTalkPage = () => {
   const [audioUrls, setAudioUrls] = useState([]);
   const [activeWord, setActiveWord] = useState({ lineIndex: null, wordIndex: null });
   const [showRepeatButton, setShowRepeatButton] = useState(false); // State to manage repeat button visibility
+  const [showStartButton, setShowStartButton] = useState(true); // State to manage start button visibility
 
   const person1 = "Aiden";
   const person2 = "Kaylee";
@@ -73,6 +74,8 @@ const DailyTalkPage = () => {
 
   const handlePlayConversation = async () => {
     setShowRepeatButton(false); // Hide repeat button initially
+    setShowStartButton(false); // Hide start button after clicking
+
     if (audioUrls.length > 0) {
       let currentIndex = 0;
   
@@ -140,6 +143,12 @@ const DailyTalkPage = () => {
     });
   };
 
+  const handleNextConversation = () => {
+    generateConversation(); // Generate a new conversation
+    setShowStartButton(true); // Show start button for the new conversation
+    setShowRepeatButton(false); // Hide repeat button until the new conversation is played
+  };
+
   return (
     <div className="wrapper">
       <Navbar />
@@ -154,11 +163,13 @@ const DailyTalkPage = () => {
         </div>
 
         {/* Start Conversation Button */}
-        <div className="start-conversation-container">
-          <button className="start-conversation-button" onClick={handlePlayConversation}>
-            Start Conversation
-          </button>
-        </div>
+        {showStartButton && (
+          <div className="start-conversation-container">
+            <button className="start-conversation-button" onClick={handlePlayConversation}>
+              Start Conversation
+            </button>
+          </div>
+        )}
 
         <div className="right-column">
           <div className="conversation-container">
@@ -194,11 +205,14 @@ const DailyTalkPage = () => {
           </div>
         </div>
 
-        {/* Repeat Conversation Button */}
+        {/* Repeat and Next Conversation Buttons */}
         {showRepeatButton && (
-          <div className="repeat-conversation-container">
+          <div className="repeat-next-conversation-container">
             <button className="repeat-conversation-button" onClick={handlePlayConversation}>
               Repeat Conversation
+            </button>
+            <button className="next-conversation-button" onClick={handleNextConversation}>
+              Next Conversation
             </button>
           </div>
         )}
