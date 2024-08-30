@@ -38,7 +38,6 @@ const DailyTalkPage = () => {
     "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/qmraJpx/videoblocks-m1430v099_4k_rpujx4zch__592661030867b94bd414a99255c7f9fe__P360.mp4",
     "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/SNv7Pyhimz0q0vg/videoblocks-stylish-young-man-chatting-with-girlfriend-in-the-park-on-sunny-summer-day-couple-in-love-talking-outdoors-wearing-similar-casual-clothes-sun-shines-on-the-background_s5vzup5z___9aa0f60245b925b04652e8518ea63bc4__P360.mp4",
     "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/NdHffr7_eijh7icah/videoblocks-a-loving-couple-drinks-champagne-in-the-evening_htm2le6k9w__2794986d8e0498d70797501eb1cc9829__P360.mp4",   
-    "https://videos.pond5.com/conversation-between-two-friends-street-footage-273366371_main_xxl.mp4"   
   ];
 
   AWS.config.update({
@@ -249,17 +248,6 @@ const DailyTalkPage = () => {
           </div>
         )}
 
-        {showStartButton && (
-          <div className="start-conversation-container">
-            <button className="start-conversation-button" onClick={handlePlayConversation}>
-              Start Reading
-            </button>
-            <button className="next-conversation-button" onClick={handleNextConversation}>
-              Next
-            </button>
-          </div>
-        )}
-
         <div className="right-column">
           <div className="conversation-container">
             {conversation.map((line, lineIndex) => {
@@ -298,6 +286,17 @@ const DailyTalkPage = () => {
             })}
           </div>
         </div>
+
+        {showStartButton && (
+          <div className="start-conversation-container">
+            <button className="start-conversation-button" onClick={handlePlayConversation}>
+              Start Reading
+            </button>
+            <button className="next-conversation-button" onClick={handleNextConversation}>
+              Next
+            </button>
+          </div>
+        )}
 
         {loadingNext ? (
           <div className="spinner-container">
