@@ -1,3 +1,58 @@
+/* Center the video container and make sure it is responsive */
+.video-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  
+}
+
+.video-container video {
+  max-width: 100%;
+  max-height: 100%;
+  border: none;
+  cursor: pointer;
+}
+
+/* Hide video controls on hover */
+.video-container video::-webkit-media-controls {
+  display: none;
+}
+
+.video-container:hover video::-webkit-media-controls {
+  display: none;
+}
+
+.video-container video::-webkit-media-controls-panel {
+  display: none;
+}
+
+/* Optional: Hide video controls on click */
+.video-container video:focus {
+  outline: none;
+}
+
+.video-container video:focus::-webkit-media-controls {
+  display: none;
+}
+
+.video-container video:focus::-webkit-media-controls-panel {
+  display: none;
+}
+
+video {
+  pointer-events: none; /* Disable interaction to hide controls */
+  width: 80%;
+  height: auto;
+}
+
+video:hover,
+video:focus {
+  pointer-events: none; /* Ensure controls remain hidden on hover */
+}
+
+
+
 /* Wrapper and main content styles */
 .wrapper {
   display: flex;

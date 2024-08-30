@@ -202,7 +202,7 @@ const DailyTalkPage = () => {
 
         {showVideo && (
   <div className="video-container">
-    <video controls autoPlay loop width="80%">
+    <video controls autoPlay loop width="100%">
       <source src="https://videos.pond5.com/conversation-between-two-friends-street-footage-273366371_main_xxl.mp4" type="video/mp4" />
       Your browser does not support the video tag.
     </video>
