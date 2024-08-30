@@ -100,13 +100,16 @@ const DailyTalkPage = () => {
   };
 
   const handlePlayConversation = async () => {
-    setShowVideo(true);
     setShowRepeatButton(false);
     setShowStartButton(false);
-
+  
+    if (videoRef.current) {
+      videoRef.current.play(); // Start playing the video when the conversation starts
+    }
+  
     if (audioUrls.length > 0) {
       let currentIndex = 0;
-
+  
       const playNextAudio = async () => {
         if (currentIndex < audioUrls.length) {
           const line = conversation[currentIndex];
@@ -115,7 +118,7 @@ const DailyTalkPage = () => {
             .trim()
             .split(' ')
             .filter(Boolean);
-
+  
           try {
             await playAudio(audioUrls[currentIndex], currentIndex, words);
             currentIndex++;
@@ -132,10 +135,11 @@ const DailyTalkPage = () => {
           }
         }
       };
-
+  
       playNextAudio();
     }
   };
+  
 
   const playAudio = (url, lineIndex, words) => {
     return new Promise((resolve) => {
@@ -225,9 +229,9 @@ const DailyTalkPage = () => {
           <h1 className="daily-talk-title">Daily Talk</h1>
         </div>
 
-        {showVideo && (
+        {true && (
           <div className="video-container">
-            <video ref={videoRef} controls autoPlay loop width="100%">
+            <video ref={videoRef} controls width="100%">
               <source src={currentVideoUrl} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
