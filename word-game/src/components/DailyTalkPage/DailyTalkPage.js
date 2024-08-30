@@ -25,9 +25,21 @@ const DailyTalkPage = () => {
   const [englishDefinition, setEnglishDefinition] = useState('');
   const [vietnameseDefinition, setVietnameseDefinition] = useState('');
   const [showVideo, setShowVideo] = useState(false); // State to manage video visibility
+  const [currentVideoUrl, setCurrentVideoUrl] = useState(null);
+
 
   const person1 = "Aiden";
   const person2 = "Kaylee";
+
+  const videoUrls = [
+    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/VZpg_YkTgilrvkdxa/videoblocks-224_tmvzdgvkifnlcxvlbmnlidiynq_r9jecgm2q__ccdbfb3ff2a14f79a5e00529f7692989__P360.mp4",
+    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/qmraJpx/videoblocks-m1430v093_4k_rpksakgqn__4730eb51fc1fb5f4cc3e43c417b82b32__P360.mp4",
+    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/qmraJpx/videoblocks-m1430v099_4k_rpujx4zch__592661030867b94bd414a99255c7f9fe__P360.mp4",
+    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/SNv7Pyhimz0q0vg/videoblocks-stylish-young-man-chatting-with-girlfriend-in-the-park-on-sunny-summer-day-couple-in-love-talking-outdoors-wearing-similar-casual-clothes-sun-shines-on-the-background_s5vzup5z___9aa0f60245b925b04652e8518ea63bc4__P360.mp4",   
+
+    "https://videos.pond5.com/conversation-between-two-friends-street-footage-273366371_main_xxl.mp4"   
+
+  ];
 
   AWS.config.update({
     region: process.env.REACT_APP_AWS_REGION,
@@ -36,6 +48,15 @@ const DailyTalkPage = () => {
   });
 
   const polly = new AWS.Polly();
+
+  useEffect(() => {
+    selectRandomVideo();
+  }, []);
+
+  const selectRandomVideo = () => {
+    const randomIndex = Math.floor(Math.random() * videoUrls.length);
+    setCurrentVideoUrl(videoUrls[randomIndex]);
+  };
 
   const generateConversation = async () => {
     setLoading(true);
@@ -154,13 +175,13 @@ const DailyTalkPage = () => {
       }
     });
   };
-  
 
   const handleNextConversation = () => {
     setLoadingNext(true);
     generateConversation();
     setShowStartButton(true);
     setShowRepeatButton(false);
+    selectRandomVideo(); 
   };
 
   const handleWordClick = async (word) => {
@@ -201,13 +222,13 @@ const DailyTalkPage = () => {
         </div>
 
         {showVideo && (
-  <div className="video-container">
-    <video controls autoPlay loop width="100%">
-      <source src="https://videos.pond5.com/conversation-between-two-friends-street-footage-273366371_main_xxl.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
-  </div>
-)}
+          <div className="video-container">
+            <video controls autoPlay loop width="100%">
+              <source src={currentVideoUrl} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        )}
 
 
         {showStartButton && (
