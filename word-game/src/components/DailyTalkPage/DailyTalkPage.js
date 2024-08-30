@@ -4,7 +4,7 @@ import axios from 'axios';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import DailyTalkIntroductionModal from '../DailyTalkIntroductionModal/DailyTalkIntroductionModal';
-import DefinitionModal from '../DefinitionModal/DefinitionModal'; // Import the DefinitionModal component
+import DefinitionModal from '../DefinitionModal/DefinitionModal';
 import boyAvatar from '../../assets/boy-avatar.png';
 import girlAvatar from '../../assets/girl-avatar.png';
 import './DailyTalkPage.css';
@@ -18,12 +18,13 @@ const DailyTalkPage = () => {
   const [showRepeatButton, setShowRepeatButton] = useState(false);
   const [showStartButton, setShowStartButton] = useState(true);
   const [loadingNext, setLoadingNext] = useState(false);
-  const [selectedWord, setSelectedWord] = useState(''); // State to manage the selected word
-  const [showDefinitionModal, setShowDefinitionModal] = useState(false); // State to manage modal visibility
-  const [language, setLanguage] = useState('en'); // State to manage language toggle
-  const [definition, setDefinition] = useState(''); // State to manage the definition
-  const [englishDefinition, setEnglishDefinition] = useState(''); // State to store English definition
-  const [vietnameseDefinition, setVietnameseDefinition] = useState(''); // State to store Vietnamese definition
+  const [selectedWord, setSelectedWord] = useState('');
+  const [showDefinitionModal, setShowDefinitionModal] = useState(false);
+  const [language, setLanguage] = useState('en');
+  const [definition, setDefinition] = useState('');
+  const [englishDefinition, setEnglishDefinition] = useState('');
+  const [vietnameseDefinition, setVietnameseDefinition] = useState('');
+  const [showVideo, setShowVideo] = useState(false); // State to manage video visibility
 
   const person1 = "Aiden";
   const person2 = "Kaylee";
@@ -78,6 +79,7 @@ const DailyTalkPage = () => {
   };
 
   const handlePlayConversation = async () => {
+    setShowVideo(true); // Show the video when the conversation starts
     setShowRepeatButton(false);
     setShowStartButton(false);
 
@@ -88,10 +90,10 @@ const DailyTalkPage = () => {
         if (currentIndex < audioUrls.length) {
           const line = conversation[currentIndex];
           const words = line
-            .replace(`${line.startsWith(`${person1}:`) ? person1 : person2}:`, '') // Remove speaker label
-            .trim() // Trim leading and trailing spaces
-            .split(' ') // Split by space to maintain spacing
-            .filter(Boolean); // Filter out empty strings
+            .replace(`${line.startsWith(`${person1}:`) ? person1 : person2}:`, '') 
+            .trim()
+            .split(' ')
+            .filter(Boolean);
   
           try {
             await playAudio(audioUrls[currentIndex], currentIndex, words);
@@ -135,7 +137,7 @@ const DailyTalkPage = () => {
               if (wordIndex >= words.length) {
                 clearInterval(interval);
               }
-            }, wordDuration * 1000); // Adjust the interval timing to match the word duration
+            }, wordDuration * 1000);
   
             audio.onended = () => {
               clearInterval(interval);
@@ -164,7 +166,7 @@ const DailyTalkPage = () => {
   const handleWordClick = async (word) => {
     try {
       const response = await axios.post('https://apiwordgame.aidenkiettran.com/validate-word', {
-        word: word.trim(), // Remove any extra spaces before sending the word
+        word: word.trim(),
       });
       const { englishDefinition, vietnameseDefinition } = response.data;
 
@@ -198,6 +200,15 @@ const DailyTalkPage = () => {
           <h1 className="daily-talk-title">Daily Talk</h1>
         </div>
 
+        {showVideo && (
+          <div className="video-container">
+            <video controls autoPlay width="100%">
+              <source src="https://videos.pond5.com/conversation-between-two-friends-street-footage-273366371_main_xxl.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        )}
+
         {showStartButton && (
           <div className="start-conversation-container">
             <button className="start-conversation-button" onClick={handlePlayConversation}>
@@ -214,10 +225,10 @@ const DailyTalkPage = () => {
             {conversation.map((line, lineIndex) => {
               const speaker = line.startsWith(`${person1}:`) ? person1 : person2;
               const words = line
-                .replace(`${speaker}:`, '') // Remove the speaker's name
-                .trim() // Trim any leading/trailing whitespace
-                .split(' ') // Split by space to maintain spacing
-                .filter(Boolean); // Filter out any empty strings
+                .replace(`${speaker}:`, '')
+                .trim()
+                .split(' ')
+                .filter(Boolean);
               return (
                 <div key={lineIndex} className={speaker === person1 ? 'message-block-left' : 'message-block-right'}>
                   <img
@@ -237,7 +248,7 @@ const DailyTalkPage = () => {
                           }
                           onClick={() => handleWordClick(word.trim())}
                         >
-                          {word}{' '} {/* Ensure a space after each word */}
+                          {word}{' '}
                         </span>
                       ))}
                     </p>
@@ -272,14 +283,13 @@ const DailyTalkPage = () => {
 
       <Footer />
 
-      {/* Definition Modal */}
       <DefinitionModal 
         show={showDefinitionModal} 
         onClose={() => setShowDefinitionModal(false)} 
         selectedWord={selectedWord} 
         language={language}
         toggleLanguage={toggleLanguage}
-        definition={definition}  // Pass the definition state
+        definition={definition}
       />
     </div>
   );
