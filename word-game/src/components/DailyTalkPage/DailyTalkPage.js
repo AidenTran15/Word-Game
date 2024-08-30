@@ -28,6 +28,7 @@ const DailyTalkPage = () => {
   const [currentVideoUrl, setCurrentVideoUrl] = useState(null);
 
   const videoRef = useRef(null);
+  const conversationContainerRef = useRef(null); // Create a ref for the conversation container
 
   const person1 = "Aiden";
   const person2 = "Kaylee";
@@ -36,7 +37,7 @@ const DailyTalkPage = () => {
     "https://videos.pond5.com/two-happy-multiethnic-friends-standing-footage-125239637_main_xxl.mp4",
     "https://videos.pond5.com/two-young-good-friends-met-footage-105081696_main_xxl.mp4",
   ];
-  
+
   AWS.config.update({
     region: process.env.REACT_APP_AWS_REGION,
     accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
@@ -98,14 +99,14 @@ const DailyTalkPage = () => {
   const handlePlayConversation = async () => {
     setShowRepeatButton(false);
     setShowStartButton(false);
-  
+
     if (videoRef.current) {
-      videoRef.current.play();
+      videoRef.current.play(); // Start playing the video when the conversation starts
     }
-  
+
     if (audioUrls.length > 0) {
       let currentIndex = 0;
-  
+
       const playNextAudio = async () => {
         if (currentIndex < audioUrls.length) {
           const line = conversation[currentIndex];
@@ -114,7 +115,7 @@ const DailyTalkPage = () => {
             .trim()
             .split(' ')
             .filter(Boolean);
-  
+
           try {
             await playAudio(audioUrls[currentIndex], currentIndex, words);
             currentIndex++;
@@ -127,15 +128,15 @@ const DailyTalkPage = () => {
           setActiveWord({ lineIndex: null, wordIndex: null });
           setShowRepeatButton(true);
           if (videoRef.current) {
-            videoRef.current.pause();
+            videoRef.current.pause(); // Pause the video when the conversation ends
           }
         }
       };
-  
+
       playNextAudio();
     }
   };
-  
+
   const playAudio = (url, lineIndex, words) => {
     return new Promise((resolve) => {
       const audio = new Audio(url);
@@ -147,13 +148,27 @@ const DailyTalkPage = () => {
           .then(() => {
             let wordIndex = 0;
             const wordDuration = audio.duration / words.length;
-            
+
             const interval = setInterval(() => {
               const currentTime = audio.currentTime;
               const expectedTime = wordDuration * wordIndex;
 
               if (currentTime >= expectedTime && wordIndex < words.length) {
                 setActiveWord({ lineIndex, wordIndex });
+
+                // Scroll the container to the active word
+                if (conversationContainerRef.current) {
+                  const activeWordElement = document.querySelector(
+                    `.line-${lineIndex} .word-${wordIndex}`
+                  );
+                  if (activeWordElement) {
+                    activeWordElement.scrollIntoView({
+                      behavior: 'smooth',
+                      block: 'center',
+                    });
+                  }
+                }
+
                 wordIndex++;
               }
 
@@ -230,10 +245,12 @@ const DailyTalkPage = () => {
       )}
 
       <div className="main-content">
-        <h1 className="daily-talk-title">Daily Talk</h1>
+        <div className="left-column">
+          <h1 className="daily-talk-title">Daily Talk</h1>
+        </div>
 
         {showVideo && (
-          <div className="container video-container">
+          <div className="video-container">
             <video key={currentVideoUrl} ref={videoRef} controls>
               <source src={currentVideoUrl} type="video/mp4" />
               Your browser does not support the video tag.
@@ -241,41 +258,39 @@ const DailyTalkPage = () => {
           </div>
         )}
 
-        <div className="container conversation-container">
-          {conversation.map((line, lineIndex) => {
-            const speaker = line.startsWith(`${person1}:`) ? person1 : person2;
-            const words = line
-              .replace(`${speaker}:`, '')
-              .trim()
-              .split(' ')
-              .filter(Boolean);
-            return (
-              <div key={lineIndex} className={speaker === person1 ? 'message-block-left' : 'message-block-right'}>
-                <img
-                  src={speaker === person1 ? boyAvatar : girlAvatar}
-                  alt={`${speaker} avatar`}
-                  className="avatar"
-                />
-                <div className={speaker === person1 ? 'chat-bubble aiden-bubble' : 'chat-bubble kaylee-bubble'}>
-                  <p className="bubble-text">
-                    {words.map((word, wordIndex) => (
-                      <span
-                        key={wordIndex}
-                        className={
-                          word.trim() && activeWord.lineIndex === lineIndex && activeWord.wordIndex === wordIndex
-                            ? 'active-word'
-                            : ''
-                        }
-                        onClick={() => handleWordClick(word.trim())}
-                      >
-                        {word}{' '}
-                      </span>
-                    ))}
-                  </p>
+        <div className="right-column">
+          <div className="conversation-container" ref={conversationContainerRef}>
+            {conversation.map((line, lineIndex) => {
+              const speaker = line.startsWith(`${person1}:`) ? person1 : person2;
+              const words = line
+                .replace(`${speaker}:`, '')
+                .trim()
+                .split(' ')
+                .filter(Boolean);
+              return (
+                <div key={lineIndex} className={`message-block ${speaker === person1 ? 'message-block-left' : 'message-block-right'} line-${lineIndex}`}>
+                  <img
+                    src={speaker === person1 ? boyAvatar : girlAvatar}
+                    alt={`${speaker} avatar`}
+                    className="avatar"
+                  />
+                  <div className={speaker === person1 ? 'chat-bubble aiden-bubble' : 'chat-bubble kaylee-bubble'}>
+                    <p className="bubble-text">
+                      {words.map((word, wordIndex) => (
+                        <span
+                          key={wordIndex}
+                          className={`word-${wordIndex} ${activeWord.lineIndex === lineIndex && activeWord.wordIndex === wordIndex ? 'active-word' : ''}`}
+                          onClick={() => handleWordClick(word.trim())}
+                        >
+                          {word}{' '}
+                        </span>
+                      ))}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
 
         {showStartButton && (

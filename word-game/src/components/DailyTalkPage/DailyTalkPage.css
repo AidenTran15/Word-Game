@@ -1,40 +1,22 @@
+/* Center the video container and make sure it is responsive */
 .video-container {
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  width: 100%; /* Full width */
+  width: 100%;
   max-width: 830px; /* Match the max-width of the conversation container */
-  margin: 0 auto; /* Center the container */
-  overflow: hidden; /* Ensure the border-radius is applied */
-  border-radius: 15px; /* Add rounded corners to the container */
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 15px;
 }
 
 .video-container video {
   width: 100%; 
-  height: 300px; /* Decrease the height of the video */
-  border-radius: 15px; /* Apply the border-radius directly to the video */
-  display: block;
-  object-fit: cover; /* Ensure the video covers the area */
-}
-
-/* Additional styles to ensure controls are hidden and responsiveness is maintained */
-.video-container video::-webkit-media-controls {
-  display: none;
-}
-
-.video-container:hover video::-webkit-media-controls {
-  display: none;
-}
-
-.video-container video:focus {
-  outline: none;
-}
-
-/* Ensure border-radius is applied correctly */
-.video-container {
+  height: 350px; /* Decrease the height of the video */
   border-radius: 15px;
-  overflow: hidden;
+  display: block;
+  object-fit: cover;
 }
 
 /* Custom scrollbar for the conversation container */
@@ -47,11 +29,10 @@
   max-width: 800px;
   width: 100%;
   max-height: 400px; /* Set a fixed height for the container */
-  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-y: auto;
   transition: box-shadow 0.5s ease;
 }
 
-/* Custom scrollbar styles */
 .conversation-container::-webkit-scrollbar {
   width: 8px;
 }
@@ -74,15 +55,13 @@
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
 }
 
-
-
 /* Adjust the message block styles to fit inside the shorter container */
 .message-block-left,
 .message-block-right {
   display: flex;
   align-items: flex-start;
   margin-bottom: 15px;
-  flex-shrink: 0; /* Prevent the messages from shrinking */
+  flex-shrink: 0;
 }
 
 .message-block-left {
@@ -93,18 +72,85 @@
   flex-direction: row-reverse;
 }
 
-
-/* Additional styles to ensure controls are hidden and responsiveness is maintained */
-.video-container video::-webkit-media-controls {
-  display: none;
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin: 0 10px;
 }
 
-.video-container:hover video::-webkit-media-controls {
-  display: none;
+/* Chat bubble styles */
+.chat-bubble {
+  padding: 12px 18px;
+  border-radius: 25px;
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  word-wrap: break-word;
+  max-width: 60%;
+  position: relative;
+  transition: background 0.5s ease, transform 0.5s ease;
 }
 
-video:focus {
-  outline: none;
+.chat-bubble:hover {
+  transform: scale(1.02);
+}
+
+.aiden-bubble {
+  background: linear-gradient(135deg, #3B71CA, #6a94e0);
+  color: white;
+  box-shadow: 0 6px 15px rgba(59, 113, 202, 0.4);
+}
+
+.kaylee-bubble {
+  background: linear-gradient(135deg, #ff6b6b, #ff9494);
+  color: white;
+  box-shadow: 0 6px 15px rgba(255, 107, 107, 0.4);
+}
+
+.bubble-text {
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+.bubble-text span {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  color: inherit;
+  transition: color 0.3s ease;
+  margin-right: 0.38rem;
+  padding: 2px 0;
+  line-height: 1.6rem;
+}
+
+.bubble-text span.active-word {
+  background-color: #004D40;
+  color: #ffffff;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border-radius: 5px;
+  padding: 2px 0;
+  line-height: 1.6rem;
+}
+
+/* Hover effect for desktop */
+@media (min-width: 769px) {
+  .bubble-text span:hover {
+    background-color: #262626;
+    color: #ffffff;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+}
+
+/* Click effect for mobile */
+@media (max-width: 768px) {
+  .bubble-text span:active {
+    background-color: #262626;
+    color: #ffffff;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 3px;
+  }
 }
 
 /* Wrapper and main content styles */
@@ -255,125 +301,60 @@ video:focus {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Optional: adds a background overlay */
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 9999;
 }
 
 /* Spinner itself */
 .spinner {
   border: 8px solid rgba(255, 255, 255, 0.2);
-  border-top: 8px solid #ff5e78; /* Color of the spinner */
+  border-top: 8px solid #ff5e78;
   border-radius: 50%;
   width: 50px;
   height: 50px;
   animation: spin 1s linear infinite;
 }
 
-/* Keyframes for spinning animation */
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+/* Additional styles to ensure controls are hidden and responsiveness is maintained */
+.video-container video::-webkit-media-controls {
+  display: none;
 }
 
-/* Chat bubble styles */
-.message-block-left,
-.message-block-right {
+.video-container:hover video::-webkit-media-controls {
+  display: none;
+}
+
+video:focus {
+  outline: none;
+}
+
+/* Wrapper and main content styles */
+.wrapper {
   display: flex;
-  align-items: flex-start;
-  margin-bottom: 15px;
+  flex-direction: column;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fdd4b7, #fceabb);
 }
 
-.message-block-left {
-  flex-direction: row;
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
 }
 
-.message-block-right {
-  flex-direction: row-reverse;
+.left-column {
+  text-align: center;
 }
 
-.avatar {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  margin: 0 10px;
-}
-
-/* Chat bubble styles */
-.chat-bubble {
-  padding: 12px 18px;
-  border-radius: 25px;
-  margin-bottom: 10px;
-  font-size: 1.2rem;
-  word-wrap: break-word;
-  max-width: 60%;
-  position: relative;
-  transition: background 0.5s ease, transform 0.5s ease;
-}
-
-.chat-bubble:hover {
-  transform: scale(1.02);
-}
-
-.aiden-bubble {
-  background: linear-gradient(135deg, #3B71CA, #6a94e0);
-  color: white;
-  box-shadow: 0 6px 15px rgba(59, 113, 202, 0.4);
-}
-
-.kaylee-bubble {
-  background: linear-gradient(135deg, #ff6b6b, #ff9494);
-  color: white;
-  box-shadow: 0 6px 15px rgba(255, 107, 107, 0.4);
-}
-
-.bubble-text {
-  margin: 0;
-  font-size: 1.6rem;
-}
-
-.bubble-text span {
-  display: inline-block;
-  position: relative;
-  overflow: hidden;
-  color: inherit;
-  transition: color 0.3s ease;
-  margin-right: 0.38rem;
-  padding: 2px 0;
-  line-height: 1.6rem;
-}
-
-.bubble-text span.active-word {
-  background-color: #004D40;
-  color: #ffffff;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  border-radius: 5px;
-  padding: 2px 0;
-  line-height: 1.6rem;
-}
-
-/* Hover effect for desktop */
-@media (min-width: 769px) {
-  .bubble-text span:hover {
-    background-color: #262626;
-    color: #ffffff;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    border-radius: 3px;
-    cursor: pointer;
-  }
-}
-
-/* Click effect for mobile */
-@media (max-width: 768px) {
-  .bubble-text span:active {
-    background-color: #262626;
-    color: #ffffff;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    border-radius: 3px;
-  }
+/* Title styles */
+.daily-talk-title {
+  font-family: 'Pacifico', cursive;
+  font-size: 4rem;
+  color: #333;
+  margin-bottom: 20px; 
 }
 
 /* Icon buttons container */
@@ -417,14 +398,14 @@ footer {
 
 @media (max-width: 768px) {
   .main-content {
-    justify-content: center;
-    padding-top: 0;
-    padding-bottom: 40px;
+    justify-content: center; 
+    padding-top: 0; 
+    padding-bottom: 40px; 
   }
 
   .conversation-container {
-    margin-top: 0;
-    width: 90%;
+    margin-top: 0; 
+    width: 90%; 
   }
 
   .video-container {
@@ -456,8 +437,8 @@ footer {
 
   .circle-play-button,
   .circle-next-button {
-    width: 72px;
-    height: 72px;
-    padding: 20px;
+    width: 72px; 
+    height: 72px; 
+    padding: 20px; 
   }
 }
