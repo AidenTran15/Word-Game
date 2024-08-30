@@ -22,22 +22,41 @@
   border-radius: 15px; /* Apply the border-radius directly to the video */
 }
 
-/* Styling for the conversation container */
+/* Conversation container styles */
 .conversation-container {
   background-color: #ffffff;
   padding: 20px;
   border-radius: 20px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   margin-top: 10px;
-  max-width: 800px; /* Ensure this matches the video container */
+  max-width: 800px;
   width: 100%;
-  overflow-y: auto;
+  height: 300px; /* Set a fixed height */
+  overflow-y: auto; /* Enable vertical scrollbar */
   transition: box-shadow 0.5s ease;
 }
 
 .conversation-container:hover {
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); /* Increase shadow on hover */
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); /* Increase shadow on hover with a slower transition */
 }
+
+/* Adjust the message block styles to fit inside the shorter container */
+.message-block-left,
+.message-block-right {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 15px;
+  flex-shrink: 0; /* Prevent the messages from shrinking */
+}
+
+.message-block-left {
+  flex-direction: row;
+}
+
+.message-block-right {
+  flex-direction: row-reverse;
+}
+
 
 /* Additional styles to ensure controls are hidden and responsiveness is maintained */
 .video-container video::-webkit-media-controls {
