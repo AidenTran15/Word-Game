@@ -34,9 +34,16 @@ const DailyTalkPage = () => {
   const person2 = "Kaylee";
 
   const videoUrls = [
-    "https://videos.pond5.com/two-happy-multiethnic-friends-standing-footage-125239637_main_xxl.mp4",
-    "https://videos.pond5.com/two-young-good-friends-met-footage-105081696_main_xxl.mp4",
-  ];
+    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/KXlOHuo/couple-looking-serious-while-talking-with-each-other-steadycam-shot_hkv25xy4x__64d1ac854997eb861feb70cf7ec50fdf__P360.mp4",
+    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/V_j81fAIx/videoblocks-43z_072_discussing_couple_home_couch_ryxfmzrhu__427504f2121c02a90da99020bb9bcf40__P360.mp4",
+    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/Sks4W_9Alj1v0vmgb/118z-coupleobsh2-vc0oc38y0c__89e2e01b4c107b237b90cb2d7e1b9cd5__P360.mp4",
+    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/DHmMj5B/couple-drinking-coffee-and-chatting-in-the-restaurant_n1rd2orz__850c7da8b865b8225d2bf4397eac5c06__P360.mp4",
+    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/KXlOHuo/couple-chatting-in-the-cafe-and-drinking-coffee-on-the-date_eygxq9td__c51806d8113e7eb8e815cb6c8c16f1a6__P360.mp4",
+    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/KXlOHuo/couple-having-a-date-in-the-cafe-and-chatting-with-each-other_bp11qaode__c8addc65359eba2bf6c9a45f895077d6__P360.mp4",
+    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/rTl3vg0veiylgd0ih/videoblocks-happy-young-couple-is-chatting-in-the-kitchen-the-family-is-drinking-coffee_sbokq0gkn__c5d824ec4ec02620e1f99fd1b971fe52__P360.mp4",
+    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/GTYSdDW/videoblocks-young-couple-talking-and-drinking-coffee-on-a-date-in-a-modern-restaurant_h2fclswosx__e7879804164163c6e051fb0c3559394b__P360.mp4"
+];
+
 
   AWS.config.update({
     region: process.env.REACT_APP_AWS_REGION,
