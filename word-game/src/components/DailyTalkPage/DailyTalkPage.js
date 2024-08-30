@@ -27,19 +27,16 @@ const DailyTalkPage = () => {
   const [showVideo, setShowVideo] = useState(false); 
   const [currentVideoUrl, setCurrentVideoUrl] = useState(null);
 
-  const videoRef = useRef(null); // Create a ref for the video element
+  const videoRef = useRef(null);
 
   const person1 = "Aiden";
   const person2 = "Kaylee";
 
   const videoUrls = [
-    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/VZpg_YkTgilrvkdxa/videoblocks-224_tmvzdgvkifnlcxvlbmnlidiynq_r9jecgm2q__ccdbfb3ff2a14f79a5e00529f7692989__P360.mp4",
-    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/qmraJpx/videoblocks-m1430v093_4k_rpksakgqn__4730eb51fc1fb5f4cc3e43c417b82b32__P360.mp4",
-    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/qmraJpx/videoblocks-m1430v099_4k_rpujx4zch__592661030867b94bd414a99255c7f9fe__P360.mp4",
-    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/SNv7Pyhimz0q0vg/videoblocks-stylish-young-man-chatting-with-girlfriend-in-the-park-on-sunny-summer-day-couple-in-love-talking-outdoors-wearing-similar-casual-clothes-sun-shines-on-the-background_s5vzup5z___9aa0f60245b925b04652e8518ea63bc4__P360.mp4",
-    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/NdHffr7_eijh7icah/videoblocks-a-loving-couple-drinks-champagne-in-the-evening_htm2le6k9w__2794986d8e0498d70797501eb1cc9829__P360.mp4",   
+    "https://videos.pond5.com/two-happy-multiethnic-friends-standing-footage-125239637_main_xxl.mp4",
+    "https://videos.pond5.com/two-young-good-friends-met-footage-105081696_main_xxl.mp4",
   ];
-
+  
   AWS.config.update({
     region: process.env.REACT_APP_AWS_REGION,
     accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
@@ -103,7 +100,7 @@ const DailyTalkPage = () => {
     setShowStartButton(false);
   
     if (videoRef.current) {
-      videoRef.current.play(); // Start playing the video when the conversation starts
+      videoRef.current.play();
     }
   
     if (audioUrls.length > 0) {
@@ -130,7 +127,7 @@ const DailyTalkPage = () => {
           setActiveWord({ lineIndex: null, wordIndex: null });
           setShowRepeatButton(true);
           if (videoRef.current) {
-            videoRef.current.pause(); // Pause the video when the conversation ends
+            videoRef.current.pause();
           }
         }
       };
@@ -139,7 +136,6 @@ const DailyTalkPage = () => {
     }
   };
   
-
   const playAudio = (url, lineIndex, words) => {
     return new Promise((resolve) => {
       const audio = new Audio(url);
@@ -184,16 +180,15 @@ const DailyTalkPage = () => {
 
   const handleNextConversation = () => {
     setLoadingNext(true);
-    selectRandomVideo(); // Select a new random video
-    generateConversation(); // Generate a new conversation
-    setShowStartButton(true); // Show the start button for the new conversation
-    setShowRepeatButton(false); // Hide the repeat button for the new conversation
-    setShowVideo(false); // Hide the current video
+    selectRandomVideo();
+    generateConversation();
+    setShowStartButton(true);
+    setShowRepeatButton(false);
+    setShowVideo(false);
     setTimeout(() => {
-      setShowVideo(true); // Force re-render of the video component
+      setShowVideo(true);
     }, 100);
   };
-  
 
   const handleWordClick = async (word) => {
     try {
@@ -221,9 +216,9 @@ const DailyTalkPage = () => {
 
   const handleModalClose = (showVideo) => {
     if (showVideo) {
-      setShowVideo(true); // Show the video when the modal is closed
+      setShowVideo(true);
     }
-    generateConversation(); // Generate the conversation text after the modal is closed
+    generateConversation();
   };
 
   return (
@@ -235,56 +230,52 @@ const DailyTalkPage = () => {
       )}
 
       <div className="main-content">
-        <div className="left-column">
-          <h1 className="daily-talk-title">Daily Talk</h1>
-        </div>
+        <h1 className="daily-talk-title">Daily Talk</h1>
 
         {showVideo && (
-          <div className="video-container">
-            <video key={currentVideoUrl} ref={videoRef} controls width="100%"> {/* Added key prop */}
+          <div className="container video-container">
+            <video key={currentVideoUrl} ref={videoRef} controls>
               <source src={currentVideoUrl} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </div>
         )}
 
-        <div className="right-column">
-          <div className="conversation-container">
-            {conversation.map((line, lineIndex) => {
-              const speaker = line.startsWith(`${person1}:`) ? person1 : person2;
-              const words = line
-                .replace(`${speaker}:`, '')
-                .trim()
-                .split(' ')
-                .filter(Boolean);
-              return (
-                <div key={lineIndex} className={speaker === person1 ? 'message-block-left' : 'message-block-right'}>
-                  <img
-                    src={speaker === person1 ? boyAvatar : girlAvatar}
-                    alt={`${speaker} avatar`}
-                    className="avatar"
-                  />
-                  <div className={speaker === person1 ? 'chat-bubble aiden-bubble' : 'chat-bubble kaylee-bubble'}>
-                    <p className="bubble-text">
-                      {words.map((word, wordIndex) => (
-                        <span
-                          key={wordIndex}
-                          className={
-                            word.trim() && activeWord.lineIndex === lineIndex && activeWord.wordIndex === wordIndex
-                              ? 'active-word'
-                              : ''
-                          }
-                          onClick={() => handleWordClick(word.trim())}
-                        >
-                          {word}{' '}
-                        </span>
-                      ))}
-                    </p>
-                  </div>
+        <div className="container conversation-container">
+          {conversation.map((line, lineIndex) => {
+            const speaker = line.startsWith(`${person1}:`) ? person1 : person2;
+            const words = line
+              .replace(`${speaker}:`, '')
+              .trim()
+              .split(' ')
+              .filter(Boolean);
+            return (
+              <div key={lineIndex} className={speaker === person1 ? 'message-block-left' : 'message-block-right'}>
+                <img
+                  src={speaker === person1 ? boyAvatar : girlAvatar}
+                  alt={`${speaker} avatar`}
+                  className="avatar"
+                />
+                <div className={speaker === person1 ? 'chat-bubble aiden-bubble' : 'chat-bubble kaylee-bubble'}>
+                  <p className="bubble-text">
+                    {words.map((word, wordIndex) => (
+                      <span
+                        key={wordIndex}
+                        className={
+                          word.trim() && activeWord.lineIndex === lineIndex && activeWord.wordIndex === wordIndex
+                            ? 'active-word'
+                            : ''
+                        }
+                        onClick={() => handleWordClick(word.trim())}
+                      >
+                        {word}{' '}
+                      </span>
+                    ))}
+                  </p>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            );
+          })}
         </div>
 
         {showStartButton && (

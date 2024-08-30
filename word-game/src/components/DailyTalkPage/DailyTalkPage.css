@@ -1,20 +1,45 @@
-/* Center the video container and make sure it is responsive */
+/* General container styling to ensure the video and conversation have the same width */
+.container {
+  width: 100%;
+  max-width: 840px; /* Ensure max-width is the same for both video and conversation */
+  margin: 0 auto; /* Center the container */
+}
+
+/* Styling for the video container */
 .video-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
-  
+  width: 100%; /* Full width of the container */
+  border-radius: 15px; /* Rounded corners */
+  overflow: hidden; /* Ensure the border-radius is applied */
 }
 
 .video-container video {
-  max-width: 100%;
-  max-height: 100%;
-  border: none;
-  cursor: pointer;
+  width: 100%; 
+  height: auto; /* Maintain aspect ratio */
+  display: block;
+  border-radius: 15px; /* Apply the border-radius directly to the video */
 }
 
-/* Hide video controls on hover */
+/* Styling for the conversation container */
+.conversation-container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+  max-width: 800px; /* Ensure this matches the video container */
+  width: 100%;
+  overflow-y: auto;
+  transition: box-shadow 0.5s ease;
+}
+
+.conversation-container:hover {
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); /* Increase shadow on hover */
+}
+
+/* Additional styles to ensure controls are hidden and responsiveness is maintained */
 .video-container video::-webkit-media-controls {
   display: none;
 }
@@ -23,35 +48,9 @@
   display: none;
 }
 
-.video-container video::-webkit-media-controls-panel {
-  display: none;
-}
-
-/* Optional: Hide video controls on click */
-.video-container video:focus {
+video:focus {
   outline: none;
 }
-
-.video-container video:focus::-webkit-media-controls {
-  display: none;
-}
-
-.video-container video:focus::-webkit-media-controls-panel {
-  display: none;
-}
-
-video {
-  pointer-events: none; /* Disable interaction to hide controls */
-  width: 80%;
-  height: auto;
-}
-
-video:hover,
-video:focus {
-  pointer-events: none; /* Ensure controls remain hidden on hover */
-}
-
-
 
 /* Wrapper and main content styles */
 .wrapper {
@@ -225,23 +224,7 @@ video:focus {
   }
 }
 
-/* Conversation container styles */
-.conversation-container {
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 20px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  margin-top: 10px;
-  max-width: 800px;
-  width: 100%;
-  overflow-y: auto;
-  transition: box-shadow 0.5s ease;
-}
-
-.conversation-container:hover {
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); /* Increase shadow on hover with a slower transition */
-}
-
+/* Chat bubble styles */
 .message-block-left,
 .message-block-right {
   display: flex;
@@ -266,8 +249,8 @@ video:focus {
 
 /* Chat bubble styles */
 .chat-bubble {
-  padding: 12px 18px; /* Increased padding for better readability */
-  border-radius: 25px; /* More rounded bubble shape */
+  padding: 12px 18px;
+  border-radius: 25px;
   margin-bottom: 10px;
   font-size: 1.2rem;
   word-wrap: break-word;
@@ -277,13 +260,13 @@ video:focus {
 }
 
 .chat-bubble:hover {
-  transform: scale(1.02); /* Slightly enlarge the bubble on hover with a slower transition */
+  transform: scale(1.02);
 }
 
 .aiden-bubble {
   background: linear-gradient(135deg, #3B71CA, #6a94e0);
   color: white;
-  box-shadow: 0 6px 15px rgba(59, 113, 202, 0.4); /* Slightly larger shadow for depth */
+  box-shadow: 0 6px 15px rgba(59, 113, 202, 0.4);
 }
 
 .kaylee-bubble {
@@ -297,46 +280,44 @@ video:focus {
   font-size: 1.6rem;
 }
 
-/* General word styling */
 .bubble-text span {
   display: inline-block;
   position: relative;
   overflow: hidden;
   color: inherit;
   transition: color 0.3s ease;
-  margin-right: 0.38rem; /* Space between words */
-  padding: 2px 0; /* Add consistent padding to maintain height */
-  line-height: 1.6rem; /* Match line-height to ensure consistent height */
+  margin-right: 0.38rem;
+  padding: 2px 0;
+  line-height: 1.6rem;
 }
 
-/* Active word effect (applies to both mobile and desktop) */
 .bubble-text span.active-word {
-  background-color: #004D40; /* Dark teal background for active word */
-  color: #ffffff; /* White text color for active word */
+  background-color: #004D40;
+  color: #ffffff;
   transition: background-color 0.3s ease, color 0.3s ease;
-  border-radius: 5px; /* Rounded corners */
-  padding: 2px 0; /* Ensure padding is consistent with non-active words */
-  line-height: 1.6rem; /* Ensure line-height matches non-active words */
+  border-radius: 5px;
+  padding: 2px 0;
+  line-height: 1.6rem;
 }
 
 /* Hover effect for desktop */
 @media (min-width: 769px) {
   .bubble-text span:hover {
-    background-color: #262626; /* Dark background color on hover */
-    color: #ffffff; /* White text color on hover */
+    background-color: #262626;
+    color: #ffffff;
     transition: background-color 0.3s ease, color 0.3s ease;
-    border-radius: 3px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 3px;
+    cursor: pointer;
   }
 }
 
 /* Click effect for mobile */
 @media (max-width: 768px) {
   .bubble-text span:active {
-    background-color: #262626; /* Dark background color on click */
-    color: #ffffff; /* White text color on click */
+    background-color: #262626;
+    color: #ffffff;
     transition: background-color 0.3s ease, color 0.3s ease;
-    border-radius: 3px; /* Rounded corners */
+    border-radius: 3px;
   }
 }
 
@@ -381,14 +362,18 @@ footer {
 
 @media (max-width: 768px) {
   .main-content {
-    justify-content: center; 
-    padding-top: 0; 
-    padding-bottom: 40px; 
+    justify-content: center;
+    padding-top: 0;
+    padding-bottom: 40px;
   }
 
   .conversation-container {
-    margin-top: 0; 
-    width: 90%; 
+    margin-top: 0;
+    width: 90%;
+  }
+
+  .video-container {
+    width: 90%;
   }
 
   .bubble-text {
@@ -405,19 +390,19 @@ footer {
   }
   
   .bubble-text span {
-    margin-right: 0.24rem; 
+    margin-right: 0.24rem;
   }
 }
 
 @media (min-width: 1024px) {
   .main-content {
-    padding-top: 180px; 
+    padding-top: 180px;
   }
 
   .circle-play-button,
   .circle-next-button {
-    width: 72px; 
-    height: 72px; 
-    padding: 20px; 
+    width: 72px;
+    height: 72px;
+    padding: 20px;
   }
 }
