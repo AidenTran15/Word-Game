@@ -181,11 +181,12 @@ const DailyTalkPage = () => {
 
   const handleNextConversation = () => {
     setLoadingNext(true);
+    selectRandomVideo(); // Select a new random video
     generateConversation();
     setShowStartButton(true);
     setShowRepeatButton(false);
-    selectRandomVideo(); 
   };
+  
 
   const handleWordClick = async (word) => {
     try {
