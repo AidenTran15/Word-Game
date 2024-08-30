@@ -42,8 +42,7 @@ const DailyTalkPage = () => {
     "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/KXlOHuo/couple-having-a-date-in-the-cafe-and-chatting-with-each-other_bp11qaode__c8addc65359eba2bf6c9a45f895077d6__P360.mp4",
     "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/rTl3vg0veiylgd0ih/videoblocks-happy-young-couple-is-chatting-in-the-kitchen-the-family-is-drinking-coffee_sbokq0gkn__c5d824ec4ec02620e1f99fd1b971fe52__P360.mp4",
     "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/GTYSdDW/videoblocks-young-couple-talking-and-drinking-coffee-on-a-date-in-a-modern-restaurant_h2fclswosx__e7879804164163c6e051fb0c3559394b__P360.mp4"
-];
-
+  ];
 
   AWS.config.update({
     region: process.env.REACT_APP_AWS_REGION,
@@ -252,13 +251,9 @@ const DailyTalkPage = () => {
       )}
 
       <div className="main-content">
-        <div className="left-column">
-          <h1 className="daily-talk-title">Daily Talk</h1>
-        </div>
-
         {showVideo && (
           <div className="video-container">
-            <video key={currentVideoUrl} ref={videoRef} controls>
+            <video key={currentVideoUrl} ref={videoRef} playsInline>
               <source src={currentVideoUrl} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
