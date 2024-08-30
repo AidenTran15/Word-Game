@@ -216,12 +216,19 @@ const DailyTalkPage = () => {
     setDefinition(language === 'en' ? vietnameseDefinition : englishDefinition);
   };
 
+  const handleModalClose = (showVideo) => {
+    if (showVideo) {
+      setShowVideo(true); // Show the video when the modal is closed
+    }
+    generateConversation(); // Generate the conversation text after the modal is closed
+  };
+
   return (
     <div className="wrapper">
       <Navbar />
 
       {showModal && (
-        <DailyTalkIntroductionModal onClose={generateConversation} />
+        <DailyTalkIntroductionModal onClose={handleModalClose} />
       )}
 
       <div className="main-content">
@@ -229,7 +236,7 @@ const DailyTalkPage = () => {
           <h1 className="daily-talk-title">Daily Talk</h1>
         </div>
 
-        {true && (
+        {showVideo && (
           <div className="video-container">
             <video ref={videoRef} controls width="100%">
               <source src={currentVideoUrl} type="video/mp4" />

@@ -7,9 +7,9 @@ const DailyTalkIntroductionModal = ({ onClose }) => {
   const handleClick = () => {
     setLoading(true);
     setTimeout(() => {
-      onClose();
-      setLoading(false); 
-    }, 2000); 
+      onClose(true); // Pass true to indicate the video should be displayed
+      setLoading(false);
+    }, 2000);
   };
 
   return (
