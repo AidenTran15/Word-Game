@@ -186,9 +186,13 @@ const DailyTalkPage = () => {
   const handleNextConversation = () => {
     setLoadingNext(true);
     selectRandomVideo(); // Select a new random video
-    generateConversation();
-    setShowStartButton(true);
-    setShowRepeatButton(false);
+    generateConversation(); // Generate a new conversation
+    setShowStartButton(true); // Show the start button for the new conversation
+    setShowRepeatButton(false); // Hide the repeat button for the new conversation
+    setShowVideo(false); // Hide the current video
+    setTimeout(() => {
+      setShowVideo(true); // Force re-render of the video component
+    }, 100);
   };
   
 
@@ -238,7 +242,7 @@ const DailyTalkPage = () => {
 
         {showVideo && (
           <div className="video-container">
-            <video ref={videoRef} controls width="100%">
+            <video key={currentVideoUrl} ref={videoRef} controls width="100%"> {/* Added key prop */}
               <source src={currentVideoUrl} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
