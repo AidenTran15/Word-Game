@@ -102,46 +102,58 @@ const DailyTalkPage = () => {
     }
   };
 
-  const handlePlayConversation = async () => {
-    setShowRepeatButton(false);
-    setShowStartButton(false);
+// In your DailyTalkPage component
 
-    if (videoRef.current) {
+const handlePlayConversation = async () => {
+  setShowRepeatButton(false);
+  setShowStartButton(false);
+
+  let currentIndex = 0; // Move the declaration of currentIndex here
+
+  if (videoRef.current) {
       videoRef.current.play(); // Start playing the video when the conversation starts
-    }
 
-    if (audioUrls.length > 0) {
-      let currentIndex = 0;
+      // Add an event listener to replay the video when it ends
+      videoRef.current.onended = () => {
+          if (currentIndex < audioUrls.length) { // Replay only if the conversation is not finished
+              videoRef.current.play();
+          }
+      };
+  }
+
+  if (audioUrls.length > 0) {
 
       const playNextAudio = async () => {
-        if (currentIndex < audioUrls.length) {
-          const line = conversation[currentIndex];
-          const words = line
-            .replace(`${line.startsWith(`${person1}:`) ? person1 : person2}:`, '') 
-            .trim()
-            .split(' ')
-            .filter(Boolean);
+          if (currentIndex < audioUrls.length) {
+              const line = conversation[currentIndex];
+              const words = line
+                  .replace(`${line.startsWith(`${person1}:`) ? person1 : person2}:`, '') 
+                  .trim()
+                  .split(' ')
+                  .filter(Boolean);
 
-          try {
-            await playAudio(audioUrls[currentIndex], currentIndex, words);
-            currentIndex++;
-            playNextAudio();
-          } catch (error) {
-            console.error('Error during audio playback:', error);
-            playNextAudio();
+              try {
+                  await playAudio(audioUrls[currentIndex], currentIndex, words);
+                  currentIndex++;
+                  playNextAudio();
+              } catch (error) {
+                  console.error('Error during audio playback:', error);
+                  playNextAudio();
+              }
+          } else {
+              setActiveWord({ lineIndex: null, wordIndex: null });
+              setShowRepeatButton(true);
+
+              if (videoRef.current) {
+                  videoRef.current.pause(); // Pause the video when the conversation ends
+              }
           }
-        } else {
-          setActiveWord({ lineIndex: null, wordIndex: null });
-          setShowRepeatButton(true);
-          if (videoRef.current) {
-            videoRef.current.pause(); // Pause the video when the conversation ends
-          }
-        }
       };
 
       playNextAudio();
-    }
-  };
+  }
+};
+
 
   const playAudio = (url, lineIndex, words) => {
     return new Promise((resolve) => {
