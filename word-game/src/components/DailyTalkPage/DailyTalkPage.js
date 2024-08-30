@@ -179,14 +179,23 @@ const handlePlayConversation = async () => {
                   const activeWordElement = document.querySelector(
                     `.line-${lineIndex} .word-${wordIndex}`
                   );
+                
                   if (activeWordElement) {
-                    activeWordElement.scrollIntoView({
+                    const lineHeight = activeWordElement.offsetHeight;
+                    const containerScrollTop = conversationContainerRef.current.scrollTop;
+                    const containerOffsetTop = conversationContainerRef.current.getBoundingClientRect().top;
+                    const elementOffsetTop = activeWordElement.getBoundingClientRect().top;
+                
+                    const offset = lineHeight * 2; // Adjust to position the element at the second or third line
+                    const scrollPosition = containerScrollTop + (elementOffsetTop - containerOffsetTop) - offset;
+                
+                    conversationContainerRef.current.scrollTo({
+                      top: scrollPosition,
                       behavior: 'smooth',
-                      block: 'center',
                     });
                   }
                 }
-
+                
                 wordIndex++;
               }
 
