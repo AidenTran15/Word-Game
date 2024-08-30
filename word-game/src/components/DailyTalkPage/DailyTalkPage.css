@@ -76,7 +76,6 @@
 
 /* Icon button styling */
 .icon-button {
-  background: linear-gradient(135deg, #4A86C5, #3A75B3);
   border: none;
   border-radius: 50%;
   padding: 15px; 
@@ -88,12 +87,27 @@
   overflow: hidden;
 }
 
+.icon-button.repeat-button {
+  background: linear-gradient(135deg, #ff5e78, #ff4568); /* Match Start Reading button */
+}
+
+.icon-button.repeat-button:hover {
+  background: linear-gradient(135deg, #ff4b7a, #ff3455); /* Hover effect matching Start Reading button */
+}
+
+.icon-button.next-icon-button {
+  background: linear-gradient(135deg, #4A86C5, #357ABD); /* Match Next button */
+}
+
+.icon-button.next-icon-button:hover {
+  background: linear-gradient(135deg, #3A75B3, #3168A7); /* Hover effect matching Next button */
+}
+
 .icon-button svg {
   transition: fill 0.5s ease;
 }
 
 .icon-button:hover {
-  background: linear-gradient(135deg, #3A75B3, #3168A7);
   transform: scale(1.05);
   box-shadow: 0 6px 20px rgba(255, 94, 120, 0.4);
 }

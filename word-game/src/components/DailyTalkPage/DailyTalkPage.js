@@ -255,12 +255,12 @@ const DailyTalkPage = () => {
         ) : (
           showRepeatButton && (
             <div className="repeat-next-conversation-container">
-              <button className="icon-button" onClick={handlePlayConversation} title="Repeat Conversation">
+              <button className="icon-button repeat-button" onClick={handlePlayConversation} title="Repeat Conversation">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="40px" height="40px">
                   <path d="M12 5V1L7 6l5 5V7c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6H4c0 4.418 3.582 8 8 8s8-3.582 8-8-3.582-8-8-8z"/>
                 </svg>
               </button>
-              <button className="icon-button" onClick={handleNextConversation} title="Next Conversation">
+              <button className="icon-button next-icon-button" onClick={handleNextConversation} title="Next Conversation">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="40px" height="40px">
                   <path d="M9 4l10 8-10 8z"/>
                 </svg>
