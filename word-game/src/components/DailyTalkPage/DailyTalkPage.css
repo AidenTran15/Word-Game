@@ -1,25 +1,40 @@
-/* General container styling to ensure the video and conversation have the same width */
-.container {
-  width: 100%;
-  max-width: 840px; /* Ensure max-width is the same for both video and conversation */
-  margin: 0 auto; /* Center the container */
-}
-
-/* Styling for the video container */
 .video-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%; /* Full width of the container */
-  border-radius: 15px; /* Rounded corners */
+  position: relative;
+  width: 100%; /* Full width */
+  max-width: 830px; /* Match the max-width of the conversation container */
+  margin: 0 auto; /* Center the container */
   overflow: hidden; /* Ensure the border-radius is applied */
+  border-radius: 15px; /* Add rounded corners to the container */
 }
 
 .video-container video {
   width: 100%; 
-  height: auto; /* Maintain aspect ratio */
-  display: block;
+  height: 300px; /* Decrease the height of the video */
   border-radius: 15px; /* Apply the border-radius directly to the video */
+  display: block;
+  object-fit: cover; /* Ensure the video covers the area */
+}
+
+/* Additional styles to ensure controls are hidden and responsiveness is maintained */
+.video-container video::-webkit-media-controls {
+  display: none;
+}
+
+.video-container:hover video::-webkit-media-controls {
+  display: none;
+}
+
+.video-container video:focus {
+  outline: none;
+}
+
+/* Ensure border-radius is applied correctly */
+.video-container {
+  border-radius: 15px;
+  overflow: hidden;
 }
 
 /* Custom scrollbar for the conversation container */
