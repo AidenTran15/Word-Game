@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import AWS from 'aws-sdk';
 import axios from 'axios';
 import Navbar from '../Navbar/Navbar';
@@ -24,9 +24,10 @@ const DailyTalkPage = () => {
   const [definition, setDefinition] = useState('');
   const [englishDefinition, setEnglishDefinition] = useState('');
   const [vietnameseDefinition, setVietnameseDefinition] = useState('');
-  const [showVideo, setShowVideo] = useState(false); // State to manage video visibility
+  const [showVideo, setShowVideo] = useState(false); 
   const [currentVideoUrl, setCurrentVideoUrl] = useState(null);
 
+  const videoRef = useRef(null); // Create a ref for the video element
 
   const person1 = "Aiden";
   const person2 = "Kaylee";
@@ -35,10 +36,9 @@ const DailyTalkPage = () => {
     "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/VZpg_YkTgilrvkdxa/videoblocks-224_tmvzdgvkifnlcxvlbmnlidiynq_r9jecgm2q__ccdbfb3ff2a14f79a5e00529f7692989__P360.mp4",
     "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/qmraJpx/videoblocks-m1430v093_4k_rpksakgqn__4730eb51fc1fb5f4cc3e43c417b82b32__P360.mp4",
     "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/qmraJpx/videoblocks-m1430v099_4k_rpujx4zch__592661030867b94bd414a99255c7f9fe__P360.mp4",
-    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/SNv7Pyhimz0q0vg/videoblocks-stylish-young-man-chatting-with-girlfriend-in-the-park-on-sunny-summer-day-couple-in-love-talking-outdoors-wearing-similar-casual-clothes-sun-shines-on-the-background_s5vzup5z___9aa0f60245b925b04652e8518ea63bc4__P360.mp4",   
-
+    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/SNv7Pyhimz0q0vg/videoblocks-stylish-young-man-chatting-with-girlfriend-in-the-park-on-sunny-summer-day-couple-in-love-talking-outdoors-wearing-similar-casual-clothes-sun-shines-on-the-background_s5vzup5z___9aa0f60245b925b04652e8518ea63bc4__P360.mp4",
+    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/NdHffr7_eijh7icah/videoblocks-a-loving-couple-drinks-champagne-in-the-evening_htm2le6k9w__2794986d8e0498d70797501eb1cc9829__P360.mp4",   
     "https://videos.pond5.com/conversation-between-two-friends-street-footage-273366371_main_xxl.mp4"   
-
   ];
 
   AWS.config.update({
@@ -100,13 +100,13 @@ const DailyTalkPage = () => {
   };
 
   const handlePlayConversation = async () => {
-    setShowVideo(true); // Show the video when the conversation starts
+    setShowVideo(true);
     setShowRepeatButton(false);
     setShowStartButton(false);
 
     if (audioUrls.length > 0) {
       let currentIndex = 0;
-  
+
       const playNextAudio = async () => {
         if (currentIndex < audioUrls.length) {
           const line = conversation[currentIndex];
@@ -115,7 +115,7 @@ const DailyTalkPage = () => {
             .trim()
             .split(' ')
             .filter(Boolean);
-  
+
           try {
             await playAudio(audioUrls[currentIndex], currentIndex, words);
             currentIndex++;
@@ -127,19 +127,22 @@ const DailyTalkPage = () => {
         } else {
           setActiveWord({ lineIndex: null, wordIndex: null });
           setShowRepeatButton(true);
+          if (videoRef.current) {
+            videoRef.current.pause(); // Pause the video when the conversation ends
+          }
         }
       };
-  
+
       playNextAudio();
     }
   };
-  
+
   const playAudio = (url, lineIndex, words) => {
     return new Promise((resolve) => {
       const audio = new Audio(url);
-  
+
       const playPromise = audio.play();
-  
+
       if (playPromise !== undefined) {
         playPromise
           .then(() => {
@@ -149,17 +152,17 @@ const DailyTalkPage = () => {
             const interval = setInterval(() => {
               const currentTime = audio.currentTime;
               const expectedTime = wordDuration * wordIndex;
-  
+
               if (currentTime >= expectedTime && wordIndex < words.length) {
                 setActiveWord({ lineIndex, wordIndex });
                 wordIndex++;
               }
-  
+
               if (wordIndex >= words.length) {
                 clearInterval(interval);
               }
             }, wordDuration * 1000);
-  
+
             audio.onended = () => {
               clearInterval(interval);
               resolve();
@@ -223,13 +226,12 @@ const DailyTalkPage = () => {
 
         {showVideo && (
           <div className="video-container">
-            <video controls autoPlay loop width="100%">
+            <video ref={videoRef} controls autoPlay loop width="100%">
               <source src={currentVideoUrl} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </div>
         )}
-
 
         {showStartButton && (
           <div className="start-conversation-container">
