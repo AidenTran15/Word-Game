@@ -54,6 +54,26 @@
   box-shadow: 0 6px 20px rgba(255, 94, 120, 0.4);
 }
 
+/* Next button with blue color */
+.next-conversation-button {
+  background: linear-gradient(135deg, #4A86C5, #357ABD); /* Blue gradient */
+  border: none;
+  border-radius: 20px;
+  padding: 12px 24px;
+  font-size: 1.3rem;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.5s ease, transform 0.5s ease, box-shadow 0.5s ease;
+  margin: 0 10px;
+  box-shadow: 0 4px 15px rgba(58, 117, 179, 0.3);
+}
+
+.next-conversation-button:hover {
+  background: linear-gradient(135deg, #3A75B3, #3168A7); /* Darker blue on hover */
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(58, 117, 179, 0.4);
+}
+
 /* Icon button styling */
 .icon-button {
   background: linear-gradient(135deg, #4A86C5, #3A75B3);
