@@ -1,0 +1,59 @@
+import React, { useState } from 'react';
+import axios from 'axios';
+
+const FriendlyChatPage = () => {
+  const [userInput, setUserInput] = useState('');
+  const [conversation, setConversation] = useState([]);
+
+  const handleSpeech = () => {
+    const recognition = new window.webkitSpeechRecognition();
+    recognition.lang = 'en-US';
+    recognition.start();
+
+    recognition.onresult = (event) => {
+      const speechResult = event.results[0][0].transcript;
+      setUserInput(speechResult);
+    };
+  };
+
+  const handleSubmit = async () => {
+    if (userInput.trim() === '') return;
+
+    setConversation((prev) => [...prev, { role: 'user', content: userInput }]);
+
+    try {
+      const response = await axios.post('http://localhost:5000/converse', { userInput });
+      const aiResponse = response.data.response;
+
+      setConversation((prev) => [...prev, { role: 'ai', content: aiResponse }]);
+      setUserInput('');
+    } catch (error) {
+      console.error('Error communicating with AI:', error);
+    }
+  };
+
+  return (
+    <div>
+      <h1>Friendly Chat</h1>
+      <div>
+        <button onClick={handleSpeech}>🎤 Speak</button>
+        <input
+          type="text"
+          value={userInput}
+          onChange={(e) => setUserInput(e.target.value)}
+          placeholder="Type your message or use the mic"
+        />
+        <button onClick={handleSubmit}>Send</button>
+      </div>
+      <div>
+        {conversation.map((entry, index) => (
+          <div key={index} className={entry.role}>
+            <strong>{entry.role === 'user' ? 'You' : 'AI'}:</strong> {entry.content}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default FriendlyChatPage;

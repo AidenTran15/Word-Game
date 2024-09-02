@@ -34,15 +34,21 @@ const DailyTalkPage = () => {
   const person2 = "Kaylee";
 
   const videoUrls = [
-    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/KXlOHuo/couple-looking-serious-while-talking-with-each-other-steadycam-shot_hkv25xy4x__64d1ac854997eb861feb70cf7ec50fdf__P360.mp4",
     "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/V_j81fAIx/videoblocks-43z_072_discussing_couple_home_couch_ryxfmzrhu__427504f2121c02a90da99020bb9bcf40__P360.mp4",
     "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/Sks4W_9Alj1v0vmgb/118z-coupleobsh2-vc0oc38y0c__89e2e01b4c107b237b90cb2d7e1b9cd5__P360.mp4",
     "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/DHmMj5B/couple-drinking-coffee-and-chatting-in-the-restaurant_n1rd2orz__850c7da8b865b8225d2bf4397eac5c06__P360.mp4",
-    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/KXlOHuo/couple-chatting-in-the-cafe-and-drinking-coffee-on-the-date_eygxq9td__c51806d8113e7eb8e815cb6c8c16f1a6__P360.mp4",
-    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/KXlOHuo/couple-having-a-date-in-the-cafe-and-chatting-with-each-other_bp11qaode__c8addc65359eba2bf6c9a45f895077d6__P360.mp4",
     "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/rTl3vg0veiylgd0ih/videoblocks-happy-young-couple-is-chatting-in-the-kitchen-the-family-is-drinking-coffee_sbokq0gkn__c5d824ec4ec02620e1f99fd1b971fe52__P360.mp4",
-    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/GTYSdDW/videoblocks-young-couple-talking-and-drinking-coffee-on-a-date-in-a-modern-restaurant_h2fclswosx__e7879804164163c6e051fb0c3559394b__P360.mp4"
+    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/GTYSdDW/videoblocks-young-couple-talking-and-drinking-coffee-on-a-date-in-a-modern-restaurant_h2fclswosx__e7879804164163c6e051fb0c3559394b__P360.mp4",
+    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/HVzxMQxkil73u47k1/videoblocks-65dbdb9c9014c45dfad80e58_sqwdw_96p__9eafe9df7ae722a4cc1caf9b90b6e518__P360.mp4",
+    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/B04Gfy1teiz3sdqe6/videoblocks-635982fdbffa5a5e4f9546d7_s1s6gsqhs__b2a94d657d56b82fdf1dab1a5f84c9f8__P360.mp4",
+    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/BmI6UBJLWj5dnkc7q/videoblocks-112z_4k_19_rd3qsdudq__4695ec5153159087acffe28d1211cb56__P360.mp4",
+    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/VZpg_YkTgilrvkdxa/videoblocks-224_tmvzdgvkifnlcxvlbmnlidiynq_r9jecgm2q__ccdbfb3ff2a14f79a5e00529f7692989__P360.mp4",
+    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/GTYSdDW/man-and-woman-in-formal-wear-using-smart-phones-and-talking-at-coffee-break-in-the-cafe_btkltiuex__4a24ba19a4427f14f0ea5858332a1522__P360.mp4",
+    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/NDcUKEpwx/couple-has-a-pleasant-conversation-at-the-cafe_rtx6mkzac__bec75e0e35543c3fa6112cd9e2067b86__P360.mp4",
+    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/SNv7Pyhimz0q0vg/videoblocks-644d21f3036bd92338a6b731_hf9wvtue2__75201c08a9415c5a632c16ee450e0c8d__P360.mp4",
+    "https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/HTtFscysMjfi6oi5o/videoblocks-211005_cafe_4k_31_bexjumia6__65232aa72a319e8ffd5405d3caee1a18__P360.mp4"
   ];
+  
 
   AWS.config.update({
     region: process.env.REACT_APP_AWS_REGION,
