@@ -33,6 +33,9 @@ const Navbar = () => {
                             {location.pathname !== '/daily-talk' && (
                                 <Link to="/daily-talk" className="dropdown-item">Daily Talk</Link> 
                             )}
+                            {location.pathname !== '/friendly-chat' && (  // Add this block for the new feature
+                                <Link to="/friendly-chat" className="dropdown-item">friendly-chat</Link>
+                            )}
                         </div>
                     )}
                 </div>
