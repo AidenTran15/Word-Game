@@ -1,8 +1,18 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import AWS from 'aws-sdk';
 import Navbar from '../Navbar/Navbar'; // Adjust the path as needed
 import Footer from '../Footer/Footer'; // Adjust the path as needed
+import AIImage from '../../assets/AI-image.jpg'; // Correctly import the image
 import './FriendlyChatPage.css'; // Import the CSS file for styling
+
+AWS.config.update({
+  region: process.env.REACT_APP_AWS_REGION,
+  accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+});
+
+const polly = new AWS.Polly();
 
 const FriendlyChatPage = () => {
   const [userInput, setUserInput] = useState('');
@@ -28,7 +38,27 @@ const FriendlyChatPage = () => {
       const response = await axios.post('http://localhost:5000/converse', { userInput });
       const aiResponse = response.data.response;
 
+      // Add AI response to the conversation
       setConversation((prev) => [...prev, { role: 'ai', content: aiResponse }]);
+
+      // Convert AI response to speech using AWS Polly
+      const pollyParams = {
+        OutputFormat: 'mp3',
+        Text: aiResponse,
+        VoiceId: 'Joanna', // You can choose other voices like 'Matthew', 'Salli', etc.
+      };
+
+      polly.synthesizeSpeech(pollyParams, (err, data) => {
+        if (err) {
+          console.error('Error synthesizing speech:', err);
+        } else if (data.AudioStream instanceof Buffer) {
+          const audioBlob = new Blob([data.AudioStream], { type: 'audio/mp3' });
+          const audioUrl = URL.createObjectURL(audioBlob);
+          const audio = new Audio(audioUrl);
+          audio.play();
+        }
+      });
+
       setUserInput('');
     } catch (error) {
       console.error('Error communicating with AI:', error);
@@ -41,6 +71,9 @@ const FriendlyChatPage = () => {
       <div className="content-wrap">
         <div className="chat-container">
           <h1>Casual Talk</h1>
+          <div className="ai-image-container">
+            <img src={AIImage} alt="AI" className="ai-image" /> {/* Display the uploaded image */}
+          </div>
           <div className="input-section">
             <button onClick={handleSpeech}>🎤 Speak</button>
             <input
