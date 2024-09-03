@@ -3,7 +3,6 @@ import axios from 'axios';
 import AWS from 'aws-sdk';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
-import AIImage from '../../assets/AI-image.jpg';
 import './FriendlyChatPage.css';
 
 AWS.config.update({
@@ -65,7 +64,7 @@ const FriendlyChatPage = () => {
   };
 
   return (
-    <div className="page-container" style={{ backgroundImage: `url(${AIImage})` }}>
+    <div className="page-container">
       <Navbar />
       <div className="content-wrap">
         <div className="chat-container">
