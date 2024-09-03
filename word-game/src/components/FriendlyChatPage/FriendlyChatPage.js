@@ -103,7 +103,7 @@ const FriendlyChatPage = () => {
                   type="text"
                   value={userInput}
                   onChange={(e) => setUserInput(e.target.value)}
-                  placeholder="Type your message or use the mic"
+                  placeholder="Type message or use the mic"
                   className="user-input"
                 />
               ) : (
