@@ -18,24 +18,8 @@ const FriendlyChatPage = () => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [conversation, setConversation] = useState([]);
   const [aiMode, setAiMode] = useState('Chat'); // Default mode is 'Chat'
+  const [showIntroModal, setShowIntroModal] = useState(false); // State to manage the modal visibility
   const recognitionRef = useRef(null);
-
-  const handleModeChange = (e) => {
-    setAiMode(e.target.value);
-    if (e.target.value === 'AI-Interview') {
-      startInterview();
-    }
-  };
-
-  const startInterview = async () => {
-    try {
-      const response = await axios.post('http://localhost:5000/start-interview');
-      const firstQuestion = response.data.question;
-      setConversation([{ role: 'ai', content: firstQuestion }]);
-    } catch (error) {
-      console.error('Error starting interview:', error);
-    }
-  };
 
   const startSpeechRecognition = () => {
     if (!recognitionRef.current) {
@@ -68,45 +52,74 @@ const FriendlyChatPage = () => {
     }
   };
 
+  const handleModeChange = (e) => {
+    setAiMode(e.target.value);
+    if (e.target.value === 'AI-Interview') {
+      setShowIntroModal(true); // Show the modal when AI-Interview mode is selected
+    }
+  };
+
+  const startInterview = async () => {
+    setShowIntroModal(false); // Close the modal
+
+    try {
+      const response = await axios.post('http://localhost:5000/start-interview');
+      const firstQuestion = response.data.question;
+      setConversation([{ role: 'ai', content: firstQuestion }]);
+    } catch (error) {
+      console.error('Error starting interview:', error);
+    }
+  };
+
   const handleSubmit = async () => {
     if (userInput.trim() === '') return;
 
     setConversation((prev) => [...prev, { role: 'user', content: userInput }]);
 
-    try {
-      const response = await axios.post('http://localhost:5000/converse', { userInput });
-      const aiResponse = response.data.response;
+    if (aiMode === 'AI-Interview') {
+      try {
+        const response = await axios.post('http://localhost:5000/submit-interview-answer', { answer: userInput });
+        const aiContent = response.data.question || response.data.feedback;
+        setConversation((prev) => [...prev, { role: 'ai', content: aiContent }]);
+      } catch (error) {
+        console.error('Error in interview mode:', error);
+      }
+    } else {
+      // Normal chat mode
+      try {
+        const response = await axios.post('http://localhost:5000/converse', { userInput });
+        const aiResponse = response.data.response;
 
-      setConversation((prev) => [...prev, { role: 'ai', content: aiResponse }]);
+        setConversation((prev) => [...prev, { role: 'ai', content: aiResponse }]);
 
-      const pollyParams = {
-        OutputFormat: 'mp3',
-        Text: aiResponse,
-        VoiceId: 'Joanna',
-      };
+        const pollyParams = {
+          OutputFormat: 'mp3',
+          Text: aiResponse,
+          VoiceId: 'Joanna',
+        };
 
-      polly.synthesizeSpeech(pollyParams, (err, data) => {
-        if (err) {
-          console.error('Error synthesizing speech:', err);
-        } else if (data.AudioStream) {
-          const uInt8Array = new Uint8Array(data.AudioStream);
-          const audioBlob = new Blob([uInt8Array.buffer], { type: 'audio/mp3' });
-          const audioUrl = URL.createObjectURL(audioBlob);
-          const audio = new Audio(audioUrl);
-          audio.play();
-        }
-      });
+        polly.synthesizeSpeech(pollyParams, (err, data) => {
+          if (err) {
+            console.error('Error synthesizing speech:', err);
+          } else if (data.AudioStream) {
+            const uInt8Array = new Uint8Array(data.AudioStream);
+            const audioBlob = new Blob([uInt8Array.buffer], { type: 'audio/mp3' });
+            const audioUrl = URL.createObjectURL(audioBlob);
+            const audio = new Audio(audioUrl);
+            audio.play();
+          }
+        });
 
-      setUserInput('');
-    } catch (error) {
-      console.error('Error communicating with AI:', error);
+        setUserInput('');
+      } catch (error) {
+        console.error('Error communicating with AI:', error);
+      }
     }
   };
 
   return (
     <div className="page-container">
       <Navbar />
-      {/* Dropdown for AI mode */}
       <select className="ai-mode-dropdown" onChange={handleModeChange} value={aiMode}>
         <option value="Chat">Chat</option>
         <option value="AI-Interview">AI-Interview</option>
@@ -152,6 +165,16 @@ const FriendlyChatPage = () => {
           </div>
         </div>
       </div>
+
+      {showIntroModal && (
+        <div className="intro-modal">
+          <div className="modal-content">
+            <h2>AI Interview Mode</h2>
+            <p>You will be asked a few questions regarding an interview. After all the questions, AI will give you a score and provide feedback on what you need to improve.</p>
+            <button onClick={startInterview} className="understand-button">I Understand</button>
+          </div>
+        </div>
+      )}
       <Footer />
     </div>
   );
