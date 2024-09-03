@@ -49,7 +49,7 @@ h1 {
 
 .user-input {
     flex-grow: 1;
-    padding: 12px 60px 12px 20px; /* Adjust padding to make room for the mic button inside */
+    padding: 12px 20px; /* Adjust padding since mic button is now outside */
     border-radius: 50px;
     border: none;
     font-size: 1.1rem;
@@ -65,24 +65,21 @@ h1 {
 }
 
 .speak-button {
-    position: absolute;
-    right: 62px; /* Position inside the input field */
-    top: 30%; /* Center vertically */
-    transform: translateY(-50%);
     background-color: #2196F3; /* Mic button color */
     border: none;
     color: white;
-    font-size: 16px; /* Adjusted for better fit */
+    font-size: 16px;
     border-radius: 50%;
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    z-index: 1;
+    margin-right: 12px; 
+    margin-bottom: 20px;
 }
 
 .speak-button:hover {
