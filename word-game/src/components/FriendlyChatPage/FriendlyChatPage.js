@@ -15,26 +15,36 @@ const polly = new AWS.Polly();
 
 const FriendlyChatPage = () => {
   const [userInput, setUserInput] = useState('');
+  const [isSpeaking, setIsSpeaking] = useState(false);
   const [conversation, setConversation] = useState([]);
+  let recognition;
 
-  const handleSpeech = () => {
-    const recognition = new window.webkitSpeechRecognition();
+  const startSpeechRecognition = () => {
+    recognition = new window.webkitSpeechRecognition();
     recognition.lang = 'en-US';
     recognition.start();
+
+    // Show the waveform and hide the input field when speech starts
+    setIsSpeaking(true);
 
     recognition.onresult = (event) => {
       const speechResult = event.results[0][0].transcript;
       setUserInput(speechResult);
+
+      // Hide the waveform and show the input field again when speech ends
+      setIsSpeaking(false);
     };
 
-    // Trigger the waveform animation
-    const waveform = document.querySelector('.waveform');
-    waveform.style.display = 'flex';
+    recognition.onend = () => {
+      // Hide the waveform and show the input field again when speech ends
+      setIsSpeaking(false);
+    };
+  };
 
-    // Remove the waveform after 3 seconds (or adjust the duration)
-    setTimeout(() => {
-      waveform.style.display = 'none';
-    }, 3000);
+  const stopSpeechRecognition = () => {
+    if (recognition) {
+      recognition.stop();
+    }
   };
 
   const handleSubmit = async () => {
@@ -78,23 +88,33 @@ const FriendlyChatPage = () => {
       <div className="content-wrap">
         <div className="chat-container">
           <div className="input-section">
-            <div className="waveform">
-              <div className="bar"></div>
-              <div className="bar"></div>
-              <div className="bar"></div>
-              <div className="bar"></div>
-              <div className="bar"></div>
-              <div className="bar"></div>
-              <div className="bar"></div>
+            <button 
+              onMouseDown={startSpeechRecognition} 
+              onMouseUp={stopSpeechRecognition} 
+              className="speak-button">
+              🎤
+            </button>
+            <div className="input-wrapper">
+              {!isSpeaking ? (
+                <input
+                  type="text"
+                  value={userInput}
+                  onChange={(e) => setUserInput(e.target.value)}
+                  placeholder="Type your message or use the mic"
+                  className="user-input"
+                />
+              ) : (
+                <div className="waveform">
+                  <div className="bar"></div>
+                  <div className="bar"></div>
+                  <div className="bar"></div>
+                  <div className="bar"></div>
+                  <div className="bar"></div>
+                  <div className="bar"></div>
+                  <div className="bar"></div>
+                </div>
+              )}
             </div>
-            <button onClick={handleSpeech} className="speak-button">🎤</button>
-            <input
-              type="text"
-              value={userInput}
-              onChange={(e) => setUserInput(e.target.value)}
-              placeholder="Type your message or use the mic"
-              className="user-input"
-            />
             <button onClick={handleSubmit} className="send-button"></button>
           </div>
           <div className="conversation-section">
