@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import AWS from 'aws-sdk';
 import Navbar from '../Navbar/Navbar';
@@ -17,33 +17,36 @@ const FriendlyChatPage = () => {
   const [userInput, setUserInput] = useState('');
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [conversation, setConversation] = useState([]);
-  let recognition;
+  const recognitionRef = useRef(null);
 
   const startSpeechRecognition = () => {
-    recognition = new window.webkitSpeechRecognition();
-    recognition.lang = 'en-US';
-    recognition.start();
+    if (!recognitionRef.current) {
+      recognitionRef.current = new window.webkitSpeechRecognition();
+      recognitionRef.current.lang = 'en-US';
+
+      recognitionRef.current.onresult = (event) => {
+        const speechResult = event.results[0][0].transcript;
+        setUserInput(speechResult);
+
+        // Hide the waveform and show the input field again when speech ends
+        setIsSpeaking(false);
+      };
+
+      recognitionRef.current.onend = () => {
+        // Hide the waveform and show the input field again when speech ends
+        setIsSpeaking(false);
+      };
+    }
 
     // Show the waveform and hide the input field when speech starts
     setIsSpeaking(true);
-
-    recognition.onresult = (event) => {
-      const speechResult = event.results[0][0].transcript;
-      setUserInput(speechResult);
-
-      // Hide the waveform and show the input field again when speech ends
-      setIsSpeaking(false);
-    };
-
-    recognition.onend = () => {
-      // Hide the waveform and show the input field again when speech ends
-      setIsSpeaking(false);
-    };
+    recognitionRef.current.start();
   };
 
   const stopSpeechRecognition = () => {
-    if (recognition) {
-      recognition.stop();
+    if (recognitionRef.current) {
+      recognitionRef.current.stop();
+      setIsSpeaking(false); // Ensure waveform is hidden when speech is manually stopped
     }
   };
 
