@@ -66,9 +66,30 @@ const FriendlyChatPage = () => {
       const response = await axios.post('http://localhost:5000/start-interview');
       const firstQuestion = response.data.question;
       setConversation([{ role: 'ai', content: firstQuestion }]);
+      speakText(firstQuestion); // Speak the interview question
     } catch (error) {
       console.error('Error starting interview:', error);
     }
+  };
+
+  const speakText = (text) => {
+    const pollyParams = {
+      OutputFormat: 'mp3',
+      Text: text,
+      VoiceId: 'Joanna',
+    };
+
+    polly.synthesizeSpeech(pollyParams, (err, data) => {
+      if (err) {
+        console.error('Error synthesizing speech:', err);
+      } else if (data.AudioStream) {
+        const uInt8Array = new Uint8Array(data.AudioStream);
+        const audioBlob = new Blob([uInt8Array.buffer], { type: 'audio/mp3' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const audio = new Audio(audioUrl);
+        audio.play();
+      }
+    });
   };
 
   const handleSubmit = async () => {
@@ -81,6 +102,9 @@ const FriendlyChatPage = () => {
         const response = await axios.post('http://localhost:5000/submit-interview-answer', { answer: userInput });
         const aiContent = response.data.question || response.data.feedback;
         setConversation((prev) => [...prev, { role: 'ai', content: aiContent }]);
+        if (response.data.question) {
+          speakText(response.data.question); // Speak the next interview question
+        }
       } catch (error) {
         console.error('Error in interview mode:', error);
       }
