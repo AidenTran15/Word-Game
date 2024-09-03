@@ -69,50 +69,50 @@ h1 {
 }
 
 .waveform {
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 2px;
-height: 40px; /* Match the height of the input field */
-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  height: 40px; /* Match the height of the input field */
+  width: 100%;
 }
 
 .bar {
-width: 4px;
-height: 100%;
-background-color: #2196F3;
-animation: wave 1.2s infinite ease-in-out;
+  width: 4px;
+  height: 100%;
+  background-color: #2196F3;
+  animation: wave 1.2s infinite ease-in-out;
 }
 
 .bar:nth-child(2) {
-animation-delay: -1.1s;
+  animation-delay: -1.1s;
 }
 .bar:nth-child(3) {
-animation-delay: -1s;
+  animation-delay: -1s;
 }
 .bar:nth-child(4) {
-animation-delay: -0.9s;
+  animation-delay: -0.9s;
 }
 .bar:nth-child(5) {
-animation-delay: -0.8s;
+  animation-delay: -0.8s;
 }
 .bar:nth-child(6) {
-animation-delay: -0.7s;
+  animation-delay: -0.7s;
 }
 .bar:nth-child(7) {
-animation-delay: -0.6s;
+  animation-delay: -0.6s;
 }
 
 @keyframes wave {
-0% {
-  transform: scaleY(1);
-}
-50% {
-  transform: scaleY(2);
-}
-100% {
-  transform: scaleY(1);
-}
+  0% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(2);
+  }
+  100% {
+    transform: scaleY(1);
+  }
 }
 
 .speak-button {
@@ -201,6 +201,23 @@ animation-delay: -0.6s;
   color: #ff9800;
 }
 
+.ai-mode-dropdown {
+  position: absolute;
+  top: 80px;  /* Move the dropdown down a bit more */
+  right: 20px; /* Keep it aligned to the right of the page */
+  padding: 8px 12px; /* Adjust the padding for better appearance */
+  border-radius: 20px; /* Make the corners slightly more rounded */
+  border: none;
+  font-size: 0.9rem; /* Slightly reduce the font size */
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+  z-index: 1000; /* Ensure it stays on top of other elements */
+  width: 150px; /* Decrease the width of the dropdown */
+}
+
 @media (max-width: 768px) {
   .user-input {
     width: 90%; /* Make the input field shorter on smaller screens */
@@ -214,7 +231,6 @@ animation-delay: -0.6s;
     width: 90%; /* Make the input field even shorter on very small screens */
     font-size: 0.9rem;
     padding: 15px 15px;
-   
   }
 
   .chat-container {

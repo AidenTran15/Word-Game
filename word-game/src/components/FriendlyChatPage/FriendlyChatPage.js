@@ -17,7 +17,25 @@ const FriendlyChatPage = () => {
   const [userInput, setUserInput] = useState('');
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [conversation, setConversation] = useState([]);
+  const [aiMode, setAiMode] = useState('Chat'); // Default mode is 'Chat'
   const recognitionRef = useRef(null);
+
+  const handleModeChange = (e) => {
+    setAiMode(e.target.value);
+    if (e.target.value === 'AI-Interview') {
+      startInterview();
+    }
+  };
+
+  const startInterview = async () => {
+    try {
+      const response = await axios.post('http://localhost:5000/start-interview');
+      const firstQuestion = response.data.question;
+      setConversation([{ role: 'ai', content: firstQuestion }]);
+    } catch (error) {
+      console.error('Error starting interview:', error);
+    }
+  };
 
   const startSpeechRecognition = () => {
     if (!recognitionRef.current) {
@@ -88,6 +106,11 @@ const FriendlyChatPage = () => {
   return (
     <div className="page-container">
       <Navbar />
+      {/* Dropdown for AI mode */}
+      <select className="ai-mode-dropdown" onChange={handleModeChange} value={aiMode}>
+        <option value="Chat">Chat</option>
+        <option value="AI-Interview">AI-Interview</option>
+      </select>
       <div className="content-wrap">
         <div className="chat-container">
           <div className="input-section">
