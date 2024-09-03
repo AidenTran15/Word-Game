@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import AWS from 'aws-sdk';
-import Navbar from '../Navbar/Navbar'; // Adjust the path as needed
-import Footer from '../Footer/Footer'; // Adjust the path as needed
-import AIImage from '../../assets/AI-image.jpg'; // Correctly import the image
-import './FriendlyChatPage.css'; // Import the CSS file for styling
+import Navbar from '../Navbar/Navbar';
+import Footer from '../Footer/Footer';
+import AIImage from '../../assets/AI-image.jpg';
+import './FriendlyChatPage.css';
 
 AWS.config.update({
   region: process.env.REACT_APP_AWS_REGION,
@@ -45,14 +45,15 @@ const FriendlyChatPage = () => {
       const pollyParams = {
         OutputFormat: 'mp3',
         Text: aiResponse,
-        VoiceId: 'Joanna', // You can choose other voices like 'Matthew', 'Salli', etc.
+        VoiceId: 'Joanna',
       };
 
       polly.synthesizeSpeech(pollyParams, (err, data) => {
         if (err) {
           console.error('Error synthesizing speech:', err);
-        } else if (data.AudioStream instanceof Buffer) {
-          const audioBlob = new Blob([data.AudioStream], { type: 'audio/mp3' });
+        } else if (data.AudioStream) {
+          const uInt8Array = new Uint8Array(data.AudioStream);
+          const audioBlob = new Blob([uInt8Array.buffer], { type: 'audio/mp3' });
           const audioUrl = URL.createObjectURL(audioBlob);
           const audio = new Audio(audioUrl);
           audio.play();
@@ -72,7 +73,7 @@ const FriendlyChatPage = () => {
         <div className="chat-container">
           <h1>Casual Talk</h1>
           <div className="ai-image-container">
-            <img src={AIImage} alt="AI" className="ai-image" /> {/* Display the uploaded image */}
+            <img src={AIImage} alt="AI" className="ai-image" />
           </div>
           <div className="input-section">
             <button onClick={handleSpeech}>🎤 Speak</button>
