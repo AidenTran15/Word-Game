@@ -38,10 +38,8 @@ const FriendlyChatPage = () => {
       const response = await axios.post('http://localhost:5000/converse', { userInput });
       const aiResponse = response.data.response;
 
-      // Add AI response to the conversation
       setConversation((prev) => [...prev, { role: 'ai', content: aiResponse }]);
 
-      // Convert AI response to speech using AWS Polly
       const pollyParams = {
         OutputFormat: 'mp3',
         Text: aiResponse,
@@ -67,23 +65,21 @@ const FriendlyChatPage = () => {
   };
 
   return (
-    <div className="page-container">
+    <div className="page-container" style={{ backgroundImage: `url(${AIImage})` }}>
       <Navbar />
       <div className="content-wrap">
         <div className="chat-container">
           <h1>Casual Talk</h1>
-          <div className="ai-image-container">
-            <img src={AIImage} alt="AI" className="ai-image" />
-          </div>
           <div className="input-section">
-            <button onClick={handleSpeech}>🎤 Speak</button>
+            <button onClick={handleSpeech} className="speak-button">🎤</button>
             <input
               type="text"
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
               placeholder="Type your message or use the mic"
+              className="user-input"
             />
-            <button onClick={handleSubmit}>Send</button>
+            <button onClick={handleSubmit} className="send-button">Send</button>
           </div>
           <div className="conversation-section">
             {conversation.map((entry, index) => (
