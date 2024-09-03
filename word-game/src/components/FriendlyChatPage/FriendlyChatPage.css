@@ -14,8 +14,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 20px;
+  justify-content: flex-end;
+  padding: 80px;
   position: relative;
 }
 
@@ -119,19 +119,24 @@ h1 {
   background-color: #2196F3; /* Mic button color */
   border: none;
   color: white;
-  font-size: 16px;
+  font-size: 24px; /* Increase the font size for a bigger mic icon */
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 80px; /* Increase the width */
+  height: 80px; /* Increase the height */
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  margin-right: 12px; 
-  margin-bottom: 20px;
+  margin-top: 20px; /* Space above the button */
+  position: relative;
 }
+
+.speak-button:hover {
+  transform: scale(1.1); /* Slightly enlarge on hover */
+}
+
 
 .send-button {
   background-color: #1E90FF; 
@@ -338,7 +343,7 @@ h1 {
 
 @media (max-width: 768px) {
   .user-input {
-    width: 90%; /* Make the input field shorter on smaller screens */
+    width: 90%; 
     font-size: 1rem;
     padding: 15px 15px;
   }
@@ -346,18 +351,17 @@ h1 {
 
 @media (max-width: 480px) {
   .user-input {
-    width: 90%; /* Make the input field even shorter on very small screens */
+    width: 90%; 
     font-size: 0.9rem;
     padding: 15px 15px;
   }
 
   .chat-container {
-    width: 90%;
+    width: 128%;
     margin-bottom: 10px; /* Add some margin from the bottom */
   }
 
   .content-wrap {
-    justify-content: flex-end; /* Ensure content is at the bottom */
     padding-bottom: 20px; /* Add some padding to the bottom */
   }
 }

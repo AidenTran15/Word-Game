@@ -178,12 +178,6 @@ const FriendlyChatPage = () => {
       <div className="content-wrap">
         <div className="chat-container">
           <div className="input-section">
-            <button 
-              onMouseDown={startSpeechRecognition} 
-              onMouseUp={stopSpeechRecognition} 
-              className="speak-button">
-              🎤
-            </button>
             <div className="input-wrapper">
               {!isSpeaking ? (
                 <input
@@ -215,8 +209,16 @@ const FriendlyChatPage = () => {
             ))}
           </div>
         </div>
+        <button 
+          onMouseDown={startSpeechRecognition} 
+          onMouseUp={stopSpeechRecognition} 
+          onTouchStart={startSpeechRecognition} 
+          onTouchEnd={stopSpeechRecognition} 
+          className="speak-button">
+          🎤 
+        </button>
       </div>
-
+  
       {showIntroModal && (
         <div className="intro-modal">
           <div className="modal-content">
@@ -226,7 +228,7 @@ const FriendlyChatPage = () => {
           </div>
         </div>
       )}
-
+  
       {showFeedbackModal && (
         <div className="feedback-modal">
           <div className="modal-content">
@@ -239,6 +241,7 @@ const FriendlyChatPage = () => {
       <Footer />
     </div>
   );
+  
 };
 
 export default FriendlyChatPage;
