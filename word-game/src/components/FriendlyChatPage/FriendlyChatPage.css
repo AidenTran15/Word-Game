@@ -254,6 +254,51 @@ h1 {
 }
 
 
+.feedback-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+}
+
+.feedback-modal .modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.feedback-modal h2 {
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+}
+
+.feedback-modal p {
+  margin-bottom: 10px;
+}
+
+.feedback-modal .close-button {
+  background-color: #1E90FF;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.feedback-modal .close-button:hover {
+  background-color: #1C86EE;
+}
+
+
 @media (max-width: 768px) {
   .user-input {
     width: 90%; /* Make the input field shorter on smaller screens */

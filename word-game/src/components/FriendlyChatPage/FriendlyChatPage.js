@@ -18,7 +18,9 @@ const FriendlyChatPage = () => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [conversation, setConversation] = useState([]);
   const [aiMode, setAiMode] = useState('Chat'); // Default mode is 'Chat'
-  const [showIntroModal, setShowIntroModal] = useState(false); // State to manage the modal visibility
+  const [showIntroModal, setShowIntroModal] = useState(false); // State to manage the intro modal visibility
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false); // State to manage the feedback modal visibility
+  const [feedback, setFeedback] = useState({ score: null, content: '' }); // State to store feedback content
   const recognitionRef = useRef(null);
 
   const startSpeechRecognition = () => {
@@ -60,36 +62,35 @@ const FriendlyChatPage = () => {
   };
 
   const startInterview = async () => {
-    setShowIntroModal(false); // Close the modal
+    setShowIntroModal(false); // Close the intro modal
 
     try {
       const response = await axios.post('http://localhost:5000/start-interview');
       const firstQuestion = response.data.question;
       setConversation([{ role: 'ai', content: firstQuestion }]);
-      speakText(firstQuestion); // Speak the interview question
+
+      // Speak the first question
+      const pollyParams = {
+        OutputFormat: 'mp3',
+        Text: firstQuestion,
+        VoiceId: 'Joanna',
+      };
+
+      polly.synthesizeSpeech(pollyParams, (err, data) => {
+        if (err) {
+          console.error('Error synthesizing speech:', err);
+        } else if (data.AudioStream) {
+          const uInt8Array = new Uint8Array(data.AudioStream);
+          const audioBlob = new Blob([uInt8Array.buffer], { type: 'audio/mp3' });
+          const audioUrl = URL.createObjectURL(audioBlob);
+          const audio = new Audio(audioUrl);
+          audio.play();
+        }
+      });
+
     } catch (error) {
       console.error('Error starting interview:', error);
     }
-  };
-
-  const speakText = (text) => {
-    const pollyParams = {
-      OutputFormat: 'mp3',
-      Text: text,
-      VoiceId: 'Joanna',
-    };
-
-    polly.synthesizeSpeech(pollyParams, (err, data) => {
-      if (err) {
-        console.error('Error synthesizing speech:', err);
-      } else if (data.AudioStream) {
-        const uInt8Array = new Uint8Array(data.AudioStream);
-        const audioBlob = new Blob([uInt8Array.buffer], { type: 'audio/mp3' });
-        const audioUrl = URL.createObjectURL(audioBlob);
-        const audio = new Audio(audioUrl);
-        audio.play();
-      }
-    });
   };
 
   const handleSubmit = async () => {
@@ -102,8 +103,32 @@ const FriendlyChatPage = () => {
         const response = await axios.post('http://localhost:5000/submit-interview-answer', { answer: userInput });
         const aiContent = response.data.question || response.data.feedback;
         setConversation((prev) => [...prev, { role: 'ai', content: aiContent }]);
-        if (response.data.question) {
-          speakText(response.data.question); // Speak the next interview question
+
+        if (response.data.feedback) {
+          setFeedback({
+            score: response.data.score,
+            content: response.data.feedback,
+          });
+          setShowFeedbackModal(true); // Show feedback modal
+
+          // Speak the feedback
+          const pollyParams = {
+            OutputFormat: 'mp3',
+            Text: response.data.feedback,
+            VoiceId: 'Joanna',
+          };
+
+          polly.synthesizeSpeech(pollyParams, (err, data) => {
+            if (err) {
+              console.error('Error synthesizing speech:', err);
+            } else if (data.AudioStream) {
+              const uInt8Array = new Uint8Array(data.AudioStream);
+              const audioBlob = new Blob([uInt8Array.buffer], { type: 'audio/mp3' });
+              const audioUrl = URL.createObjectURL(audioBlob);
+              const audio = new Audio(audioUrl);
+              audio.play();
+            }
+          });
         }
       } catch (error) {
         console.error('Error in interview mode:', error);
@@ -139,6 +164,10 @@ const FriendlyChatPage = () => {
         console.error('Error communicating with AI:', error);
       }
     }
+  };
+
+  const closeFeedbackModal = () => {
+    setShowFeedbackModal(false); // Close feedback modal
   };
 
   return (
@@ -196,6 +225,17 @@ const FriendlyChatPage = () => {
             <h2>AI Interview Mode</h2>
             <p>You will be asked a few questions regarding an interview. After all the questions, AI will give you a score and provide feedback on what you need to improve.</p>
             <button onClick={startInterview} className="understand-button">I Understand</button>
+          </div>
+        </div>
+      )}
+
+      {showFeedbackModal && (
+        <div className="feedback-modal">
+          <div className="modal-content">
+            <h2>Interview Feedback</h2>
+            <p><strong>Score:</strong> {feedback.score}/10</p>
+            <p><strong>Feedback:</strong> {feedback.content}</p>
+            <button onClick={closeFeedbackModal} className="close-button">Close</button>
           </div>
         </div>
       )}
