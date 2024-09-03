@@ -67,6 +67,18 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Soft shadow for buttons */
 }
 
+/* Casual Talk button styles */
+.game-button.friendly-chat-button {
+    background-color: #FF9800; /* A warm, inviting orange color */
+}
+
+.game-button.friendly-chat-button:hover {
+    background-color: #F57C00; /* A darker, richer orange on hover */
+    box-shadow: 0 8px 20px rgba(255, 152, 0, 0.5); /* Subtle glow on hover */
+    transform: translateY(-3px); /* Slight lift on hover */
+}
+
+
 /* Specific button styles */
 .game-button:first-child {
     background-color: #4CAF50;
