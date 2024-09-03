@@ -26,6 +26,15 @@ const FriendlyChatPage = () => {
       const speechResult = event.results[0][0].transcript;
       setUserInput(speechResult);
     };
+
+    // Trigger the waveform animation
+    const waveform = document.querySelector('.waveform');
+    waveform.style.display = 'flex';
+
+    // Remove the waveform after 3 seconds (or adjust the duration)
+    setTimeout(() => {
+      waveform.style.display = 'none';
+    }, 3000);
   };
 
   const handleSubmit = async () => {
@@ -69,6 +78,15 @@ const FriendlyChatPage = () => {
       <div className="content-wrap">
         <div className="chat-container">
           <div className="input-section">
+            <div className="waveform">
+              <div className="bar"></div>
+              <div className="bar"></div>
+              <div className="bar"></div>
+              <div className="bar"></div>
+              <div className="bar"></div>
+              <div className="bar"></div>
+              <div className="bar"></div>
+            </div>
             <button onClick={handleSpeech} className="speak-button">🎤</button>
             <input
               type="text"
