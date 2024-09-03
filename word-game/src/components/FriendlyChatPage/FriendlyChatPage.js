@@ -77,7 +77,7 @@ const FriendlyChatPage = () => {
               placeholder="Type your message or use the mic"
               className="user-input"
             />
-            <button onClick={handleSubmit} className="send-button">Send</button>
+            <button onClick={handleSubmit} className="send-button"></button>
           </div>
           <div className="conversation-section">
             {conversation.map((entry, index) => (
