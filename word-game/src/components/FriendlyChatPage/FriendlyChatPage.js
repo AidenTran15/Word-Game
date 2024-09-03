@@ -67,7 +67,7 @@ const FriendlyChatPage = () => {
     setQuestionCount(0); // Reset question count at the start of a new interview
 
     try {
-      const response = await axios.post('http://localhost:5000/start-interview');
+      const response = await axios.post('https://apiwordgame.aidenkiettran.com/start-interview');
       const firstQuestion = response.data.question;
       setConversation([{ role: 'ai', content: firstQuestion }]);
       speakText(firstQuestion);
@@ -84,7 +84,7 @@ const FriendlyChatPage = () => {
   
     if (aiMode === 'AI-Interview') {
       try {
-        const response = await axios.post('http://localhost:5000/submit-interview-answer', { answer: userInput });
+        const response = await axios.post('https://apiwordgame.aidenkiettran.com/submit-interview-answer', { answer: userInput });
         const aiContent = response.data.question || response.data.feedback;
   
         if (response.data.feedback) {
@@ -115,7 +115,7 @@ const FriendlyChatPage = () => {
     } else {
       // Normal chat mode
       try {
-        const response = await axios.post('http://localhost:5000/converse', { userInput });
+        const response = await axios.post('https://apiwordgame.aidenkiettran.com/converse', { userInput });
         const aiResponse = response.data.response;
   
         setConversation((prev) => [...prev, { role: 'ai', content: aiResponse }]);
