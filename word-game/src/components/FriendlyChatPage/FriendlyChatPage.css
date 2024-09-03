@@ -95,8 +95,8 @@ h1 {
 
 .conversation-section {
     margin-top: 30px;
-    max-height: 400px;
-    overflow-y: auto;
+    max-height: 300px; /* Set the maximum height to 100px */
+    overflow-y: auto; /* Add a vertical scrollbar if content exceeds max height */
     padding: 15px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 15px;

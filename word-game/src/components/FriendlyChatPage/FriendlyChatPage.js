@@ -68,7 +68,6 @@ const FriendlyChatPage = () => {
       <Navbar />
       <div className="content-wrap">
         <div className="chat-container">
-          <h1>Casual Talk</h1>
           <div className="input-section">
             <button onClick={handleSpeech} className="speak-button">🎤</button>
             <input
