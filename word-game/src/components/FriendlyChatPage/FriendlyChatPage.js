@@ -169,55 +169,62 @@ const FriendlyChatPage = () => {
   };
 
   return (
-    <div className="page-container">
-      <Navbar />
-      <select className="ai-mode-dropdown" onChange={handleModeChange} value={aiMode}>
-        <option value="Chat">Chat</option>
-        <option value="AI-Interview">AI-Interview</option>
-      </select>
-      <div className="content-wrap">
-        <div className="chat-container">
-          <div className="input-section">
-            <div className="input-wrapper">
-              {!isSpeaking ? (
-                <input
-                  type="text"
-                  value={userInput}
-                  onChange={(e) => setUserInput(e.target.value)}
-                  placeholder="Type message or use the mic"
-                  className="user-input"
-                />
-              ) : (
-                <div className="waveform">
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                </div>
-              )}
+<div className="page-container">
+  <Navbar />
+  <select className="ai-mode-dropdown" onChange={handleModeChange} value={aiMode}>
+    <option value="Chat">Chat</option>
+    <option value="AI-Interview">AI-Interview</option>
+  </select>
+  <div className="content-wrap">
+    <div className="chat-container">
+      <div className="input-section">
+        <div className="input-wrapper">
+          {!isSpeaking ? (
+            <input
+              type="text"
+              value={userInput}
+              onChange={(e) => setUserInput(e.target.value)}
+              placeholder="Type message or use the mic"
+              className="user-input"
+            />
+          ) : (
+            <div className="waveform">
+              <div className="bar"></div>
+              <div className="bar"></div>
+              <div className="bar"></div>
+              <div className="bar"></div>
+              <div className="bar"></div>
+              <div className="bar"></div>
+              <div className="bar"></div>
             </div>
-            <button onClick={handleSubmit} className="send-button"></button>
-          </div>
-          <div className="conversation-section">
-            {conversation.map((entry, index) => (
-              <div key={index} className={entry.role}>
-                <strong>{entry.role === 'user' ? 'You' : 'AI'}:</strong> {entry.content}
-              </div>
-            ))}
-          </div>
+          )}
         </div>
-        <button 
-          onMouseDown={startSpeechRecognition} 
-          onMouseUp={stopSpeechRecognition} 
-          onTouchStart={startSpeechRecognition} 
-          onTouchEnd={stopSpeechRecognition} 
-          className="speak-button">
-          🎤 
-        </button>
+        <button onClick={handleSubmit} className="send-button"></button>
       </div>
+      <div className="conversation-section">
+        {conversation.map((entry, index) => (
+          <div key={index} className={entry.role}>
+            <strong>{entry.role === 'user' ? 'You' : 'AI'}:</strong> {entry.content}
+          </div>
+        ))}
+      </div>
+    </div>
+    <button 
+  onMouseDown={(e) => {
+    e.preventDefault(); // Prevent any default behavior
+    startSpeechRecognition();
+  }} 
+  onMouseUp={stopSpeechRecognition} 
+  onTouchStart={(e) => {
+    e.preventDefault(); // Prevent any default behavior
+    startSpeechRecognition();
+  }} 
+  onTouchEnd={stopSpeechRecognition} 
+  className="speak-button">
+  🎤 
+</button>
+
+  </div>
   
       {showIntroModal && (
         <div className="intro-modal">

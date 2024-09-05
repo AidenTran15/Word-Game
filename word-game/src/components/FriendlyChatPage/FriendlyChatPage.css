@@ -116,26 +116,34 @@ h1 {
 }
 
 .speak-button {
-  background-color: #2196F3; /* Mic button color */
+  background-color: #2196F3;
   border: none;
   color: white;
-  font-size: 24px; /* Increase the font size for a bigger mic icon */
+  font-size: 28px;
   border-radius: 50%;
-  width: 80px; /* Increase the width */
-  height: 80px; /* Increase the height */
+  width: 70px;
+  height: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  margin-top: 20px; /* Space above the button */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
   position: relative;
+
+  /* Prevent text selection */
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10+ and Edge */
+  user-select: none; /* Standard syntax */
+
+  /* Prevent touch callouts */
+  -webkit-touch-callout: none; /* iOS Safari */
 }
 
-.speak-button:hover {
-  transform: scale(1.1); /* Slightly enlarge on hover */
-}
+
 
 
 .send-button {
