@@ -282,7 +282,7 @@ const FriendlyChatPage = () => {
 
           {/* Areas for Improvement */}
           <div className="feedback-section">
-            <h3>⚠️ Areas for Improvement</h3>
+            <h3>⚠️ Specific Areas for Improvement</h3>
             <ul>
               {feedback?.improvementAreas?.length > 0 ? (
                 feedback.improvementAreas.map((area, index) => (
@@ -296,7 +296,7 @@ const FriendlyChatPage = () => {
 
           {/* Recommendations */}
           <div className="feedback-section">
-            <h3>📈 Recommendations</h3>
+            <h3>📈 Specific Recommendations</h3>
             <p>{feedback?.recommendations || 'No recommendations available'}</p>
           </div>
 
