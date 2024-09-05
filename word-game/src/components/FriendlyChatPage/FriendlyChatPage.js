@@ -237,7 +237,6 @@ const FriendlyChatPage = () => {
 {showFeedbackModal && (
   <div className="feedback-modal">
     <div className="modal-content">
-      <h2>Interview Feedback</h2>
 
       {/* Feedback Summary */}
       <div className="feedback-section">

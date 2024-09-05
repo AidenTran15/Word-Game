@@ -1,3 +1,10 @@
+/* Ensure no horizontal scroll */
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Disable horizontal scrolling */
+}
+
 .page-container {
   display: flex;
   flex-direction: column;
@@ -7,6 +14,7 @@
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3)), url('../../assets/AI-image.jpg') center/cover no-repeat;
   color: white;
   font-family: 'Roboto', sans-serif;
+  overflow-x: hidden; /* Disable horizontal scroll within the page container */
 }
 
 .content-wrap {
