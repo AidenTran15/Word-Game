@@ -274,15 +274,32 @@ h1 {
 
 
 
+.feedback-modal {
+  position: fixed; /* Fix the modal to the center of the screen */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Move the modal back by 50% of its width and height */
+  width: 100%; /* Ensure modal doesn't overflow */
+  height: 100%; /* Fill the height of the viewport */
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+  display: flex; /* Use flexbox for centering */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  z-index: 1001; /* Ensure it stays above other elements */
+}
+
 .feedback-modal .modal-content {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.85); /* Semi-transparent white */
   padding: 30px;
   border-radius: 12px;
-  width: 80%;
-  max-width: 450px;
+  max-width: 600px; /* Set max width for the modal */
+  width: 90%; /* Make it responsive on smaller screens */
   text-align: center;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37); /* Soft, elevated shadow */
+  backdrop-filter: blur(10px); /* Blur effect */
+  border: 1px solid rgba(255, 255, 255, 0.18); /* Subtle border for glass effect */
 }
+
 
 .feedback-section {
   margin-bottom: 20px;
