@@ -28,6 +28,8 @@ const FriendlyChatPage = () => {
     improvementAreas: [],
     recommendations: '',
   });
+  const [isLoadingFeedback, setIsLoadingFeedback] = useState(false); // New state for loading feedback
+
   
   const recognitionRef = useRef(null);
 
@@ -87,7 +89,7 @@ const FriendlyChatPage = () => {
 
   const handleSubmit = async () => {
     if (userInput.trim() === '') return;
-  
+    
     setConversation((prev) => [...prev, { role: 'user', content: userInput }]);
   
     if (aiMode === 'AI-Interview') {
@@ -96,9 +98,15 @@ const FriendlyChatPage = () => {
         const aiContent = response.data.question || response.data.feedback;
   
         if (response.data.feedback) {
-          setFeedback(response.data.feedback);
-          setShowFeedbackModal(true); // Show feedback modal after all questions
-          speakText(response.data.feedback); // Speak the feedback
+          setIsLoadingFeedback(true); // Set loading state before AI generates feedback
+          setShowFeedbackModal(true); // Ensure the modal shows immediately with loading message
+  
+          // Simulate loading delay before showing the feedback
+          setTimeout(() => {
+            setFeedback(response.data.feedback);
+            setIsLoadingFeedback(false); // Stop loading once feedback is ready
+            speakText(response.data.feedback); // Speak the feedback
+          }, 2000); // Adjust delay time as necessary
         } else {
           // Handle next question
           setConversation((prev) => [...prev, { role: 'ai', content: aiContent }]);
@@ -154,6 +162,7 @@ const FriendlyChatPage = () => {
   
     setUserInput(''); // Clear input field after submission
   };
+  
   
 
   const speakText = (text) => {
@@ -237,51 +246,62 @@ const FriendlyChatPage = () => {
 {showFeedbackModal && (
   <div className="feedback-modal">
     <div className="modal-content">
+      {isLoadingFeedback ? (
+        <div>
+          <h2>AI Generating Feedback</h2>
+          <p>Please wait a few seconds...</p>
+        </div>
+      ) : (
+        <div>
+          <h2>Interview Feedback</h2>
 
-      {/* Feedback Summary */}
-      <div className="feedback-section">
-        <h3>📝 Feedback Summary</h3>
-        <p>{feedback?.summary || 'No summary available'}</p>
-      </div>
+          {/* Feedback Summary */}
+          <div className="feedback-section">
+            <h3>📝 Feedback Summary</h3>
+            <p>{feedback?.summary || 'No summary available'}</p>
+          </div>
 
-      {/* Strengths */}
-      <div className="feedback-section">
-        <h3>✅ Strengths</h3>
-        <ul>
-          {feedback?.strengths?.length > 0 ? (
-            feedback.strengths.map((strength, index) => (
-              <li key={index}>{strength}</li>
-            ))
-          ) : (
-            <li>No strengths available</li>
-          )}
-        </ul>
-      </div>
+          {/* Strengths */}
+          <div className="feedback-section">
+            <h3>✅ Strengths</h3>
+            <ul>
+              {feedback?.strengths?.length > 0 ? (
+                feedback.strengths.map((strength, index) => (
+                  <li key={index}>{strength}</li>
+                ))
+              ) : (
+                <li>No strengths available</li>
+              )}
+            </ul>
+          </div>
 
-      {/* Areas for Improvement */}
-      <div className="feedback-section">
-        <h3>⚠️ Areas for Improvement</h3>
-        <ul>
-          {feedback?.improvementAreas?.length > 0 ? (
-            feedback.improvementAreas.map((area, index) => (
-              <li key={index}>{area}</li>
-            ))
-          ) : (
-            <li>No improvement areas available</li>
-          )}
-        </ul>
-      </div>
+          {/* Areas for Improvement */}
+          <div className="feedback-section">
+            <h3>⚠️ Areas for Improvement</h3>
+            <ul>
+              {feedback?.improvementAreas?.length > 0 ? (
+                feedback.improvementAreas.map((area, index) => (
+                  <li key={index}>{area}</li>
+                ))
+              ) : (
+                <li>No improvement areas available</li>
+              )}
+            </ul>
+          </div>
 
-      {/* Recommendations */}
-      <div className="feedback-section">
-        <h3>📈 Recommendations</h3>
-        <p>{feedback?.recommendations || 'No recommendations available'}</p>
-      </div>
+          {/* Recommendations */}
+          <div className="feedback-section">
+            <h3>📈 Recommendations</h3>
+            <p>{feedback?.recommendations || 'No recommendations available'}</p>
+          </div>
 
-      <button onClick={() => setShowFeedbackModal(false)} className="close-button">Close</button>
+          <button onClick={() => setShowFeedbackModal(false)} className="close-button">Close</button>
+        </div>
+      )}
     </div>
   </div>
 )}
+
 
 
 
