@@ -89,26 +89,30 @@ const FriendlyChatPage = () => {
 
   const handleSubmit = async () => {
     if (userInput.trim() === '') return;
-    
+  
     setConversation((prev) => [...prev, { role: 'user', content: userInput }]);
   
     if (aiMode === 'AI-Interview') {
+      // Check if this is the 5th question before making the request
+      if (questionCount >= 5) {
+        // Set loading and show modal instantly
+        setIsLoadingFeedback(true);
+        setShowFeedbackModal(true); // Show feedback modal right away with loading message
+      }
+  
       try {
         const response = await axios.post('http://localhost:5000/submit-interview-answer', { answer: userInput });
         const aiContent = response.data.question || response.data.feedback;
   
         if (response.data.feedback) {
-          setIsLoadingFeedback(true); // Set loading state before AI generates feedback
-          setShowFeedbackModal(true); // Ensure the modal shows immediately with loading message
-  
-          // Simulate loading delay before showing the feedback
+          // Feedback is generated, simulate loading effect and show feedback
           setTimeout(() => {
             setFeedback(response.data.feedback);
-            setIsLoadingFeedback(false); // Stop loading once feedback is ready
+            setIsLoadingFeedback(false); // Stop loading after feedback is ready
             speakText(response.data.feedback); // Speak the feedback
-          }, 2000); // Adjust delay time as necessary
+          }, 2000); // Simulate loading delay
         } else {
-          // Handle next question
+          // Handle next question if not the 5th one
           setConversation((prev) => [...prev, { role: 'ai', content: aiContent }]);
           speakText(aiContent);
   
@@ -117,9 +121,10 @@ const FriendlyChatPage = () => {
             const newCount = prevCount + 1;
   
             // Check if this is the 5th question
-            if (newCount >= 6) {
+            if (newCount === 6) {
               // Generate and show feedback after 5 questions
-              setShowFeedbackModal(true);
+              setIsLoadingFeedback(true); // Set loading state for feedback generation
+              setShowFeedbackModal(true); // Show feedback modal immediately
             }
   
             return newCount;
@@ -162,6 +167,7 @@ const FriendlyChatPage = () => {
   
     setUserInput(''); // Clear input field after submission
   };
+  
   
   
 
