@@ -301,18 +301,22 @@ h1 {
   background: rgba(255, 255, 255, 0.85); /* Semi-transparent white */
   padding: 30px;
   border-radius: 12px;
-  max-width: 600px; /* Set max width for the modal */
+  max-width: 600px;
+  max-height: 80vh; /* Set a max height for the modal */
   width: 90%; /* Make it responsive on smaller screens */
   text-align: center;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37); /* Soft, elevated shadow */
   backdrop-filter: blur(10px); /* Blur effect */
   border: 1px solid rgba(255, 255, 255, 0.18); /* Subtle border for glass effect */
+  overflow-y: auto; /* Enable vertical scrolling for the entire modal */
 }
 
-
+/* Remove overflow from individual sections */
 .feedback-section {
-  margin-bottom: 20px;
+  max-height: none;
+  overflow-y: visible;
 }
+
 
 .feedback-section h3 {
   font-size: 1.5rem;
