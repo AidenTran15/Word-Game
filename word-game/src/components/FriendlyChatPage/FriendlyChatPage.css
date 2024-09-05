@@ -284,31 +284,32 @@ h1 {
 
 
 .feedback-modal {
-  position: fixed; /* Fix the modal to the center of the screen */
+  position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* Move the modal back by 50% of its width and height */
-  width: 100%; /* Ensure modal doesn't overflow */
-  height: 100%; /* Fill the height of the viewport */
-  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
-  display: flex; /* Use flexbox for centering */
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  z-index: 1001; /* Ensure it stays above other elements */
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Darken the background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+  animation: fadeInModal 0.3s ease-in-out; /* Smooth fade-in animation */
 }
 
 .feedback-modal .modal-content {
-  background: rgba(255, 255, 255, 0.85); /* Semi-transparent white */
+  background: rgba(255, 255, 255, 0.85); /* Frosted glass effect */
   padding: 30px;
-  border-radius: 12px;
+  border-radius: 15px; /* Rounded corners */
   max-width: 600px;
-  max-height: 80vh; /* Set a max height for the modal */
-  width: 90%; /* Make it responsive on smaller screens */
-  text-align: center;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37); /* Soft, elevated shadow */
-  backdrop-filter: blur(10px); /* Blur effect */
-  border: 1px solid rgba(255, 255, 255, 0.18); /* Subtle border for glass effect */
-  overflow-y: auto; /* Enable vertical scrolling for the entire modal */
+  max-height: 80vh;
+  width: 90%;
+  text-align: left; /* Align text to the left for better readability */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37); /* Soft shadow for elevation */
+  backdrop-filter: blur(15px); /* Blur effect for frosted glass */
+  border: 1px solid rgba(255, 255, 255, 0.18); /* Light border */
+  overflow-y: auto; /* Modal will scroll if content exceeds height */
 }
 
 /* Remove overflow from individual sections */
@@ -352,6 +353,88 @@ h1 {
   margin-right: 0.5em;
 }
 
+/* Animation for fade-in */
+@keyframes fadeInModal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+h3 {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #ff9800;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.feedback-section p,
+.feedback-section ul {
+  font-size: 1rem;
+  color: #333;
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.5;
+}
+
+/* Feedback icons and headers */
+.feedback-section h3::before {
+  content: '⚡'; /* Add icons to the section headers */
+  margin-right: 10px;
+}
+
+.feedback-section h3.feedback-summary::before {
+  content: '📝'; /* Use a different icon for summary */
+}
+
+.feedback-section h3.feedback-strengths::before {
+  content: '✅'; /* Icon for strengths */
+}
+
+.feedback-section h3.feedback-improvement::before {
+  content: '⚠️'; /* Icon for areas of improvement */
+}
+
+.feedback-section h3.feedback-recommendations::before {
+  content: '📈'; /* Icon for recommendations */
+}
+
+/* Feedback strengths and improvement areas */
+.feedback-section ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.feedback-section ul li {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.feedback-section ul li::before {
+  content: '•';
+  color: #4CAF50; /* Green dot for strengths */
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-right: 0.5em;
+}
+
+.feedback-section.feedback-improvement ul li::before {
+  color: #ff9800; /* Orange dot for areas of improvement */
+}
+
+/* Close button styling */
 .close-button {
   background-color: #1E90FF;
   color: white;
@@ -368,6 +451,24 @@ h1 {
   background-color: #1C86EE;
   transform: translateY(-3px);
 }
+
+.close-button {
+  background-color: #1E90FF;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.close-button:hover {
+  background-color: #1C86EE;
+  transform: translateY(-3px);
+}
+
 
 
 
