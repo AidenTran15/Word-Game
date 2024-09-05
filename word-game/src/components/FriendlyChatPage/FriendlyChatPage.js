@@ -30,7 +30,6 @@ const FriendlyChatPage = () => {
   });
   const [isLoadingFeedback, setIsLoadingFeedback] = useState(false); // New state for loading feedback
 
-  
   const recognitionRef = useRef(null);
 
   const toggleSpeechRecognition = () => {
@@ -69,6 +68,8 @@ const FriendlyChatPage = () => {
     setAiMode(e.target.value);
     if (e.target.value === 'AI-Interview') {
       setShowIntroModal(true); // Show the modal when AI-Interview mode is selected
+    } else if (e.target.value === 'FriendlyAI') {
+      startFriendlyConversation(); // Automatically start Friendly AI conversation
     }
   };
 
@@ -87,11 +88,18 @@ const FriendlyChatPage = () => {
     }
   };
 
+  // Start Friendly AI conversation with introduction
+  const startFriendlyConversation = () => {
+    const initialMessage = `Hello, my name is Kaylee, I'm 24 years old. I just graduated with a Master of Marketing at RMIT. Nice to meet you! Can you introduce yourself?`;
+    setConversation([{ role: 'ai', content: initialMessage }]);
+    speakText(initialMessage);
+  };
+
   const handleSubmit = async () => {
     if (userInput.trim() === '') return;
-  
+
     setConversation((prev) => [...prev, { role: 'user', content: userInput }]);
-  
+
     if (aiMode === 'AI-Interview') {
       // Check if this is the 5th question before making the request
       if (questionCount >= 5) {
@@ -99,11 +107,11 @@ const FriendlyChatPage = () => {
         setIsLoadingFeedback(true);
         setShowFeedbackModal(true); // Show feedback modal right away with loading message
       }
-  
+
       try {
         const response = await axios.post('http://localhost:5000/submit-interview-answer', { answer: userInput });
         const aiContent = response.data.question || response.data.feedback;
-  
+
         if (response.data.feedback) {
           // Feedback is generated, simulate loading effect and show feedback
           setTimeout(() => {
@@ -115,38 +123,49 @@ const FriendlyChatPage = () => {
           // Handle next question if not the 5th one
           setConversation((prev) => [...prev, { role: 'ai', content: aiContent }]);
           speakText(aiContent);
-  
+
           // Increment question count correctly
           setQuestionCount((prevCount) => {
             const newCount = prevCount + 1;
-  
+
             // Check if this is the 5th question
             if (newCount === 6) {
               // Generate and show feedback after 5 questions
               setIsLoadingFeedback(true); // Set loading state for feedback generation
               setShowFeedbackModal(true); // Show feedback modal immediately
             }
-  
+
             return newCount;
           });
         }
       } catch (error) {
         console.error('Error in interview mode:', error);
       }
+    } else if (aiMode === 'FriendlyAI') {
+      // Friendly AI mode
+      try {
+        const response = await axios.post('http://localhost:5000/friendly-conversation', { userInput });
+        const aiResponse = response.data.response;
+
+        setConversation((prev) => [...prev, { role: 'ai', content: aiResponse }]);
+        speakText(aiResponse);
+      } catch (error) {
+        console.error('Error communicating with Friendly AI:', error);
+      }
     } else {
       // Normal chat mode
       try {
         const response = await axios.post('http://localhost:5000/converse', { userInput });
         const aiResponse = response.data.response;
-  
+
         setConversation((prev) => [...prev, { role: 'ai', content: aiResponse }]);
-  
+
         const pollyParams = {
           OutputFormat: 'mp3',
           Text: aiResponse,
           VoiceId: 'Joanna',
         };
-  
+
         polly.synthesizeSpeech(pollyParams, (err, data) => {
           if (err) {
             console.error('Error synthesizing speech:', err);
@@ -158,17 +177,15 @@ const FriendlyChatPage = () => {
             audio.play();
           }
         });
-  
+
         setUserInput(''); // Clear input field after submission
       } catch (error) {
         console.error('Error communicating with AI:', error);
       }
     }
-  
+
     setUserInput(''); // Clear input field after submission
   };
-  
-  
 
   const speakText = (text) => {
     const pollyParams = {
@@ -196,6 +213,7 @@ const FriendlyChatPage = () => {
       <select className="ai-mode-dropdown" onChange={handleModeChange} value={aiMode}>
         <option value="Chat">Chat</option>
         <option value="AI-Interview">AI-Interview</option>
+        <option value="FriendlyAI">Friendly AI</option> {/* New Friendly AI Mode */}
       </select>
       <div className="content-wrap">
         <div className="chat-container">
@@ -248,67 +266,64 @@ const FriendlyChatPage = () => {
         </div>
       )}
 
-{showFeedbackModal && (
-  <div className="feedback-modal">
-    <div className="modal-content">
-      {isLoadingFeedback ? (
-        <div>
-          <h2>AI Generating Feedback</h2>
-          <p>Please wait a few seconds...</p>
-        </div>
-      ) : (
-        <div>
-          <h2>Interview Feedback</h2>
+      {showFeedbackModal && (
+        <div className="feedback-modal">
+          <div className="modal-content">
+            {isLoadingFeedback ? (
+              <div>
+                <h2>AI Generating Feedback</h2>
+                <p>Please wait a few seconds...</p>
+              </div>
+            ) : (
+              <div>
+                <h2>Interview Feedback</h2>
 
-          {/* Feedback Summary */}
-          <div className="feedback-section">
-            <h3>📝 Feedback Summary</h3>
-            <p>{feedback?.summary || 'No summary available'}</p>
+                {/* Feedback Summary */}
+                <div className="feedback-section">
+                  <h3>📝 Feedback Summary</h3>
+                  <p>{feedback?.summary || 'No summary available'}</p>
+                </div>
+
+                {/* Strengths */}
+                <div className="feedback-section">
+                  <h3>✅ Strengths</h3>
+                  <ul>
+                    {feedback?.strengths?.length > 0 ? (
+                      feedback.strengths.map((strength, index) => (
+                        <li key={index}>{strength}</li>
+                      ))
+                    ) : (
+                      <li>No strengths available</li>
+                    )}
+                  </ul>
+                </div>
+
+                {/* Areas for Improvement */}
+                <div className="feedback-section">
+                  <h3>⚠️ Specific Areas for Improvement</h3>
+                  <ul>
+                    {feedback?.improvementAreas?.length > 0 ? (
+                      feedback.improvementAreas.map((area, index) => (
+                        <li key={index}>{area}</li>
+                      ))
+                    ) : (
+                      <li>No improvement areas available</li>
+                    )}
+                  </ul>
+                </div>
+
+                {/* Recommendations */}
+                <div className="feedback-section">
+                  <h3>📈 Specific Recommendations</h3>
+                  <p>{feedback?.recommendations || 'No recommendations available'}</p>
+                </div>
+
+                <button onClick={() => setShowFeedbackModal(false)} className="close-button">Close</button>
+              </div>
+            )}
           </div>
-
-          {/* Strengths */}
-          <div className="feedback-section">
-            <h3>✅ Strengths</h3>
-            <ul>
-              {feedback?.strengths?.length > 0 ? (
-                feedback.strengths.map((strength, index) => (
-                  <li key={index}>{strength}</li>
-                ))
-              ) : (
-                <li>No strengths available</li>
-              )}
-            </ul>
-          </div>
-
-          {/* Areas for Improvement */}
-          <div className="feedback-section">
-            <h3>⚠️ Specific Areas for Improvement</h3>
-            <ul>
-              {feedback?.improvementAreas?.length > 0 ? (
-                feedback.improvementAreas.map((area, index) => (
-                  <li key={index}>{area}</li>
-                ))
-              ) : (
-                <li>No improvement areas available</li>
-              )}
-            </ul>
-          </div>
-
-          {/* Recommendations */}
-          <div className="feedback-section">
-            <h3>📈 Specific Recommendations</h3>
-            <p>{feedback?.recommendations || 'No recommendations available'}</p>
-          </div>
-
-          <button onClick={() => setShowFeedbackModal(false)} className="close-button">Close</button>
         </div>
       )}
-    </div>
-  </div>
-)}
-
-
-
 
       <Footer />
     </div>
