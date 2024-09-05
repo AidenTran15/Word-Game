@@ -16,6 +16,7 @@ const polly = new AWS.Polly();
 const FriendlyChatPage = () => {
   const [userInput, setUserInput] = useState('');
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [isListening, setIsListening] = useState(false); // Track listening state
   const [conversation, setConversation] = useState([]);
   const [aiMode, setAiMode] = useState('Chat'); // Default mode is 'Chat'
   const [showIntroModal, setShowIntroModal] = useState(false); // State to manage the modal visibility
@@ -24,7 +25,7 @@ const FriendlyChatPage = () => {
   const [feedback, setFeedback] = useState(''); // Store feedback
   const recognitionRef = useRef(null);
 
-  const startSpeechRecognition = () => {
+  const toggleSpeechRecognition = () => {
     if (!recognitionRef.current) {
       recognitionRef.current = new window.webkitSpeechRecognition();
       recognitionRef.current.lang = 'en-US';
@@ -38,20 +39,21 @@ const FriendlyChatPage = () => {
       };
 
       recognitionRef.current.onend = () => {
-        // Hide the waveform and show the input field again when speech ends
         setIsSpeaking(false);
+        setIsListening(false); // Set listening to false when recognition ends
       };
     }
 
-    // Show the waveform and hide the input field when speech starts
-    setIsSpeaking(true);
-    recognitionRef.current.start();
-  };
-
-  const stopSpeechRecognition = () => {
-    if (recognitionRef.current) {
+    if (!isListening) {
+      // Start listening
+      setIsSpeaking(true);
+      setIsListening(true); // Update state to indicate recognition is active
+      recognitionRef.current.start();
+    } else {
+      // Stop listening
       recognitionRef.current.stop();
-      setIsSpeaking(false); // Ensure waveform is hidden when speech is manually stopped
+      setIsSpeaking(false);
+      setIsListening(false); // Update state to indicate recognition has stopped
     }
   };
 
@@ -169,63 +171,53 @@ const FriendlyChatPage = () => {
   };
 
   return (
-<div className="page-container">
-  <Navbar />
-  <select className="ai-mode-dropdown" onChange={handleModeChange} value={aiMode}>
-    <option value="Chat">Chat</option>
-    <option value="AI-Interview">AI-Interview</option>
-  </select>
-  <div className="content-wrap">
-    <div className="chat-container">
-      <div className="input-section">
-        <div className="input-wrapper">
-          {!isSpeaking ? (
-            <input
-              type="text"
-              value={userInput}
-              onChange={(e) => setUserInput(e.target.value)}
-              placeholder="Type message or use the mic"
-              className="user-input"
-            />
-          ) : (
-            <div className="waveform">
-              <div className="bar"></div>
-              <div className="bar"></div>
-              <div className="bar"></div>
-              <div className="bar"></div>
-              <div className="bar"></div>
-              <div className="bar"></div>
-              <div className="bar"></div>
+    <div className="page-container">
+      <Navbar />
+      <select className="ai-mode-dropdown" onChange={handleModeChange} value={aiMode}>
+        <option value="Chat">Chat</option>
+        <option value="AI-Interview">AI-Interview</option>
+      </select>
+      <div className="content-wrap">
+        <div className="chat-container">
+          <div className="input-section">
+            <div className="input-wrapper">
+              {!isSpeaking ? (
+                <input
+                  type="text"
+                  value={userInput}
+                  onChange={(e) => setUserInput(e.target.value)}
+                  placeholder="Type message or use the mic"
+                  className="user-input"
+                />
+              ) : (
+                <div className="waveform">
+                  <div className="bar"></div>
+                  <div className="bar"></div>
+                  <div className="bar"></div>
+                  <div className="bar"></div>
+                  <div className="bar"></div>
+                  <div className="bar"></div>
+                  <div className="bar"></div>
+                </div>
+              )}
             </div>
-          )}
-        </div>
-        <button onClick={handleSubmit} className="send-button"></button>
-      </div>
-      <div className="conversation-section">
-        {conversation.map((entry, index) => (
-          <div key={index} className={entry.role}>
-            <strong>{entry.role === 'user' ? 'You' : 'AI'}:</strong> {entry.content}
+            <button onClick={handleSubmit} className="send-button"></button>
           </div>
-        ))}
+          <div className="conversation-section">
+            {conversation.map((entry, index) => (
+              <div key={index} className={entry.role}>
+                <strong>{entry.role === 'user' ? 'You' : 'AI'}:</strong> {entry.content}
+              </div>
+            ))}
+          </div>
+        </div>
+        <button 
+          onClick={toggleSpeechRecognition} 
+          className="speak-button">
+          🎤 
+        </button>
       </div>
-    </div>
-    <button 
-  onMouseDown={(e) => {
-    e.preventDefault(); // Prevent any default behavior
-    startSpeechRecognition();
-  }} 
-  onMouseUp={stopSpeechRecognition} 
-  onTouchStart={(e) => {
-    e.preventDefault(); // Prevent any default behavior
-    startSpeechRecognition();
-  }} 
-  onTouchEnd={stopSpeechRecognition} 
-  className="speak-button">
-  🎤 
-</button>
 
-  </div>
-  
       {showIntroModal && (
         <div className="intro-modal">
           <div className="modal-content">
@@ -235,7 +227,7 @@ const FriendlyChatPage = () => {
           </div>
         </div>
       )}
-  
+
       {showFeedbackModal && (
         <div className="feedback-modal">
           <div className="modal-content">
@@ -248,7 +240,6 @@ const FriendlyChatPage = () => {
       <Footer />
     </div>
   );
-  
 };
 
 export default FriendlyChatPage;
