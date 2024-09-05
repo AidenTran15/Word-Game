@@ -169,7 +169,6 @@ const FriendlyChatPage = () => {
   };
   
   
-  
 
   const speakText = (text) => {
     const pollyParams = {
