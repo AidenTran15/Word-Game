@@ -267,65 +267,86 @@ h1 {
 }
 
 
-.feedback-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1001;
-  backdrop-filter: blur(10px); /* Frosted glass effect */
-  animation: fadeInModal 0.5s ease-in-out; /* Smooth fade-in animation */
-}
+
+
+
+
+
+
 
 .feedback-modal .modal-content {
-  background: rgba(255, 255, 255, 0.85); /* Slightly transparent white */
+  background: rgba(255, 255, 255, 0.85);
   padding: 30px;
   border-radius: 12px;
   width: 80%;
   max-width: 450px;
   text-align: center;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37); /* Soft, elevated shadow */
-  backdrop-filter: blur(10px); /* Additional blur effect inside the modal */
-  border: 1px solid rgba(255, 255, 255, 0.18); /* Subtle border for the glass effect */
-  animation: slideUpModal 0.6s ease-in-out; /* Smooth slide-up animation */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
 }
 
-.feedback-modal h2 {
+.feedback-section {
   margin-bottom: 20px;
-  font-size: 1.8rem;
+}
+
+.feedback-section h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  font-family: 'Montserrat', sans-serif;
   color: #333;
-  font-family: 'Montserrat', sans-serif; /* Modern font */
 }
 
-.feedback-modal p {
-  margin-bottom: 20px;
-  font-size: 1.1rem;
+.feedback-section p, .feedback-section ul {
+  font-size: 1rem;
   color: #666;
-  line-height: 1.5;
   font-family: 'Roboto', sans-serif;
+  line-height: 1.5;
 }
 
-.feedback-modal .close-button {
+.feedback-section ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.feedback-section ul li {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.feedback-section ul li::before {
+  content: '•';
+  color: #4CAF50;
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-right: 0.5em;
+}
+
+.close-button {
   background-color: #1E90FF;
   color: white;
   border: none;
   padding: 12px 24px;
-  border-radius: 50px; /* Rounded button */
+  border-radius: 50px;
   cursor: pointer;
   font-size: 1rem;
   font-weight: bold;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.feedback-modal .close-button:hover {
+.close-button:hover {
   background-color: #1C86EE;
-  transform: translateY(-3px); /* Slight lift effect on hover */
+  transform: translateY(-3px);
 }
+
+
+
+
+
+
+
+
+
 
 /* Smooth fade-in effect for the modal */
 @keyframes fadeInModal {

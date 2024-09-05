@@ -22,7 +22,13 @@ const FriendlyChatPage = () => {
   const [showIntroModal, setShowIntroModal] = useState(false); // State to manage the modal visibility
   const [questionCount, setQuestionCount] = useState(0); // Track number of questions asked
   const [showFeedbackModal, setShowFeedbackModal] = useState(false); // State to manage feedback modal
-  const [feedback, setFeedback] = useState(''); // Store feedback
+  const [feedback, setFeedback] = useState({
+    summary: '',
+    strengths: [],
+    improvementAreas: [],
+    recommendations: '',
+  });
+  
   const recognitionRef = useRef(null);
 
   const toggleSpeechRecognition = () => {
@@ -69,7 +75,7 @@ const FriendlyChatPage = () => {
     setQuestionCount(0); // Reset question count at the start of a new interview
 
     try {
-      const response = await axios.post('https://apiwordgame.aidenkiettran.com/start-interview');
+      const response = await axios.post('http://localhost:5000/start-interview');
       const firstQuestion = response.data.question;
       setConversation([{ role: 'ai', content: firstQuestion }]);
       speakText(firstQuestion);
@@ -86,7 +92,7 @@ const FriendlyChatPage = () => {
   
     if (aiMode === 'AI-Interview') {
       try {
-        const response = await axios.post('https://apiwordgame.aidenkiettran.com/submit-interview-answer', { answer: userInput });
+        const response = await axios.post('http://localhost:5000/submit-interview-answer', { answer: userInput });
         const aiContent = response.data.question || response.data.feedback;
   
         if (response.data.feedback) {
@@ -117,7 +123,7 @@ const FriendlyChatPage = () => {
     } else {
       // Normal chat mode
       try {
-        const response = await axios.post('https://apiwordgame.aidenkiettran.com/converse', { userInput });
+        const response = await axios.post('http://localhost:5000/converse', { userInput });
         const aiResponse = response.data.response;
   
         setConversation((prev) => [...prev, { role: 'ai', content: aiResponse }]);
@@ -228,15 +234,58 @@ const FriendlyChatPage = () => {
         </div>
       )}
 
-      {showFeedbackModal && (
-        <div className="feedback-modal">
-          <div className="modal-content">
-            <h2>Interview Feedback</h2>
-            <p>{feedback}</p>
-            <button onClick={() => setShowFeedbackModal(false)} className="close-button">Close</button>
-          </div>
-        </div>
-      )}
+{showFeedbackModal && (
+  <div className="feedback-modal">
+    <div className="modal-content">
+      <h2>Interview Feedback</h2>
+
+      {/* Feedback Summary */}
+      <div className="feedback-section">
+        <h3>📝 Feedback Summary</h3>
+        <p>{feedback?.summary || 'No summary available'}</p>
+      </div>
+
+      {/* Strengths */}
+      <div className="feedback-section">
+        <h3>✅ Strengths</h3>
+        <ul>
+          {feedback?.strengths?.length > 0 ? (
+            feedback.strengths.map((strength, index) => (
+              <li key={index}>{strength}</li>
+            ))
+          ) : (
+            <li>No strengths available</li>
+          )}
+        </ul>
+      </div>
+
+      {/* Areas for Improvement */}
+      <div className="feedback-section">
+        <h3>⚠️ Areas for Improvement</h3>
+        <ul>
+          {feedback?.improvementAreas?.length > 0 ? (
+            feedback.improvementAreas.map((area, index) => (
+              <li key={index}>{area}</li>
+            ))
+          ) : (
+            <li>No improvement areas available</li>
+          )}
+        </ul>
+      </div>
+
+      {/* Recommendations */}
+      <div className="feedback-section">
+        <h3>📈 Recommendations</h3>
+        <p>{feedback?.recommendations || 'No recommendations available'}</p>
+      </div>
+
+      <button onClick={() => setShowFeedbackModal(false)} className="close-button">Close</button>
+    </div>
+  </div>
+)}
+
+
+
       <Footer />
     </div>
   );
