@@ -524,4 +524,7 @@ h3 {
   .content-wrap {
     padding-bottom: 20px; /* Add some padding to the bottom */
   }
+  .feedback-modal .modal-content{
+    width: 80%; 
+  }
 }
