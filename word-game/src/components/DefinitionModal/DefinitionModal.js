@@ -50,14 +50,16 @@ const DefinitionModal = ({ show, onClose, selectedWord, language, toggleLanguage
     <div className="modal-overlay-dm">
       <div className="modal-content-dm">
         <h2>Word Definition</h2>
-        <div className="word-section">
-          <h3>{selectedWord || 'No word selected'}</h3>
-          {selectedWord && (
-            <button className="speak-button" onClick={handleSpeak}>
-              <i className="fas fa-volume-up"></i>
-            </button>
-          )}
-        </div>
+        <div className="dm-word-section">
+  <span className="dm-word-display">{selectedWord || 'No word selected'}</span>
+  {selectedWord && (
+    <button className="dm-speak-button" onClick={handleSpeak}>
+      <i className="fas fa-volume-up"></i>
+    </button>
+  )}
+</div>
+
+
 
         {loading ? (
           <p>Loading...</p>

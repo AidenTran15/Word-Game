@@ -36,7 +36,7 @@ const VocabularyCardPage = () => {
   const fetchVocabularyWord = async (topic) => {
     setLoading(true);
     try {
-      const response = await axios.post('https://apiwordgame.aidenkiettran.com/generate-vocabulary-word', { topic });
+      const response = await axios.post('http://localhost:5000/generate-vocabulary-word', { topic });
       setWord(response.data.word);
       setDefinition(response.data.englishDefinition);
       setEnglishDefinition(response.data.englishDefinition);
@@ -120,7 +120,7 @@ const VocabularyCardPage = () => {
       // If switching to Vietnamese, fetch the Vietnamese word
       if (!vietnameseWord || vietnameseWord === 'No Vietnamese word available') {
         try {
-          const response = await axios.post('https://apiwordgame.aidenkiettran.com/translate-word', { word });
+          const response = await axios.post('http://localhost:5000/translate-word', { word });
           console.log('Translation API response:', response.data); // Debugging the API response
   
           if (response.data && response.data.vietnameseTranslation) {
@@ -158,7 +158,7 @@ const VocabularyCardPage = () => {
 
   const handleWordClick = async (word) => {
     try {
-      const response = await axios.post('https://apiwordgame.aidenkiettran.com/validate-word', { word });
+      const response = await axios.post('http://localhost:5000/validate-word', { word });
       const { englishDefinition, vietnameseDefinition } = response.data;
 
       setEnglishDefinition(englishDefinition);

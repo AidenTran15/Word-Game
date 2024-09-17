@@ -78,7 +78,7 @@ const FriendlyChatPage = () => {
     setQuestionCount(0); // Reset question count at the start of a new interview
 
     try {
-      const response = await axios.post('http://localhost:5000/start-interview');
+      const response = await axios.post('https://apiwordgame.aidenkiettran.com/start-interview');
       const firstQuestion = response.data.question;
       setConversation([{ role: 'ai', content: firstQuestion }]);
       speakText(firstQuestion);
@@ -90,7 +90,7 @@ const FriendlyChatPage = () => {
 
   // Start Friendly AI conversation with introduction
   const startFriendlyConversation = () => {
-    const initialMessage = `Hello, my name is Kaylee, I'm 24 years old. I just graduated with a Master of Marketing at RMIT. Nice to meet you! Can you introduce yourself?`;
+    const initialMessage = `Hello, my name is Aiden, I'm 22 years old, I just graduated with a Bachelor of IT at RMIT. Nice to meet you! Can you introduce yourself?`;
     setConversation([{ role: 'ai', content: initialMessage }]);
     speakText(initialMessage);
   };
@@ -109,7 +109,7 @@ const FriendlyChatPage = () => {
       }
 
       try {
-        const response = await axios.post('http://localhost:5000/submit-interview-answer', { answer: userInput });
+        const response = await axios.post('https://apiwordgame.aidenkiettran.com/submit-interview-answer', { answer: userInput });
         const aiContent = response.data.question || response.data.feedback;
 
         if (response.data.feedback) {
@@ -144,7 +144,7 @@ const FriendlyChatPage = () => {
     } else if (aiMode === 'FriendlyAI') {
       // Friendly AI mode
       try {
-        const response = await axios.post('http://localhost:5000/friendly-conversation', { userInput });
+        const response = await axios.post('https://apiwordgame.aidenkiettran.com/friendly-conversation', { userInput });
         const aiResponse = response.data.response;
 
         setConversation((prev) => [...prev, { role: 'ai', content: aiResponse }]);
@@ -155,7 +155,7 @@ const FriendlyChatPage = () => {
     } else {
       // Normal chat mode
       try {
-        const response = await axios.post('http://localhost:5000/converse', { userInput });
+        const response = await axios.post('https://apiwordgame.aidenkiettran.com/converse', { userInput });
         const aiResponse = response.data.response;
 
         setConversation((prev) => [...prev, { role: 'ai', content: aiResponse }]);

@@ -53,10 +53,11 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  margin-top: 20px; 
+  margin-top: 20px;
   margin-bottom: 10px;
+  text-align: center;
+  width: 100%;
 }
-
 /* Speaker button styling */
 .speak-button {
   background: linear-gradient(135deg, #007BFF, #00c6ff);
@@ -64,7 +65,7 @@
   cursor: pointer;
   font-size: 18px;
   color: white;
-  padding: 8px;
+  padding: 12px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -120,6 +121,19 @@
   font-size: 18px;
 }
 
+.word-display {
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  display: flex; /* Ensure the word behaves like a flex item */
+  align-items: center; /* Center the word vertically with the speaker button */
+  justify-content: center; /* Center the word horizontally */
+}
+
+
 .modal-content-dm .toggle-button:hover {
   background-color: #0056b3;
 }
@@ -152,4 +166,49 @@
     padding: 6px 12px;
     font-size: 16px;
   }
+}
+
+/* Word Section: Aligns word and speaker icon */
+.dm-word-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+/* Styling for the displayed word */
+.dm-word-display {
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  display: flex; /* Ensure the word behaves like a flex item */
+  align-items: center; /* Center the word vertically with the speaker button */
+  justify-content: center; /* Center the word horizontally */
+}
+
+/* Speaker button styling */
+.dm-speak-button {
+  background: linear-gradient(135deg, #007BFF, #00c6ff);
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: white;
+  padding: 12px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.dm-speak-button i {
+  margin-left: 0;
 }
