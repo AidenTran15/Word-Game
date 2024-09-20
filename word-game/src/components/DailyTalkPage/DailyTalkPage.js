@@ -70,7 +70,7 @@ const DailyTalkPage = () => {
   const generateConversation = async () => {
     setLoading(true);
     try {
-      const response = await axios.post('https://apiwordgame.aidenkiettran.com/generate-daily-talk');
+      const response = await axios.post('http://localhost:5000/generate-daily-talk');
       let conversationText = response.data.conversation;
 
       conversationText = conversationText.replace(/Person 1:/g, `${person1}:`);
@@ -240,7 +240,7 @@ const handlePlayConversation = async () => {
 
   const handleWordClick = async (word) => {
     try {
-      const response = await axios.post('https://apiwordgame.aidenkiettran.com/validate-word', {
+      const response = await axios.post('http://localhost:5000/validate-word', {
         word: word.trim(),
       });
       const { englishDefinition, vietnameseDefinition } = response.data;
